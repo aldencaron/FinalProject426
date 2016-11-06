@@ -6,6 +6,9 @@
     display: inline-block;
 }
 
+
+/* Resource cards */
+
 .rameses {
     background-image: url(rameses.gif);
     background-color: #5E90BB;
@@ -27,6 +30,11 @@
 }
 
 .books {
-    background-color: #eeaa7b;
+    background-color: #262228;
     background-image: url(book.gif);
 }
+
+
+/* Development cards */
+
+.knights {}
