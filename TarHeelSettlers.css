@@ -1,5 +1,18 @@
 .cards {
-    width: 50px;
-    height: 100px;
+    width: 100px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: gray;
+    background-image: url(rameses.gif);
+    background-color: #4ABDAC;
+    /*
+    Green - rameses
+    
+    */
+}
+
+.developmentCard {
     background-color: #e34234;
 }
+
+.resourceCard {}
