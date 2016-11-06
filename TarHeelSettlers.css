@@ -30,42 +30,42 @@ body {
     float: left;
     height: 300px;
     border: 1pt solid black;
-    background-color: #add8e6;
+    background-color: #07889B;
 }
 
 #player_two {
     float: right;
     height: 300px;
     border: 1pt solid black;
-    background-color: #f5ca66;
+    background-color: #E37222;
 }
 
 #player_three {
     float: left;
     height: 300px;
     border: 1pt solid black;
-    background-color: #e99494;
+    background-color: #EEAA7B;
 }
 
 #player_four {
     float: right;
     height: 300px;
     border: 1pt solid black;
-    background-color: #66f5a9;
+    background-color: #66B9BF;
 }
 
 #board {
     height: 550px;
     border: 1pt solid black;
-	overflow: auto;
-	text-align: center;
+    overflow: auto;
+    text-align: center;
 }
 
 #turn_info {
     border: 1pt solid black;
     height: 50px;
     text-align: center;
-    background-color: #f5ca66;
+    background-color: #E37222;
 }
 
 #turn_panel {
@@ -73,7 +73,7 @@ body {
     width: 100%;
     height: 125px;
     text-align: center;
-    background-color: #f5ca66;
+    background-color: #F1F1EF;
 }
 
 /* General card dimensions */
