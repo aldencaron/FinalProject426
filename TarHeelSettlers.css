@@ -70,35 +70,81 @@
     background-color: #f5ca66;
 }
 
+/* General card dimensions */
 .cards {
     width: 50px;
     height: 100px;
     border-radius: 10px;
-    background-color: gray;
     display: inline-block;
+    background-color: white;
 }
 
+/* Specifies the image dimensions inside
+the cards */
 .cards img {
     width: 50px;
     height: 100px;
 }
 
-.rameses {;
-    background-color: #5E90BB;
+/* Resource cards */
+
+.rameses {
+    border: 1px solid #5E90BB;
 }
 
 .bricks {
-    background-color: #A39B96;
+    border: 1px solid #A39B96;
 }
 
 .basketballs {
-    background-color: #B25F4E;
+    border: 1px solid #B25F4E;
 }
 
 .ramen {
-    background-color: #794B38;
+    border: 1px solid #794B38;
 }
 
 .books {
-    background-color: #eeaa7b;
+    border: 1px solid #6B9FCE;
+}
+
+/* Development cards */
+.folt {
+    border: 1px solid #C7C8CA;
+}
+
+.devil {
+    border: 1px solid blue;
+}
+
+.well {
+    border: 1px solid gray;
+}
+
+.pit {
+    border: 1px solid brown;
+}
+
+.davis {
+    border: 1px solid #99775D;
+}
+
+.sitterson {
+    border: 1px solid #7E615A;
+}
+
+.bell {
+    border: 1px solid #A06E53;
+}
+
+.roadBuilding {
+    border: 1px solid #54524A;
+}
+
+.volunteer {
+    border: 1px solid #54524A;
+}
+
+.monopoly {
+    border: 1px solid #B1322F;
 }
