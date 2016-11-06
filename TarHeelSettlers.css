@@ -3,16 +3,30 @@
     height: 150px;
     border-radius: 10px;
     background-color: gray;
+    display: inline-block;
+}
+
+.rameses {
     background-image: url(rameses.gif);
-    background-color: #4ABDAC;
-    /*
-    Green - rameses
-    
-    */
+    background-color: #5E90BB;
 }
 
-.developmentCard {
-    background-color: #e34234;
+.bricks {
+    background-color: #A39B96;
+    background-image: url(brick.gif);
 }
 
-.resourceCard {}
+.basketballs {
+    background-color: #B25F4E;
+    background-image: url(basketball.gif);
+}
+
+.ramen {
+    background-color: #794B38;
+    background-image: url(ramen.gif);
+}
+
+.books {
+    background-color: #eeaa7b;
+    background-image: url(book.gif);
+}
