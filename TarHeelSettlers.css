@@ -1,1 +1,5 @@
-something
+.cards {
+    width: 50px;
+    height: 100px;
+    background-color: #e34234;
+}
