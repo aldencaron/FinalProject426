@@ -78,27 +78,27 @@
     display: inline-block;
 }
 
-.rameses {
-    background-image: url(rameses.gif);
+.cards img {
+    width: 50px;
+    height: 100px;
+}
+
+.rameses {;
     background-color: #5E90BB;
 }
 
 .bricks {
     background-color: #A39B96;
-    background-image: url(brick.gif);
 }
 
 .basketballs {
     background-color: #B25F4E;
-    background-image: url(basketball.gif);
 }
 
 .ramen {
     background-color: #794B38;
-    background-image: url(ramen.gif);
 }
 
 .books {
     background-color: #eeaa7b;
-    background-image: url(book.gif);
 }
