@@ -137,6 +137,21 @@ the cards */
 
 .bell {
     border: 1px solid #A06E53;
+<<<<<<< HEAD
+=======
+}
+
+.roadBuilding {
+    border: 1px solid #54524A;
+}
+
+.volunteer {
+    border: 1px solid #54524A;
+}
+
+.monopoly {
+    border: 1px solid #B1322F;
+>>>>>>> origin/master
 }
 
 .roadBuilding {
