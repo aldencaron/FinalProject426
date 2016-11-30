@@ -185,8 +185,13 @@ class Road{
 
 }
 class Player {
+  private $PlayerID;
+  private $Username;
+  private $RoadsCount;
+  private $SoldiersCount;
+  private $Points;
 
-  public static function findByID($ID){
+  public static function findByID($PlayerID){
 
   }
   public static function getAllIDs() {
