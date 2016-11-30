@@ -53,12 +53,6 @@ class Card {
       else{
         $card_info = $result->fetch_array();
 
-        // if (!$card_info['complete']) {
-        // 	$complete = false;
-        //       } else {
-        // 	$complete = true;
-        //   }
-
         return new Card(card_info['PlayerID'],
                         card_info['Ram'],
                         card_info['Ramen'],
