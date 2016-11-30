@@ -1,3 +1,13 @@
+SERVER SIDE THOUGHTS
+4 Players 
+Board w/ Updates
+	Roads, colleges, universities, robber
+Current dice roll 
+Player cards
+Do we want is turn column on player?
+
+
+
 GENERAL INFORMATION 
 
 Other Player General Information
