@@ -24,17 +24,20 @@ $SQL = "Create Table Players (
   SoldiersCount int,
   Points int)";
 mysqli_query($mysqli, $SQL);
+//4 players
 
 $SQL = "Create Table Roads (
   RoadID int primary key not null auto_increment,
   PlayerID int,
   Available int)";
 mysqli_query($mysqli, $SQL);
+//73 roads
 
 $SQL = "Create Table Tiles (
   ID int primary key not null auto_increment,
   Robber int)";
 mysqli_query($mysqli, $SQL);
+//19 Tiles
 
 $SQL = "Create Table Colleges (
   CollegeID int primary key not null auto_increment,
@@ -42,6 +45,11 @@ $SQL = "Create Table Colleges (
   Available int,
   University int)";
 mysqli_query($mysqli, $SQL);
+//54 colleges
+for(int $i =0; $i<54; $i++){
+
+}
+
 
   $SQL = "Create Table Cards (
     PlayerID int primary key not null auto_increment,
