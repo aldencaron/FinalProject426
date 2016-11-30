@@ -1,22 +1,28 @@
 
 $(document).ready(function() {
-    var GAME_STATE = {
-        cardStack: [
-            "knight", "knight", "knight", "knight", "knight",
-            "knight", "knight", "knight", "knight", "knight",
-            "knight", "knight", "knight", "knight",
-            "old well", "the pit", "davis library", "sitterson", "bell tower",
-            "road building", "road building",
-            "monopoly", "monopoly", "volunteered for medical research",
-            "volunteered for medical research"
-        ]
-    };
+    // Global variables
+    var cardStack = [
+        "knight", "knight", "knight", "knight", "knight",
+        "knight", "knight", "knight", "knight", "knight",
+        "knight", "knight", "knight", "knight",
+        "old well", "the pit", "davis library", "sitterson", "bell tower",
+        "road building", "road building",
+        "monopoly", "monopoly", "volunteered for medical research",
+        "volunteered for medical research"
+    ]
+    var randomizedCardStack=[];
+
+    (function() {
+        for (var i = 0; i <25; i++) {
+            var item = cardStack[Math.floor(Math.random()*cardStack.length)];
+            randomizedCardStack[i]=item;
+            cardStack.splice(cardStack.indexOf(item), 1);
+        }
+    }());
 
     /* Randomly draws a development card */
     function drawDevelopmentCard() {
-        var arr = GAME_STATE.cardStack;
-        var item = arr[Math.floor(Math.random()*arr.length)];
-
+        var item = randomizedCardStack.shift();
         switch (item) {
             case "knight":
                 $("#cardOut").append("<div class = 'cards folt'> <img src = 'images/folt.gif'/></div>");
@@ -42,11 +48,13 @@ $(document).ready(function() {
             case "monopoly":
                 $("#cardOut").append("<div class = 'cards monopoly'> <img src = 'images/monopoly.gif'/></div>");
                 break;
-            case "volunteered for medical reseach":
+            case "volunteered for medical research":
                 $("#cardOut").append("<div class = 'cards volunteer'> <img src = 'images/volunteer.gif'/></div>");
                 break;
         }
     }
 
-    drawDevelopmentCard();
+    for (var i = 0; i < 25; i++) {
+        drawDevelopmentCard();
+    }
 });

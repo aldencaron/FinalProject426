@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu" />
+        <style>
+            @font-face {
+                font-family: Ubuntu;
+            }
+
+            body {
+                font-family: Ubuntu;
+            }
+
+            .container {
+                background-color: #66B9BF;
+                width: 500px;
+                height: 1000px;
+                text-align: center;
+                border-radius: 25px;
+                position: relative;
+                float: left;
+            }
+
+            th {
+                text-decoration: underline;
+            }
+
+            h1 {
+                color: #F1F1EF;
+            }
+        </style>
+    </head>
+    <body>
+        <div class = "container">
+            <h1> Database Schema</h1>
+
+            <p>
+                We have five unique tables for our Settlers of Carolina game.
+                All tables, of course, contain an ID column.
+                The first one, the Players table, contains four unique
+                columns, Username, RoadsCount, SoldiersCount, and Points.
+                The second table, called Roads, contains PlayerID and another column called Available.
+                The third table, called Tiles, contains only a column named Robber.
+                The fourth table, called Colleges, contains PlayerID, Available,
+                and University. The last table, called Cards, contains Ram,
+                Ramen, Brick, Basketball, Book, Knight, OldWell, ThePit,
+                DavisLibrary, Sitterson, BellTower, Roads, Volunteer, Monopoly.
+            </p>
+
+            <h2> Players Table</h2>
+            <p>
+                The Username column holds the username specified by the user
+                at the beginning of the game. RoadsCount keeps track of the
+                number of roads built by a player and SoldiersCount keeps
+                track of the number of Knight development cards played by a
+                user. These are important because there is a longest road
+                development card and largest army development card which give
+                two victory points to the person with the longest road or
+                played the most knights, respectively. Points keeps track of the
+                number of the victory points the player has and the player that
+                reaches ten victory points first wins.
+            </p>
+
+            <h2> Roads Table</h2>
+            <p>
+                The PlayerID column is a foreign key to the Players table.
+                The Available column is used to check whether the road is
+                available because you can't build a road next to a settlement
+                you don't own.
+            </p>
+
+            <h2> Tiles Table </h2>
+            <p>
+                Robber just keeps track of which tile the robber is on.
+            </p>
+
+            <h2> Colleges Table</h2>
+            <p>
+                The PlayerID is a foreign key that points to the Players table.
+                Available column is used to check whether the college is available
+                because you can't build a college if there is no space for it.
+                University keeps tracks of the universities.
+            </p>
+
+            <h2> Cards Table</h2>
+            <p>
+                The Cards Table keeps track of the cards a given player has.
+                The specific cards mentioned are the possible cards the player
+                has.
+            </p>
+        </div>
+
+        <div class = "container" style = "left: 25px;">
+            <h1> Server-Side API</h1>
+        </div>
+    </body>
+</html>
