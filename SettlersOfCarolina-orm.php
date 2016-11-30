@@ -28,16 +28,16 @@ class Card {
 
   //check if Player has been inserted.
   $SQL= "Select $CardName from Cards where PlayerID = $PlayerID";
-  $result = $mysqli_query($SQL);
+  $result = mysqli_query($mysqli, $SQL);
   $CardValue = $result;
 
     if($result->num_rows==0){
       $SQL = "Insert into Cards (PlayerID, $CardName) Values ($PlayerID, " . $result+1 . " )";
-      $result = $mysqli_query($SQL);
+      $result = mysqli_query($mysqli, $SQL);
     }
     else{
       $SQL = "Update Cards set $CardName = $CardValue where PlayerID = $PlayerID";
-      $result = $mysqli_query($SQL);
+      $result = mysqli_query($mysqli, $SQL);
     }
   }
 
