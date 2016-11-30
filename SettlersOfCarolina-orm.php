@@ -3,9 +3,9 @@
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "naeimz",
-          "naeim410",
-          "naeimzdb");
+          "mhb",
+          "password",
+          "mhbdb");
   }
   private $PlayerID;
   private $Ram;
@@ -186,28 +186,107 @@ class Card {
 }
 class College {
 
-  private $ID;
+  private $CollegeID;
   private $PlayerID;
   private $Available;
   private $University;
 
-public static function findByID($ID){
+  public static function connect() {
+    return new mysqli("classroom.cs.unc.edu",
+          "mhb",
+          "password",
+          "mhbdb");
+  }
 
+public static function findByID($CollegeID){
+  $mysqli= College::connect();
+  $SQL= "Select * from Colleges where CollegeID = $CollegeID ";
+
+  $result= mysqli_query($mysqli, $SQL);
+
+  if($result){
+    if($result->num_rows==0){
+      return null;
+    }
+    else{
+      $College_info = $result->fetch_array();
+      return new College($College_info['CollegeID'],
+                         $College_info['PlayerID'],
+                         $College_info['Available'],
+                         $College_info['University'] );
+    }
+  }
+return null;
 }
+
 public static function getAllIDs() {
+$SQL = "Select CollegeID from Colleges where 1";
+  $result= mysqli_query($mysqli, $SQL);
 
 }
 public static function getJSON(){
+$json_obj = array('CollegeID' => $this->CollegeID,
+                   'PlayerID' => $this->PlayerID,
+                   'Available' => $this->Available,
+                   'Available' => $this->Available );
+return json_encode($json_obj);
 
 }
  private function update() {
+   $mysqli= College::connect();
 
+   $SQL = "Update Colleges set
+   CollegeID = $mysqli->real_escape_string($this->CollegeID)
+   PlayerID = $mysqli->real_escape_string($this->PlayerID)
+   Available = $mysqli->real_escape_string($this->Available)
+   Available = $mysqli->real_escape_string($this->University)";
+  $result= mysqli_query($mysqli, $SQL);
+  return $result;
  }
-private function __construct(){
-
+private function __construct($CollegeID, $PlayerID, $Available, $University){
+$this->CollegeID = $CollegeID;
+$this->PlayerID = $PlayerID;
+$this->Available = $Available;
+$this->University = $University;
 }
 
+function getCollegeID() {
+    return $this->CollegeID;
 }
+
+function getPlayerID(){
+    return $this->PlayerID;
+}
+
+function getAvailable(){
+    return $this->Available;
+}
+
+function getUniversity(){
+  return $this->University;
+}
+
+function setCollegeID(){
+  $this->CollegeID = $CollegeID;
+  return $this->update();
+}
+
+function setPlayerID(){
+  $this->PlayerID = $PlayerID;
+  return $this->update();
+}
+
+function setAvailable(){
+  $this->Available = $Available;
+  return $this->update();
+}
+
+function setUniversity(){
+  $this->University = $University;
+  return $this->update();
+}
+}
+
 class Tile {
   private $ID;
   private $Robber;
