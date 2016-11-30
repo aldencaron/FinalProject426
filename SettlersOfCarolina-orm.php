@@ -3,9 +3,9 @@
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "comp426f16",
-          "CH@ngemenow99Please!comp426f16",
-          "mhbdb");
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
   }
   private $PlayerID;
   private $Ram;
@@ -89,11 +89,22 @@ class Card {
           die("Connection unsuccessful");
       } else {
           echo "Connection successful";
-      };
+      }
 
-        return new Card($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
-         $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
-          $BellTower, $Roads, $Volunteer, $Monopoly);
+      $res = $conn->query(
+      "INSERT INTO Cards VALUES('$PlayerID', '$Ram', '$Ramen',
+      '$Brick', '$Basketball', '$Book', '$Knight', '$OldWell', '$ThePit',
+      '$DavisLibrary', '$Sitterson', '$BellTower', '$Roads', '$Volunteer', '$Monopoly')
+      ");
+
+      if ($res) {
+          return new Card($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+           $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
+            $BellTower, $Roads, $Volunteer, $Monopoly);
+      } else {
+          echo "<br />Insertion error! <br />";
+          echo $conn->connect_error;
+      }
   }
 
    function __construct( $PlayerID, $Ram, $Ramen, $Brick, $Basketball,
@@ -116,6 +127,68 @@ class Card {
     $this-> Monopoly = $Monopoly;
 
   }
+
+  function getPlayerID() {
+      return $this->PlayerID;
+  }
+
+  function getRam() {
+      return $this->Ram;
+  }
+
+  function getRamen() {
+      return $this->Ramen;
+  }
+
+  function getBrick() {
+      return $this->Brick;
+  }
+
+  function getBasketball() {
+      return $this->Basketball;
+  }
+
+  function getBook() {
+      return $this->Book;
+  }
+
+  function getKnight() {
+      return $this->Knight;
+  }
+
+  function getOldWell() {
+      return $this->OldWell;
+  }
+
+
+  function getThePit() {
+      return $this->ThePit;
+  }
+
+  function getDavisLibrary() {
+      return $this->DavisLibrary;
+  }
+
+  function getSitterson() {
+      return $this->Sitterson;
+  }
+
+  function getBellTower() {
+      return $this->BellTower;
+  }
+
+  function getRoads() {
+      return $this->Roads;
+  }
+
+  function getVolunteer() {
+      return $this->Volunteer;
+  }
+
+  function getMonopoly() {
+      return $this->Monopoly;
+  }
+
 }
 class College {
 
