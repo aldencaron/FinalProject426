@@ -46,7 +46,7 @@ class Card {
     $SQL = "Select * from Cards where PlayerID = $PlayerID";
     $result = $myqli_query($SQL);
     if($result){
-      if(result->num_rows==0){
+      if($result->num_rows==0){
         //no matches
         return null;
       }
@@ -80,24 +80,40 @@ class Card {
 
   }
 
+  public static function create($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+   $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
+    $BellTower, $Roads, $Volunteer, $Monopoly) {
+      $conn = Card::connect();
+
+      if ($conn->connect_error) {
+          die("Connection unsuccessful");
+      } else {
+          echo "Connection successful";
+      };
+
+        return new Card($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+         $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
+          $BellTower, $Roads, $Volunteer, $Monopoly);
+  }
+
    function __construct( $PlayerID, $Ram, $Ramen, $Brick, $Basketball,
     $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
      $BellTower, $Roads, $Volunteer, $Monopoly ){
-    this-> $PlayerID = $PlayerID;
-    this-> $Ram = $Ram;
-    this-> $Ramen = $Ramen;
-    this-> $Brick = $Brick;
-    this-> $Basketball = $Basketball;
-    this-> $Book = $Book;
-    this-> $Knight = $Knight;
-    this-> $OldWell = $OldWell;
-    this-> $ThePit = $ThePit;
-    this-> $DavisLibrary = $DavisLibrary;
-    this-> $Sitterson = $Sitterson;
-    this-> $BellTower = $BellTower;
-    this-> $Roads = $Roads;
-    this-> $Volunteer = $Volunteer;
-    this-> $Monopoly = $Monopoly;
+    $this-> PlayerID = $PlayerID;
+    $this-> Ram = $Ram;
+    $this-> Ramen = $Ramen;
+    $this-> Brick = $Brick;
+    $this-> Basketball = $Basketball;
+    $this-> Book = $Book;
+    $this-> Knight = $Knight;
+    $this-> OldWell = $OldWell;
+    $this-> ThePit = $ThePit;
+    $this-> DavisLibrary = $DavisLibrary;
+    $this-> Sitterson = $Sitterson;
+    $this-> BellTower = $BellTower;
+    $this-> Roads = $Roads;
+    $this-> Volunteer = $Volunteer;
+    $this-> Monopoly = $Monopoly;
 
   }
 }

@@ -1,5 +1,5 @@
 <?php
-require(SettlersOfCarolina-orm.php);
+require("SettlersOfCarolina-orm.php");
 //NUMBER ONE: Get Multiple People in One Game
 
 //we need function to update/get cards
@@ -9,8 +9,7 @@ require(SettlersOfCarolina-orm.php);
 //Get and update Player Information.
 
 
-
-
-
+$card1 = Card::create("15", "15", "1", "15", "15", "1", "15", "15", "1",
+"15", "15", "1", "15", "15", "1");
 
  ?>
