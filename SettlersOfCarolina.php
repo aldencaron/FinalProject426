@@ -123,7 +123,7 @@ $path_components = explode('/', $_SERVER['PATH_INFO']);
       exit();
   }
 }
-  if ($_SERVER['REQUEST_METHOD'] == "POST") {
+  if ($_SERVER['REQUEST_METHOD'] == "PUT") {
     if($path_components[1]=="Cards"){
       if($path_components[2]=="PlayerID"){
 
