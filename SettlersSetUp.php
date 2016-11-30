@@ -3,9 +3,9 @@
 date_default_timezone_set('America/New_York');
 
 $mysqli = new mysqli("classroom.cs.unc.edu",
-                   "mhb",
-                   "password",
-		               "mhbdb");
+                   "naeimz",
+                   "alphabetazetaomega",
+		               "naeimzdb");
 $SQL = "drop table if exists Players";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists Roads";
@@ -46,9 +46,6 @@ $SQL = "Create Table Colleges (
   University int)";
 mysqli_query($mysqli, $SQL);
 //54 colleges
-for(int $i =0; $i<54; $i++){
-
-}
 
 
   $SQL = "Create Table Cards (
