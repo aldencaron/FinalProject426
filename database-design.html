@@ -14,22 +14,40 @@
                 font-family: Ubuntu;
             }
 
+            table {
+                border-collapse: separate;
+                border-spacing: 20px 0;
+                border-style: solid;
+                border: 2px solid black;
+                margin: 0 auto;
+                border-radius: 10px;
+            }
+
             .container {
                 background-color: #66B9BF;
                 width: 500px;
                 height: 1000px;
-                text-align: center;
                 border-radius: 25px;
                 position: relative;
                 float: left;
             }
 
+            th, td {
+                padding: 4px;
+            }
+
             th {
                 text-decoration: underline;
+                text-transform: uppercase;
             }
 
             h1 {
                 color: #F1F1EF;
+                text-align: center;
+            }
+
+            h2 {
+                text-align: center;
             }
         </style>
     </head>
@@ -95,6 +113,78 @@
 
         <div class = "container" style = "left: 25px;">
             <h1> Server-Side API</h1>
+
+            <h2>ORM Layer</h2>
+            <p>
+                Our project includes an ORM file that contains a couple of classes
+                to account for the various tables from the database. In particular,
+                these classes are: Card, College, Road, Tile, and Players. The
+                Database Schema to the left explains the specific function of
+                each class, since the classes themselves are a reference to the
+                tables in our database.
+            </p>
+
+            <p>
+                The ORM classes contain object-oriented functions and instance
+                variables, including private and static functions. For instance,
+                they provide private variables that hold the values of all
+                columns from the SQL tables. Two specific functions, create()
+                and connect(), have special uses. The first one, create(), is
+                used to create an instance of the class. The connect() function
+                is used to make a connection to the SQL database and returns a
+                reference to the mysqli object. Another function, called
+                getJSON(), returns a json encoded representation of the class.
+                This function is important because it is the basis for server-client
+                AJAX communication.
+            </p>
+
+            <h2> HTTP and AJAX</h2>
+            <p>
+                For our project, we are implementing GET and POST. The GET
+                request is used to obtain a specific value from a particular table
+                in the SQL database. The POST request is used to create/update
+                information on a table. The GET/POST parameters vary by ORM class, so
+                we will have to list them by class.
+            </p>
+
+            <table>
+                <tr>
+                    <th>Class</th>
+                    <th>GET Parameters</th>
+                    <th>POST Parameters</th>
+                </tr>
+                <tr>
+                    <td>Players</td>
+                    <td> id, Username, RoadsCount, SoldiersCount</td>
+                    <td> id, Username, RoadsCount, SoldiersCount</td>
+                </tr>
+                <tr>
+                    <td> Roads</td>
+                    <td> id, PlayerID, Available</td>
+                    <td> id, PlayerID, Available</td>
+                </tr>
+                <tr>
+                    <td> Tiles</td>
+                    <td>id, Robber</td>
+                    <td>id, Robber</td>
+                </tr>
+                <tr>
+                    <td>Colleges</td>
+                    <td> id, PlayerID, Available, University</td>
+                    <td> id, PlayerID, Available, University</td>
+                </tr>
+                <tr>
+                    <td>Cards</td>
+                    <td>id, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                        ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
+                        Monopoly
+                    </td>
+                    <td>id, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                        ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
+                        Monopoly
+                    </td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>
