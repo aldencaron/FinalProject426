@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var size = 60;
   var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
-  var x_initial = width / 2 - (Math.sqrt(3) * size) + 8;
+  var x_initial = width / 2 - (Math.sqrt(3) * size) + 10;
   var y_initial = 98;
   var num_sides = 6;
   var board;
@@ -193,10 +193,6 @@ var addRoadStart = function() {
         //TODO add new available colleges as we come
         game.roads[i].radius = 12;
         drawBoard(false, false, false, false);
-        if(game.turn_number > 2){
-          //ADD IN NEW AVAILABLE COLLEGES AND STUFF
-
-        }
       }
     }
   }
@@ -215,6 +211,12 @@ var firstTurn = function() {
   board_canvas.addEventListener('mousedown', addCollegeStart);
   board_canvas.addEventListener('mousedown', addRoadStart);
 };
+var updatePlayerInfo = function() {
+
+}
+var updateOtherPlayerInfo = function() {
+
+}
 
 var game = new SettlersGame();
 game.startGame();
