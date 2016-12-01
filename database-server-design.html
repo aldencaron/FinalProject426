@@ -49,6 +49,18 @@
             h2 {
                 text-align: center;
             }
+
+            ul {
+                list-style-type: none;
+            }
+
+            ul.innerList {
+                list-style-type: square;
+            }
+
+            code {
+                font-size: 14px;
+            }
         </style>
     </head>
     <body>
@@ -67,6 +79,68 @@
                 Ramen, Brick, Basketball, Book, Knight, OldWell, ThePit,
                 DavisLibrary, Sitterson, BellTower, Roads, Volunteer, Monopoly.
             </p>
+
+            <code>
+                <ul>
+                    <li>Players</li>
+                    <ul class = "innerList">
+                        <li>PlayerID: INT, primary key, auto-increment</li>
+                        <li>Username: VARCHAR(50), username of the user</li>
+                        <li>RoadsCount: INT, the number of roads owned</li>
+                        <li>SoldiersCount: INT, the number of soldiers owned</li>
+                        <li>Points: INT, the number of victory points a player has</li>
+                    </ul>
+
+                    <br />
+
+                    <li> Roads</li>
+                    <ul class = "innerList">
+                        <li>RoadsID: INT, primary key, auto-increment</li>
+                        <li>PlayerID: INT, foreign key to Players ID</li>
+                        <li>Available: INT, the number of available roads</li>
+                    </ul>
+
+                    <br />
+
+                    <li> Tiles</li>
+                    <ul class = "innerList">
+                        <li>TilesID: INT, primary key, auto-increment</li>
+                        <li>Robber: INT, which tile the robber is on</li>
+                    </ul>
+
+                    <br />
+
+                    <li>Colleges</li>
+                    <ul class = "innerList">
+                        <li>CollegeID: INT, primary key, auto-increment</li>
+                        <li>PlayerID: INT, foreign key to Players ID</li>
+                        <li>Available: INT, the number of available colleges</li>
+                        <li>University: INT, keeps track of the universities</li>
+                    </ul>
+
+                    <br />
+
+                    <li>Cards</li>
+                    <ul class = "innerList">
+                        <li>CardsID: INT, primary key, auto-increment</li>
+                        <li>PlayerID: INT, foreign key to Players ID</li>
+                        <li>Ram: INT, the number of Ram cards</li>
+                        <li>Ramen: INT, the number of Ramen cards</li>
+                        <li>Brick: INT, the number of Brick cards</li>
+                        <li>Basketball: INT, the number of basketball cards</li>
+                        <li>Book: INT, the number of book cards</li>
+                        <li>Knight:INT, the number of knight cards</li>
+                        <li>OldWell: INT, the number of Old Well cards</li>
+                        <li>ThePit: INT, the number of The Pit cards</li>
+                        <li>DavisLibrary: INT, the number of library cards</li>
+                        <li>Sitterson: INT, the number of Sitterson cards</li>
+                        <li>BellTower: INT, the number of Bell Tower cards</li>
+                        <li>Roads: INT, the number of road cards</li>
+                        <li>Volunteer: INT, the number of volunteer cards</li>
+                        <li>Monopoly: INT, the number of monopoly cards</li>
+                    </ul>
+                </ul>
+            </code>
 
             <h2> Players Table</h2>
             <p>
@@ -155,8 +229,8 @@
                 </tr>
                 <tr>
                     <td>Players</td>
-                    <td> id, Username, RoadsCount, SoldiersCount</td>
-                    <td> id, Username, RoadsCount, SoldiersCount</td>
+                    <td> id, Username, RoadsCount, SoldiersCount, Points</td>
+                    <td> id, Username, RoadsCount, SoldiersCount, Points</td>
                 </tr>
                 <tr>
                     <td> Roads</td>
