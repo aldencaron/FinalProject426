@@ -1,5 +1,10 @@
 <?php
 
+//Classes: Player, Road, Tile, Card, College
+//Player has playerID, Username, RoadsCount, SoldiersCount
+//Tile has TileID, robber
+//Card has CardID and cardnames
+//College has CollegeID, PlayerID, Available, University
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -288,10 +293,10 @@ function setUniversity(){
 }
 
 class Tile {
-  private $ID;
+  private $TileID;
   private $Robber;
 
-  public static function findByID($ID){
+  public static function findByID($TileID){
 
   }
   public static function getAllIDs() {
