@@ -1,5 +1,5 @@
 body {
-    font-family: Verdana;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
 #top_container {
@@ -28,30 +28,36 @@ body {
 
 #player_one {
     float: left;
-    height: 300px;
+    height: 605px;
     border: 1pt solid black;
     background-color: #07889B;
 }
 
 #player_two {
     float: right;
-    height: 300px;
+    height: 120px;
     border: 1pt solid black;
     background-color: #E37222;
 }
 
 #player_three {
     float: left;
-    height: 300px;
+    height: 120px;
     border: 1pt solid black;
     background-color: #EEAA7B;
 }
 
 #player_four {
     float: right;
-    height: 300px;
+    height: 120px;
     border: 1pt solid black;
     background-color: #66B9BF;
+}
+
+#buying_info {
+  height: 240px;
+  border: 1pt solid black;
+  background-color: #FFAABB;
 }
 
 #board {
@@ -63,7 +69,7 @@ body {
 
 #turn_info {
     border: 1pt solid black;
-    height: 50px;
+    height: 51px;
     text-align: center;
     background-color: #E37222;
 }
@@ -76,10 +82,14 @@ body {
     background-color: #F1F1EF;
 }
 
+#player_one_cards td {
+    font-size: 10px;
+}
+
 /* General card dimensions */
 .cards {
-    width: 50px;
-    height: 100px;
+    width: 40px;
+    height: 80px;
     border-radius: 10px;
     display: inline-block;
     background-color: white;
@@ -88,8 +98,8 @@ body {
 /* Specifies the image dimensions inside
 the cards */
 .cards img {
-    width: 50px;
-    height: 100px;
+    width: 40px;
+    height: 80px;
 }
 
 /* Resource cards */
