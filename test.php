@@ -1,139 +1,77 @@
-<?php function postCard(){
-  if ((count($path_components) >= 3) &&
-      ($path_components[2] != "")) {
-        $PlayreID= intval($path_components[2]);
-        $Card = Card::findbyID($PlayerID);
-        if($PlayreID==null){
-            header("HTTP/1.0 404 Not Found");
-            print("Player id: " . $PlayerID . " not found while attempting update.");
-            exit();
-        }
-        //check which values to update
-        $new_Ram=false;
-        if(isset($_Request['Ram'])){
-          $new_Ram= intval(trim($_Request['Ram']));
-        }
-        $new_Ramen=false;
-        if(isset($_Request['Ramen'])){
-          $new_Ramen= intval(trim($_Request['Ramen']));
-        }
-        $new_Brick=false;
-        if(isset($_Request['Brick'])){
-          $new_Brick= intval(trim($_Request['Brick']));
-        }
-        $new_Basketball=false;
-        if(isset($_Request['Basketball'])){
-          $new_Basketball= intval(trim($_Request['Basketball']));
-        }
-        $new_Book=false;
-        if(isset($_Request['Book'])){
-          $new_Book= intval(trim($_Request['Book']));
-        }
-        $new_Knight=false;
-        if(isset($_Request['Knight'])){
-          $new_Knight= intval(trim($_Request['Knight']));
-        }
-        $new_OldWell=false;
-        if(isset($_Request['Oldwell'])){
-          $new_Oldwell= intval(trim($_Request['Oldwell']));
-        }
-        $new_ThePit=false;
-        if(isset($_Request['ThePit'])){
-          $new_ThePit= intval(trim($_Request['ThePit']));
-        }
-        $new_DavisLibrary=false;
-        if(isset($_Request['DavisLibrary'])){
-          $new_DavisLibrary= intval(trim($_Request['DavisLibrary']));
-        }
-        $new_Sitterson=false;
-        if(isset($_Request['Sitterson'])){
-          $new_Sitterson= intval(trim($_Request['Sitterson']));
-        }
-        $new_BellTower=false;
-        if(isset($_Request['BellTower'])){
-          $new_BellTower= intval(trim($_Request['BellTower']));
-        }
-        $new_Roads=false;
-        if(isset($_Request['Roads'])){
-          $new_Roads= intval(trim($_Request['Roads']));
-        }
-        $new_Volunteer=false;
-        if(isset($_Request['Volunteer'])){
-          $new_Volunteer= intval(trim($_Request['Volunteer']));
-        }
-        $new_Monopoly=false;
-        if(isset($_Request['Monopoly'])){
-          $new_Monopoly= intval(trim($_Request['Monopoly']));
-        }
+<?php
 
-        //update via ORM
-        $new_Ram=false;
-        if($new_Ram != false){
-          $Card->setAvailable($new_Ram);
-        }
-        $new_Ramen=false;
-        if($new_Ramen != false){
-          $Card->setAvailable($new_Ramen);
-        }
-        $new_Brick=false;
-        if($new_Brick != false){
-          $Card->setAvailable($new_Brick);
-        }
-        $new_Basketball=false;
-        if($new_Basketball != false){
-          $Card->setAvailable($new_Basketball);
-        }
-        $new_Book=false;
-        if($new_Book != false){
-          $Card->setAvailable($new_Book);
-        }
-        $new_Knight=false;
-        if($new_Knight != false){
-          $Card->setAvailable($new_Knight);
-        }
-        $new_OldWell=false;
-        if($new_OldWell != false){
-          $Card->setAvailable($new_OldWell);
-        }
-        $new_ThePit=false;
-        if($new_ThePit != false){
-          $Card->setAvailable($new_ThePit);
-        }
-        $new_DavisLibrary=false;
-        if($new_DavisLibrary != false){
-          $Card->setAvailable($new_DavisLibrary);
-        }
-        $new_Sitterson=false;
-        if($new_Sitterson != false){
-          $Card->setAvailable($new_Sitterson);
-        }
-        $new_BellTower=false;
-        if($new_BellTower != false){
-          $Card->setAvailable($new_BellTower);
-        }
-        $new_Roads=false;
-        if($new_Roads != false){
-          $Card->setAvailable($new_Roads);
-        }
-        $new_Volunteer=false;
-        if($new_Volunteer != false){
-          $Card->setAvailable($new_Volunteer);
-        }
-        $new_Monopoly=false;
-        if($new_Monopoly != false){
-          $Card->setAvailable($new_Monopoly);
-        }
+date_default_timezone_set('America/New_York');
 
-           //return json
-          header("Content-type: application/json");
-          print($Card->getJSON());
-          exit();
-    }
-    else{
-      //no ID, what now?
-    }
-  header("HTTP/1.0 400 Bad Request");
-  print("Did not understand URL");
+$conn = new mysqli("classroom.cs.unc.edu",
+                   "comp426f16",
+                   "CH@ngemenow99Please!comp426f16",
+		   "comp426f16db");
+
+$conn->query("drop table if exists Todo");
+
+$conn->query("create table Todo ( " .
+               "id int primary key not null auto_increment, " .
+	       "title char(200), " .
+	       "note text, " .
+	       "project char(100), " .
+	       "due_date date, " .
+	       "priority int, " .
+	       "complete boolean)");
+
+$project_names = array("COMP 416", "COMP 426", "Scalable Display", "Telepresence", "Graduate Admissions");
+$title_part1 = array("Write", "Consider", "Develop", "Assess", "Delete", "Read");
+$title_part2 = array("preliminary", "primary", "secondary", "penultimate", "backup", "final");
+$title_part3 = array("report", "proposal", "plan", "manual", "book", "article");
+$title_part4 = array("notes", "outline", "index", "table of contents", "references", "footnotes");
+
+for($i=0; $i<50; $i++) {
+  $title = $title_part1[rand(0,5)] . " " .
+    $title_part2[rand(0,5)] . " " .
+    $title_part3[rand(0,5)] . " " .
+    $title_part4[rand(0,5)] . ".";
+  $project = $project_names[rand(0,4)];
+  $complete = 0;
+  if (rand(0,99) < 10) {
+    $complete = 1;
+  }
+  $note = "This is a note for the item \"" . $title .
+    "\". The rest of this text is" .
+    " here just to make it a little longer. I thought about creating a " .
+    "note generator, but then got tired.";
+
+  $due_date = null;
+  $now = new DateTime();
+  $rnd = rand(0,99);
+  if ($rnd < 25) {
+    $due_date = $now;
+    $due_date->sub(new DateInterval("P" . rand(1,10) . "D"));
+  } else if ($rnd < 75) {
+    $due_date = $now;
+    $due_date->add(new DateInterval("P" . rand(1,200) . "D"));
+  }
+  $priority = rand(1,10);
+
+  if ($due_date == null) {
+    $due_date = "null";
+  } else {
+    $due_date = "'" . $due_date->format('Y-m-d') . "'";
+  }
+
+  $conn->query("insert into Todo values (0, " .
+	       "'" . $conn->real_escape_string($title) . "', " .
+	       "'" . $conn->real_escape_string($note) . "', " .
+	       "'" . $conn->real_escape_string($project) . "', " .
+	       $due_date . ", " .
+	       $priority . ", " .
+	       $complete . ")");
 }
 
 ?>
+<html>
+ <head>
+   <title>Todo List Example Setup</title>
+ <head>
+ <body>
+   <h1>Database Setup Complete</h1>
+ </body>
+</html>
