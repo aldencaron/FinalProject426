@@ -8,9 +8,9 @@
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "mhb",
-          "MAXISCOOL",
-          "mhbdb");
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
   }
   private $PlayerID;
   private $Ram;
@@ -96,16 +96,10 @@ class Card {
     return $id_array;
     }
 
-  public static function create($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+  public function create($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
    $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
     $BellTower, $Roads, $Volunteer, $Monopoly) {
       $conn = Card::connect();
-
-      if ($conn->connect_error) {
-          die("Connection unsuccessful");
-      } else {
-          echo "Connection successful";
-      }
 
       $res = $conn->query(
       "INSERT INTO Cards VALUES('$PlayerID', '$Ram', '$Ramen',
@@ -113,14 +107,14 @@ class Card {
       '$DavisLibrary', '$Sitterson', '$BellTower', '$Roads', '$Volunteer', '$Monopoly')
       ");
 
-      if ($res) {
-          return new Card($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
-           $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
-            $BellTower, $Roads, $Volunteer, $Monopoly);
-      } else {
-          echo "<br />Insertion error! <br />";
-          echo $conn->connect_error;
+      if ($res == false) {
+          header("HTTP/1.0 500 Server Error");
+          print("Query was unsuccessful");
+          exit();
       }
+      return new Card($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+       $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
+        $BellTower, $Roads, $Volunteer, $Monopoly);
   }
 
   public function getJSON(){
@@ -292,9 +286,25 @@ class College {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "mhb",
-          "MAXISCOOL",
-          "mhbdb");
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function create($CollegeID, $PlayerID, $Available, $University) {
+      $mysqli = College::connect();
+
+      $res = $mysqli->query(
+          "INSERT INTO Colleges VALUES ('$CollegeID', '$PlayerID',
+              '$Available', '$University')"
+      );
+
+      if ($res == false) {
+          header("HTTP/1.0 500 Server Error");
+          print($mysqli->error);
+          exit();
+      }
+      return new College($CollegeID, $PlayerID, $Available, $University);
   }
 
 public static function findByID($CollegeID){
@@ -401,9 +411,23 @@ class Tile {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "mhb",
-          "MAXISCOOL",
-          "mhbdb");
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function create($TileID, $Robber) {
+      $mysqli = Tile::connect();
+      $res = $mysqli->query(
+          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber')"
+      );
+
+      if ($res) {} else {
+          header("HTTP/1.0 500 Server Error");
+          print($mysqli->error);
+          exit();
+      }
+      return new Tile($TileID, $Robber);
   }
 
   public static function findByID($TileID){
@@ -592,9 +616,25 @@ class Player {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "mhb",
-          "MAXISCOOL",
-          "mhbdb");
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function create() {
+      $mysqli = Player::connect();
+      $res = $mysqli->query(
+          "INSERT INTO Players VAlUES('$PlayerID', '$Username',
+          '$RoadsCount', '$SoldiersCount', '$Points')"
+      );
+
+      if ($res) {} else {
+          header("HTTP/1.0 500 Server Error");
+          print($mysqli->error);
+          exit();
+      }
+
+      return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points);
   }
 
 public static function findByID($PlayerID){

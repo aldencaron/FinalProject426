@@ -76,7 +76,7 @@ require_once('SettlersOfCarolina-orm.php');
       }
       header("Content-type: application/json");
       print($Road_Info->getJSON());
-      error_log(print_r($Road_Info, true), 3,  "debug.txt");
+      //error_log(print_r($Road_Info, true), 3,  "debug.txt");
       exit();
     }
     else{
@@ -149,7 +149,7 @@ exit();
         else if($DBname=="Roads"){
           postRoad();
         }
-        else if($DBname=="College"){
+        else if($DBname=="Colleges"){
           postCollege();
         }
         else if($DBname=="Tiles"){
@@ -166,7 +166,7 @@ exit();
       else if($DBname=="Roads"){
         postRoad();
       }
-      else if($DBname=="College"){
+      else if($DBname=="Colleges"){
         postCollege();
       }
       else if($DBname=="Tiles"){
@@ -242,10 +242,69 @@ exit();
             exit();
       }
       else{
-        //no ID, what now?
+        // Create new Player
+        $new_PlayerID = false;
+        if (isset($_REQUEST['PlayerID'])) {
+            $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("PlayerID is is not given.");
+            exit();
+        }
+
+        $new_Username = false;
+        if (isset($_REQUEST['Username'])) {
+            $new_Username = trim($_REQUEST['Username']);
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Username is is not given.");
+            exit();
+        }
+
+        $new_RoadsCount = false;
+        if (isset($_REQUEST['RoadsCount'])) {
+            $new_RoadsCount = intval(trim($_REQUEST['RoadsCount']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("RoadsCount is is not given.");
+            exit();
+        }
+
+        $new_SoldiersCount = false;
+        if (isset($_REQUEST['SoldiersCount'])) {
+            $new_SoldiersCount = intval(trim($_REQUEST['SoldiersCount']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("SoldiersCount is is not given.");
+            exit();
+        }
+
+        $new_Points = false;
+        if (isset($_REQUEST['Points'])) {
+            $new_Points = intval(trim($_REQUEST['Points']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Points is is not given.");
+            exit();
+        }
+
+        if ($new_PlayerID && $new_Username && $new_RoadsCount && $new_SoldiersCount && $new_Points) {
+            $Player = Player::create($new_PlayerID, $new_Username,
+            $new_RoadsCount, $new_SoldiersCount, $new_Points);
+
+            if ($Player == null) {
+                header("HTTP/1.0 500 Server Error");
+                print("Player was not inserted");
+                exit();
+            }
+            header("Content-type: application/json");
+            print($Player->getJSON());
+            exit();
+        }
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
+    exit();
   }
 
   function postRoad(){
@@ -287,7 +346,7 @@ exit();
             $new_RoadID = intval(trim($_REQUEST['RoadID']));
         } else {
             header("HTTP/1.0 400 Bad Request");
-            print("RoadID is is not given.");
+            print("RoadID is not given.");
             exit();
         }
 
@@ -296,7 +355,7 @@ exit();
             $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
         } else {
             header("HTTP/1.0 400 Bad Request");
-            print("PlayerID is is not given.");
+            print("PlayerID is not given.");
             exit();
         }
 
@@ -306,15 +365,15 @@ exit();
 
         } else {
             header("HTTP/1.0 400 Bad Request");
-            print("Available is is not given.");
+            print("Available is not given.");
             exit();
         }
 
-        if (new_RoadID && new_PlayerID && new_Available) {
+        if ($new_RoadID && $new_PlayerID && $new_Available) {
             $Road = Road::create($new_RoadID, $new_PlayerID, $new_Available);
             if ($Road == null) {
-                header("Road was not inserted");
-                print($Road->getJSON());
+                header("HTTP/1.0 500 Server Error");
+                print("Road was not inserted");
                 exit();
             }
             header("Content-type: application/json");
@@ -324,6 +383,7 @@ exit();
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
+    exit();
   }
 
   function postCollege(){
@@ -365,7 +425,55 @@ exit();
             exit();
       }
       else{
-        //no ID, what now?
+        // Create new College
+        $new_CollegeID = false;
+        if (isset($_REQUEST['CollegeID'])) {
+            $new_CollegeID = intval(trim($_REQUEST['CollegeID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("CollegeID is not given.");
+            exit();
+        }
+
+        $new_PlayerID = false;
+        if (isset($_REQUEST['CollegeID'])) {
+            $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("PlayerID is not given.");
+            exit();
+        }
+
+        $new_Available = false;
+        if (isset($_REQUEST['Available'])) {
+            $new_Available = intval(trim($_REQUEST['Available']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Available is not given.");
+            exit();
+        }
+
+        $new_University = false;
+        if (isset($_REQUEST['University'])) {
+            $new_University = intval(trim($_REQUEST['University']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("University is not given.");
+            exit();
+        }
+
+        if ($new_CollegeID && $new_PlayerID && $new_Available && $new_University) {
+            $College = College::create($new_CollegeID, $new_PlayerID, $new_Available, $new_University);
+
+            if ($College == null) {
+                header("HTTP/1.0 500 Server Error");
+                print("College was not inserted");
+                exit();
+            }
+            header("Content-type: application/json");
+            print($College->getJSON());
+            exit();
+        }
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
@@ -395,11 +503,41 @@ exit();
             exit();
       }
       else{
-        //no ID, what now?
+          // Create new Tile
+          $new_TileID = false;
+          if (isset($_REQUEST['TileID'])) {
+              $new_TileID = intval(trim($_REQUEST['TileID']));
+          } else {
+              header("HTTP/1.0 400 Bad Request");
+              print("TileID is is not given.");
+              exit();
+          }
+
+          $new_Robber = false;
+          if (isset($_REQUEST['Robber'])) {
+              $new_Robber = intval(trim($_REQUEST['Robber']));
+          } else {
+              header("HTTP/1.0 400 Bad Request");
+              print("Robber is is not given.");
+              exit();
+          }
+
+          if ($new_TileID && $new_Robber) {
+              $Tile = Tile::create($new_TileID, $new_Robber);
+
+              if ($Tile == null) {
+                  header("HTTP/1.0 500 Server Error");
+                  print("Tile was not inserted");
+                  exit();
+              }
+              header("Content-type: application/json");
+              print($Tile->getJSON());
+              exit();
+          }
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
-  }
+}
 
   function postCard(){
     if ((count($path_components) >= 3) &&
@@ -533,10 +671,166 @@ exit();
             exit();
       }
       else{
-        //no ID, what now?
+        // Create new Card
+        $new_PlayerID = false;
+        if (isset($_REQUEST['PlayerID'])) {
+            $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("PlayerID is not given.");
+            exit();
+        }
+
+        $new_Ram = false;
+        if (isset($_REQUEST['Ram'])) {
+            $new_Ram = intval(trim($_REQUEST['Ram']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Ram is not given.");
+            exit();
+        }
+
+        $new_Ramen = false;
+        if (isset($_REQUEST['Ramen'])) {
+            $new_Ramen = intval(trim($_REQUEST['Ramen']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Ramen is not given.");
+            exit();
+        }
+
+        $new_Brick = false;
+        if (isset($_REQUEST['Brick'])) {
+            $new_Brick = intval(trim($_REQUEST['Brick']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Brick is not given.");
+            exit();
+        }
+
+        $new_Basketball = false;
+        if (isset($_REQUEST['Basketball'])) {
+            $new_Basketball = intval(trim($_REQUEST['Basketball']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Basketball is not given.");
+            exit();
+        }
+
+        $new_Book = false;
+        if (isset($_REQUEST['Book'])) {
+            $new_Book = intval(trim($_REQUEST['Book']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Book is not given.");
+            exit();
+        }
+
+        $new_Knight = false;
+        if (isset($_REQUEST['Knight'])) {
+            $new_Knight = intval(trim($_REQUEST['Knight']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Knight is not given.");
+            exit();
+        }
+
+        $new_OldWell = false;
+        if (isset($_REQUEST['OldWell'])) {
+            $new_OldWell = intval(trim($_REQUEST['OldWell']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("OldWell is not given.");
+            exit();
+        }
+
+        $new_ThePit = false;
+        if (isset($_REQUEST['ThePit'])) {
+            $new_ThePit = intval(trim($_REQUEST['ThePit']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("ThePit is not given.");
+            exit();
+        }
+
+        $new_DavisLibrary = false;
+        if (isset($_REQUEST['DavisLibrary'])) {
+            $new_DavisLibrary = intval(trim($_REQUEST['DavisLibrary']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("DavisLibrary is not given.");
+            exit();
+        }
+
+        $new_Sitterson = false;
+        if (isset($_REQUEST['Sitterson'])) {
+            $new_Sitterson = intval(trim($_REQUEST['Sitterson']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Sitterson is not given.");
+            exit();
+        }
+
+        $new_BellTower = false;
+        if (isset($_REQUEST['BellTower'])) {
+            $new_BellTower = intval(trim($_REQUEST['BellTower']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("BellTower is not given.");
+            exit();
+        }
+
+        $new_Roads = false;
+        if (isset($_REQUEST['Roads'])) {
+            $new_Roads = intval(trim($_REQUEST['Roads']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Roads is not given.");
+            exit();
+        }
+
+        $new_Volunteer = false;
+        if (isset($_REQUEST['Volunteer'])) {
+            $new_Volunteer = intval(trim($_REQUEST['Volunteer']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Volunteer is not given.");
+            exit();
+        }
+
+        $new_Monopoly = false;
+        if (isset($_REQUEST['Monopoly'])) {
+            $new_Monopoly = intval(trim($_REQUEST['Monopoly']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Monopoly is not given.");
+            exit();
+        }
+
+        if ($new_PlayerID && $new_Ram && $new_Ramen && $new_Brick
+            && $new_Basketball && $new_Book && $new_Knight && $new_OldWell
+            && $new_ThePit && $new_DavisLibrary && $new_Sitterson
+            && $new_BellTower && $new_Roads && $new_Volunteer
+            && $new_Monopoly) {
+
+            $Card = Card::create($new_PlayerID, $new_Ram, $new_Ramen, $new_Brick,
+            $new_Basketball, $new_Book, $new_Knight, $new_Oldwell, $new_ThePit,
+            $new_DavisLibrary, $new_Sitterson, $new_BellTower, $new_Roads,
+            $new_Volunteer, $new_Monopoly);
+
+            if ($Card == null) {
+                header("HTTP/1.0 500 Server Error");
+                print("Card was not inserted");
+                exit();
+            }
+            header("Content-type: application/json");
+            print($Card->getJSON());
+            exit();
+        }
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
+    exit();
   }
 
  ?>

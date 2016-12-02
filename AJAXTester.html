@@ -7,13 +7,32 @@
         <style>
             body {
                 font-family: "Ubuntu";
-                background-color: #FFFFFF;
             }
-            form {
-                width: 500px;
-                height: 500px;
+
+            form.green {
+                width: 400px;
                 background-color: #A7DDB1;
                 border-radius: 10px;
+            }
+
+            #form {
+                height: 250px;
+            }
+
+            #form1 {
+                height: 350px;
+            }
+
+            #form2 {
+                height: 200px;
+            }
+
+            #form3 {
+                height: 300px;
+            }
+
+            #form4 {
+                height: 875px;
             }
 
             label, input {
@@ -21,18 +40,52 @@
             }
 
             label {
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
 
             h1 {
                 display: inline;
             }
+
+            h1.title {
+                text-align: center;
+                display: block;
+                text-decoration: underline;
+            }
+
+            #controls {
+                position: relative;
+                float: right;
+                right: 350px;
+                border: 2px solid black;
+                border-radius: 5px;
+                width: 150px;
+                height: 500px;
+                background-color: #F6F9FA;
+            }
+
+            #controls h4 {
+                text-align: center;
+                text-decoration: underline;
+            }
+
+            #controls input {
+                font-size: 5px;
+                display: inline;
+            }
+
+            #controls button {
+                position: relative;
+                left: 35px;
+            }
         </style>
     </head>
 
     <body>
-        <h1> Roads Tester (POST)</h1>
-        <form id = "form" method = "post" action = "SettlersOfCarolina.php">
+        <h1 class = "title"> AJAX TESTER (POST)</h1>
+
+        <h1> Roads Table</h1>
+        <form id = "form" class = "green" method = "post" action = "SettlersOfCarolina.php">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Roads" />
             </label>
@@ -50,8 +103,8 @@
 
         <br />
 
-        <h1> Players Tester (POST) </h1>
-        <form id = "form1" method = "post" action ="SettlersOfCarolina.php">
+        <h1> Players Table </h1>
+        <form id = "form1" class = "green" method = "post" action ="SettlersOfCarolina.php">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Players" />
             </label>
@@ -73,8 +126,10 @@
             <button type = "submit">Submit</button>
         </form>
 
-        <h1> Tiles Tester (POST) </h1>
-        <form id = "form2" method = "post" action ="SettlersOfCarolina.php">
+        <br />
+
+        <h1> Tiles Table </h1>
+        <form id = "form2" class = "green" method = "post" action ="SettlersOfCarolina.php">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Tiles" />
             </label>
@@ -87,8 +142,10 @@
             <button type = "submit">Submit</button>
         </form>
 
-        <h1> Colleges Tester (POST) </h1>
-        <form id = "form3" method = "post" action ="SettlersOfCarolina.php">
+        <br />
+
+        <h1> Colleges Table </h1>
+        <form id = "form3" class = "green" method = "post" action ="SettlersOfCarolina.php">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Colleges" />
             </label>
@@ -107,31 +164,66 @@
             <button type = "submit">Submit</button>
         </form>
 
-        <!-- TODO: continue adding tables below-->
-        <h1> Cards Tester (POST) </h1>
-        <form id = "form3" method = "post" action ="SettlersOfCarolina.php">
+        <br />
+
+        <h1> Cards Table </h1>
+        <form id = "form4" class = "green" method = "post" action ="SettlersOfCarolina.php">
             <label>
-                Table Name: <input type = "text" name = "Database" value = "Colleges" />
-            </label>
-            <label>
-                CollegeID: <input type = "text" name = "CollegeID" />
+                Table Name: <input type = "text" name = "Database" value = "Cards" />
             </label>
             <label>
                 PlayerID: <input type = "text" name = "PlayerID" />
             </label>
             <label>
-                Available: <input type = "text" name = "Available" />
+                Ram: <input type = "text" name = "Ram" />
             </label>
             <label>
-                University: <input type = "text" name = "University" />
+                Ramen: <input type = "text" name = "Ramen" />
+            </label>
+            <label>
+                Brick: <input type = "text" name = "Brick" />
+            </label>
+            <label>
+                Basketball: <input type = "text" name = "Basketball" />
+            </label>
+            <label>
+                Book: <input type = "text" name = "Book"/>
+            </label>
+            <label>
+                Knight: <input type = "text" name = "Knight" />
+            </label>
+            <label>
+                OldWell: <input type = "text" name = "OldWell" />
+            </label>
+            <label>
+                ThePit: <input type = "text" name = "ThePit" />
+            </label>
+            <label>
+                DavisLibrary: <input type = "text" name = "DavisLibrary" />
+            </label>
+            <label>
+                Sitterson: <input type = "text" name = "Sitterson" />
+            </label>
+            <label>
+                BellTower: <input type = "text" name = "BellTower" />
+            </label>
+            <label>
+                Roads: <input type = "text" name = "Roads" />
+            </label>
+            <label>
+                Volunteer: <input type = "text" name = "Volunteer" />
+            </label>
+            <label>
+                Monopoly: <input type = "text" name = "Monopoly" />
             </label>
             <button type = "submit">Submit</button>
         </form>
 
         <script>
+            // Roads Table
             $("#form").submit(function(event) {
                 event.preventDefault();
-                var formData = $(form).serialize();
+                var formData = $("#form").serialize();
                 $.ajax({
                     type: 'POST',
                     url: $("#form").attr('action'),
@@ -143,10 +235,65 @@
                 });
             });
 
+            // Players Table
+            $("#form1").submit(function(event) {
+                event.preventDefault();
+                var formData = $("#form1").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: $("#form1").attr('action'),
+                    data: formData
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (response) {
+                    console.log("Error: " + response.responseText);
+                });
+            });
 
-            /* Prevent table names from being changed in the
-            Table Name text of forms */
-            //$('input[name="Database"]').attr("disabled", true);
+            // Tiles Table
+            $("#form2").submit(function(event) {
+                event.preventDefault();
+                var formData = $("#form2").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: $("#form2").attr('action'),
+                    data: formData
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (response) {
+                    console.log("Error: " + response.responseText);
+                });
+            });
+
+            // Colleges Table
+            $("#form3").submit(function(event) {
+                event.preventDefault();
+                var formData = $("#form3").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: $("#form3").attr('action'),
+                    data: formData
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (response) {
+                    console.log("Error: " + response.responseText);
+                });
+            });
+
+            // Cards Table
+            $("#form4").submit(function(event) {
+                event.preventDefault();
+                var formData = $("#form4").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: $("#form4").attr('action'),
+                    data: formData
+                }).done(function (response) {
+                    console.log(response);
+                }).fail(function (response) {
+                    console.log("Error: " + response.responseText);
+                });
+            });
         </script>
     </body>
 </html>
