@@ -1,5 +1,10 @@
 <?php
+<<<<<<< HEAD
 require_once('SettlersOfCarolina-orm.php');
+=======
+require("SettlersOfCarolina-orm.php");
+
+>>>>>>> origin/master
 //NUMBER ONE: Get Multiple People in One Game
 //we need function to update/get cards
 //to get/update roads

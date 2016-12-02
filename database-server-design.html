@@ -26,7 +26,7 @@
             .container {
                 background-color: #66B9BF;
                 width: 500px;
-                height: 1000px;
+                height: 1450px;
                 border-radius: 25px;
                 position: relative;
                 float: left;
@@ -66,20 +66,6 @@
     <body>
         <div class = "container">
             <h1> Database Schema</h1>
-
-            <p>
-                We have five unique tables for our Settlers of Carolina game.
-                All tables, of course, contain an ID column.
-                The first one, the Players table, contains four unique
-                columns, Username, RoadsCount, SoldiersCount, and Points.
-                The second table, called Roads, contains PlayerID and another column called Available.
-                The third table, called Tiles, contains only a column named Robber.
-                The fourth table, called Colleges, contains PlayerID, Available,
-                and University. The last table, called Cards, contains Ram,
-                Ramen, Brick, Basketball, Book, Knight, OldWell, ThePit,
-                DavisLibrary, Sitterson, BellTower, Roads, Volunteer, Monopoly.
-            </p>
-
             <code>
                 <ul>
                     <li>Players</li>
@@ -229,31 +215,31 @@
                 </tr>
                 <tr>
                     <td>Players</td>
-                    <td> id, Username, RoadsCount, SoldiersCount, Points</td>
-                    <td> id, Username, RoadsCount, SoldiersCount, Points</td>
+                    <td> PlayerID, Username, RoadsCount, SoldiersCount, Points</td>
+                    <td> PlayerID, Username, RoadsCount, SoldiersCount, Points</td>
                 </tr>
                 <tr>
                     <td> Roads</td>
-                    <td> id, PlayerID, Available</td>
-                    <td> id, PlayerID, Available</td>
+                    <td> RoadsID, PlayerID, Available</td>
+                    <td> RoadsID, PlayerID, Available</td>
                 </tr>
                 <tr>
                     <td> Tiles</td>
-                    <td>id, Robber</td>
-                    <td>id, Robber</td>
+                    <td>TilesID, Robber</td>
+                    <td>TilesID, Robber</td>
                 </tr>
                 <tr>
                     <td>Colleges</td>
-                    <td> id, PlayerID, Available, University</td>
-                    <td> id, PlayerID, Available, University</td>
+                    <td> CollegeID, PlayerID, Available, University</td>
+                    <td> CollegeID, PlayerID, Available, University</td>
                 </tr>
                 <tr>
                     <td>Cards</td>
-                    <td>id, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                    <td>CardsID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
                         ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
                         Monopoly
                     </td>
-                    <td>id, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                    <td>CardsID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
                         ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
                         Monopoly
                     </td>
