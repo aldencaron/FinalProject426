@@ -418,7 +418,7 @@ class Tile {
       else{
         $Tile_info = $result->fetch_array();
         return new Tile($Tile_info['TileID'],
-                        $Tile_info['Robber']);
+                           $Tile_info['Robber']);
       }
     }
   return null;
