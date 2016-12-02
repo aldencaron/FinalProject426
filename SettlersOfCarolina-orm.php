@@ -9,7 +9,7 @@ class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
           "mhb",
-          "MAXISCOOL",
+          "password",
           "mhbdb");
   }
   private $PlayerID;
@@ -28,34 +28,28 @@ class Card {
   private $Volunteer;
   private $Monopoly;
 
-  private function update() {
-    $mysqli= Card::connect();
+  public static function update($PlayerID, $CardName){
+    $conn= Card::connect();
 
-    $SQL = "Update Cards set
-    PlayerID = $mysqli->real_escape_string($this->PlayerID),
-    Ram = $mysqli->real_escape_string($this->Ram),
-    Ramen = $mysqli->real_escape_string($this->Ramen),
-    Brick = $mysqli->real_escape_string($this->Brick),
-    Basketball = $mysqli->real_escape_string($this->Basketball),
-    Book = $mysqli->real_escape_string($this->Book),
-    Knight = $mysqli->real_escape_string($this->Knight),
-    OldWell = $mysqli->real_escape_string($this->OldWell),
-    ThePit = $mysqli->real_escape_string($this->ThePit),
-    DavisLibrary = $mysqli->real_escape_string($this->DavisLibrary),
-    Sitterson = $mysqli->real_escape_string($this->Sitterson),
-    BellTower = $mysqli->real_escape_string($this->BellTower),
-    Roads = $mysqli->real_escape_string($this->Roads),
-    Volunteer = $mysqli->real_escape_string($this->Volunteer),
-    Monopoly = $mysqli->real_escape_string($this->Monopoly)";
-   $result= mysqli_query($mysqli, $SQL);
-   return $result;
+  //check if Player has been inserted.
+  $SQL= "Select $CardName from Cards where PlayerID = $PlayerID";
+  $result = mysqli_query($mysqli, $SQL);
+  $CardValue = $result;
+
+    if($result->num_rows==0){
+      $SQL = "Insert into Cards (PlayerID, $CardName) Values ($PlayerID, " . $result+1 . " )";
+      $result = mysqli_query($mysqli, $SQL);
+    }
+    else{
+      $SQL = "Update Cards set $CardName = $CardValue where PlayerID = $PlayerID";
+      $result = mysqli_query($mysqli, $SQL);
+    }
   }
-
 
   public static function findByID($PlayerID){
     $mysqli = Card::connect();
     $SQL = "Select * from Cards where PlayerID = $PlayerID";
-    $result= mysqli_query($mysqli, $SQL);
+    $result = $myqli_query($SQL);
     if($result){
       if($result->num_rows==0){
         //no matches
@@ -63,24 +57,26 @@ class Card {
       }
       else{
         $card_info = $result->fetch_array();
-        return new Card($card_info['PlayerID'],
-                        $card_info['Ram'],
-                        $card_info['Ramen'],
-                        $card_info['Brick'],
-                        $card_info['BasketBall'],
-                        $card_info['Book'],
-                        $card_info['Knight'],
-                        $card_info['OldWell'],
-                        $card_info['ThePit'],
-                        $card_info['DavisLibrary'],
-                        $card_info['Sitterson'],
-                        $card_info['BellTower'],
-                        $card_info['Roads'],
-                        $card_info['Volunteer'],
-                        $card_info['Monopoly']);
+
+        return new Card(card_info['PlayerID'],
+                        card_info['Ram'],
+                        card_info['Ramen'],
+                        card_info['Brick'],
+                        card_info['BasketBall'],
+                        card_info['Book'],
+                        card_info['Knight'],
+                        card_info['OldWell'],
+                        card_info['ThePit'],
+                        card_info['DavisLibrary'],
+                        card_info['Sitterson'],
+                        card_info['BellTower'],
+                        card_info['Roads'],
+                        card_info['Volunteer'],
+                        card_info['Monopoly']);
       }
     }
     return null;
+
   }
 
   public static function create($PlayerID, $Ram, $Ramen, $Brick, $Basketball,
@@ -110,166 +106,89 @@ class Card {
       }
   }
 
-  public function getJSON(){
-  $json_obj = array(  'PlayerID' => $this->PlayerID,
-                      'Ram' => $this->Ram,
-                      'Ramen' => $this->Ramen,
-                      'Brick' => $this->Brick,
-                      'Basketball' => $this->Basketball,
-                      'Book' => $this->Book,
-                      'Knight' => $this->Knight,
-                      'OldWell' => $this->OldWell,
-                      'ThePit' => $this->ThePit,
-                      'DavisLibrary' => $this->DavisLibrary,
-                      'Sitterson' => $this->Sitterson,
-                      'BellTower' => $this->BellTower,
-                      'Roads' => $this->Roads,
-                      'Volunteer' => $this->Volunteer,
-                      'Monopoly' => $this->Monopoly);
-  return json_encode($json_obj);
- }
-
-   private function __construct( $PlayerID, $Ram, $Ramen, $Brick, $Basketball,
+   function __construct( $PlayerID, $Ram, $Ramen, $Brick, $Basketball,
     $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
      $BellTower, $Roads, $Volunteer, $Monopoly ){
-    $this->PlayerID = $PlayerID;
-    $this->Ram = $Ram;
-    $this->Ramen = $Ramen;
-    $this->Brick = $Brick;
-    $this->Basketball = $Basketball;
-    $this->Book = $Book;
-    $this->Knight = $Knight;
-    $this->OldWell = $OldWell;
-    $this->ThePit = $ThePit;
-    $this->DavisLibrary = $DavisLibrary;
-    $this->Sitterson = $Sitterson;
-    $this->BellTower = $BellTower;
-    $this->Roads = $Roads;
-    $this->Volunteer = $Volunteer;
-    $this->Monopoly = $Monopoly;
+    $this-> PlayerID = $PlayerID;
+    $this-> Ram = $Ram;
+    $this-> Ramen = $Ramen;
+    $this-> Brick = $Brick;
+    $this-> Basketball = $Basketball;
+    $this-> Book = $Book;
+    $this-> Knight = $Knight;
+    $this-> OldWell = $OldWell;
+    $this-> ThePit = $ThePit;
+    $this-> DavisLibrary = $DavisLibrary;
+    $this-> Sitterson = $Sitterson;
+    $this-> BellTower = $BellTower;
+    $this-> Roads = $Roads;
+    $this-> Volunteer = $Volunteer;
+    $this-> Monopoly = $Monopoly;
+
   }
 
-  public function getPlayerID() {
+  function getPlayerID() {
       return $this->PlayerID;
   }
 
-  public function getRam() {
+  function getRam() {
       return $this->Ram;
   }
 
-  public function getRamen() {
+  function getRamen() {
       return $this->Ramen;
   }
 
-  public function getBrick() {
+  function getBrick() {
       return $this->Brick;
   }
 
-  public function getBasketball() {
+  function getBasketball() {
       return $this->Basketball;
   }
 
-  public function getBook() {
+  function getBook() {
       return $this->Book;
   }
 
-  public function getKnight() {
+  function getKnight() {
       return $this->Knight;
   }
 
-  public function getOldWell() {
+  function getOldWell() {
       return $this->OldWell;
   }
 
-  public function getThePit() {
+
+  function getThePit() {
       return $this->ThePit;
   }
 
-  public function getDavisLibrary() {
+  function getDavisLibrary() {
       return $this->DavisLibrary;
   }
 
-  public function getSitterson() {
+  function getSitterson() {
       return $this->Sitterson;
   }
 
-  public function getBellTower() {
+  function getBellTower() {
       return $this->BellTower;
   }
 
-  public function getRoads() {
+  function getRoads() {
       return $this->Roads;
   }
 
-  public function getVolunteer() {
+  function getVolunteer() {
       return $this->Volunteer;
   }
 
-  public function getMonopoly() {
+  function getMonopoly() {
       return $this->Monopoly;
   }
-  public function setPlayerID(){
-    $this->PlayerID = $PlayerID;
-    return $this->update();
-  }
-  public function setRam(){
-    $this->Ram = $Ram;
-    return $this->update();
-  }
-  public function setRamen(){
-    $this->Ramen = $Ramen;
-    return $this->update();
-  }
-  public function setBrick(){
-    $this->Brick = $Brick;
-    return $this->update();
-  }
-  public function setBasketball(){
-    $this->Basketball = $Basketball;
-    return $this->update();
-  }
-  public function setBook(){
-    $this->Book = $Book;
-    return $this->update();
-  }
-  public function setKnight(){
-    $this->Knight = $Knight;
-    return $this->update();
-  }
-  public function setOldWell(){
-    $this->OldWell = $OldWell;
-    return $this->update();
-  }
-  public function setThePit(){
-    $this->ThePit = $ThePit;
-    return $this->update();
-  }
-  public function setDavisLibrary(){
-    $this->DavisLibrary = $DavisLibrary;
-    return $this->update();
-  }
-  public function setSitterson(){
-    $this->Sitterson = $Sitterson;
-    return $this->update();
-  }
-  public function setBellTower(){
-    $this->BellTower = $BellTower;
-    return $this->update();
-  }
-  public function setRoads(){
-    $this->Roads = $Roads;
-    return $this->update();
-  }
-  public function setVolunteer(){
-    $this->Volunteer = $Volunteer;
-    return $this->update();
-  }
-  public function setMonopoly(){
-    $this->Monopoly = $Monopoly;
-    return $this->update();
-  }
-}
 
+}
 class College {
 
   private $CollegeID;
@@ -280,7 +199,7 @@ class College {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
           "mhb",
-          "MAXISCOOL",
+          "password",
           "mhbdb");
   }
 
@@ -310,7 +229,7 @@ $SQL = "Select CollegeID from Colleges where 1";
   $result= mysqli_query($mysqli, $SQL);
 
 }
-public function getJSON(){
+public static function getJSON(){
 $json_obj = array('CollegeID' => $this->CollegeID,
                    'PlayerID' => $this->PlayerID,
                    'Available' => $this->Available,
@@ -329,7 +248,6 @@ return json_encode($json_obj);
   $result= mysqli_query($mysqli, $SQL);
   return $result;
  }
-
 private function __construct($CollegeID, $PlayerID, $Available, $University){
 $this->CollegeID = $CollegeID;
 $this->PlayerID = $PlayerID;
@@ -337,38 +255,38 @@ $this->Available = $Available;
 $this->University = $University;
 }
 
-public function getCollegeID() {
+function getCollegeID() {
     return $this->CollegeID;
 }
 
-public function getPlayerID(){
+function getPlayerID(){
     return $this->PlayerID;
 }
 
-public function getAvailable(){
+function getAvailable(){
     return $this->Available;
 }
 
-public function getUniversity(){
+function getUniversity(){
   return $this->University;
 }
 
-public function setCollegeID(){
+function setCollegeID(){
   $this->CollegeID = $CollegeID;
   return $this->update();
 }
 
-public function setPlayerID(){
+function setPlayerID(){
   $this->PlayerID = $PlayerID;
   return $this->update();
 }
 
-public function setAvailable(){
+function setAvailable(){
   $this->Available = $Available;
   return $this->update();
 }
 
-public function setUniversity(){
+function setUniversity(){
   $this->University = $University;
   return $this->update();
 }
@@ -378,86 +296,32 @@ class Tile {
   private $TileID;
   private $Robber;
 
-  public static function connect() {
-    return new mysqli("classroom.cs.unc.edu",
-          "mhb",
-          "MAXISCOOL",
-          "mhbdb");
-  }
-
   public static function findByID($TileID){
-    $mysqli= Tiles::connect();
-    $SQL= "Select * from Roads where TileID = $TileID ";
-    $result= mysqli_query($mysqli, $SQL);
 
-    if($result){
-      if($result->num_rows==0){
-        return null;
-      }
-      else{
-        $Tile_info = $result->fetch_array();
-        return new Tile($Tile_info['TileID'],
-                           $Tile_info['Robber']);
-      }
-    }
-  return null;
   }
-
   public static function getAllIDs() {
 
   }
-  public function getJSON(){
-  $json_obj = array('TileID' => $this->TileID,
-                     'Robber' => $this->Robber );
-  return json_encode($json_obj);
-  }
+  public static function getJSON(){
 
-  private function update() {
-    $mysqli= Tile::connect();
+  }
+   private function update() {
 
-    $SQL = "Update Roads set
-    TileID = $mysqli->real_escape_string($this->TileID),
-    Robber= $mysqli->real_escape_string($this->Robber)";
-   $result= mysqli_query($mysqli, $SQL);
-   return $result;
-  }
+   }
+  private function __construct(){
 
- private function __construct($TileID, $Robber){
- $this->TileID= $TileID;
- $this->Robber = $Robber;
- }
- public function getTileID() {
-     return $this->TileID;
- }
- public function getRobber() {
-     return $this->Robber;
-  }
-  public function setTileID(){
-    $this->TileID = $TileID;
-    return $this->update();
-  }
-  public function setRobber(){
-    $this->Robber = $Robber;
-    return $this->update();
   }
 
 }
-
 class Road{
   private $RoadID;
   private $PlayerID;
   private $Available;
 
-    public static function create($RoadID, $PlayerID, $Available){
-    $mysqli= Road::connect();
-    return new Road($RoadID, $PlayerID, $Available);
-
-    }
-
     public static function connect() {
       return new mysqli("classroom.cs.unc.edu",
             "mhb",
-            "MAXISCOOL",
+            "password",
             "mhbdb");
     }
 
@@ -485,13 +349,13 @@ class Road{
     $result= mysqli_query($mysqli, $SQL);
 
   }
-  public function getJSON(){
+  public static function getJSON(){
   $json_obj = array('RoadID' => $this->RoadID,
                      'PlayerID' => $this->PlayerID,
                      'Available' => $this->Available );
   return json_encode($json_obj);
-  }
 
+  }
    private function update() {
      $mysqli= Road::connect();
 
@@ -502,35 +366,35 @@ class Road{
     $result= mysqli_query($mysqli, $SQL);
     return $result;
    }
-  private function __construct($RoadID, $PlayerID, $Available){
+  private function __construct($RoadID, $PlayerID, $Available, $University){
   $this->RoadID = $RoadID;
   $this->PlayerID = $PlayerID;
   $this->Available = $Available;
   }
 
-  public function getRoadID() {
+  function getRoadID() {
       return $this->RoadID;
   }
 
-  public function getPlayerID(){
+  function getPlayerID(){
       return $this->PlayerID;
   }
 
-  public function getAvailable(){
+  function getAvailable(){
       return $this->Available;
   }
 
-  public function setRoadID(){
+  function setRoadID(){
     $this->RoadID = $RoadID;
     return $this->update();
   }
 
-  public function setPlayerID(){
+  function setPlayerID(){
     $this->PlayerID = $PlayerID;
     return $this->update();
   }
 
-  public function setAvailable(){
+  function setAvailable(){
     $this->Available = $Available;
     return $this->update();
   }
@@ -547,7 +411,7 @@ class Player {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
           "mhb",
-          "MAXISCOOL",
+          "password",
           "mhbdb");
   }
 
@@ -577,7 +441,7 @@ $SQL = "Select PlayerID from Players where 1";
   $result= mysqli_query($mysqli, $SQL);
 
 }
-public function getJSON(){
+public static function getJSON(){
 $json_obj = array('PlayerID' => $this->PlayerID,
                   'Username' => $this->Username,
                   'RoadsCount' => $this->RoadsCount,
@@ -608,47 +472,47 @@ $this->SoldiersCount= $SoldiersCount;
 $this->Points= $Points;
 }
 
-public function getPlayerID(){
+function getPlayerID(){
     return $this->PlayerID;
 }
 
-public function getUsername(){
+function getUsername(){
     return $this->Username;
 }
 
-public function getRoadsCount(){
+function getRoadsCount(){
     return $this->RoadsCount;
 }
 
-public function getSoldiersCount(){
+function getSoldiersCount(){
     return $this->SoldiersCount;
 }
 
-public function getPoints(){
+function getPoints(){
   return $this->Points;
 }
 
-public function setPlayerID(){
+function setPlayerID(){
   $this->PlayerID = $PlayerID;
   return $this->update();
 }
 
-public function setUsername(){
+function setUsername(){
   $this->Username = $Username;
   return $this->update();
 }
 
-public function setRoadsCount(){
+function setRoadsCount(){
   $this->RoadsCount = $RoadsCount;
   return $this->update();
 }
 
-public function setSoldiersCount(){
+function setSoldiersCount(){
   $this->SoldiersCount = $SoldiersCount;
   return $this->update();
 }
 
-public function setPoints(){
+function setPoints(){
   $this->Points = $Points;
   return $this->update();
 }

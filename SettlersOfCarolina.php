@@ -1,6 +1,7 @@
 <?php
-require_once('SettlersOfCarolina-orm.php');
+require("SettlersOfCarolina-orm.php");
 //NUMBER ONE: Get Multiple People in One Game
+
 //we need function to update/get cards
 //to get/update roads
 //To get/update colleges
@@ -9,17 +10,15 @@ require_once('SettlersOfCarolina-orm.php');
 
 //Classes: Player, Road, Tile, Card, College
 
+
+global $conn = new mysqli("classroom.cs.unc.edu", "mhb", "password", "mhbdb");
+
 //Get/SettlersofCarolina/Cards/PlayerID and POST/SettlersofCarolina/Cards/PlayerID
-//global $path_components;
-//
-
-
- $path_components= explode('/', $_SERVER['PATH_INFO']);
+global $path_components = explode('/', $_SERVER['PATH_INFO']);
 
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if($path_components[1]=="Cards"){
-      if($path_components[2]!="" &&
-    count($path_components) >= 3){
+      if($path_components[2]=="PlayerID"){
         $PlayerID= intval($path_components[2]);
         $requested_hand = Card::findByID($PlayerID);
         if ($requested_hand == null) {
@@ -36,13 +35,12 @@ require_once('SettlersOfCarolina-orm.php');
         // no ID, try returning all IDs.
         //TODO implement .getAllIDs
         header("Content-type: application/json");
-        print("Tried usong getAllIds()");
+        print(json_encode(Card::getAllIDs()));
         exit();
       }
     }
   else if($path_components[1]=="Players"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
+    if($path_components[2]=="PlayerID"){
       $PlayerID= intval($path_components[2]);
       $Player_Info = Player::findByID($PlayerID);
       if ($Player_Info == null) {
@@ -59,13 +57,12 @@ require_once('SettlersOfCarolina-orm.php');
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(Player::getAllIDs()));
       exit();
     }
   }
   else if($path_components[1]=="Roads"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
+    if($path_components[2]=="RoadID"){
       $RoadID= intval($path_components[2]);
       $Road_Info = Road::findByID($RoadID);
       if ($Road_Info == null) {
@@ -76,20 +73,19 @@ require_once('SettlersOfCarolina-orm.php');
       }
       header("Content-type: application/json");
       print($Road_Info->getJSON());
-      error_log(print_r($Road_Info, true), 3,  "debug.txt");
       exit();
     }
     else{
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+
+
+      print(json_encode(Road::getAllIDs()));
       exit();
-    }
   }
   else if($path_components[1]=="Tiles"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
+    if($path_components[2]=="ID"){
       $TileID= intval($path_components[2]);
       $Tile_Info = Tile::findByID($TileID);
       if ($Tile_Info == null) {
@@ -105,14 +101,13 @@ require_once('SettlersOfCarolina-orm.php');
     else{
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
-      //header("Content-type: application/json");
-      //print(json_encode(Tile::getAllIDs()));
+      header("Content-type: application/json");
+      print(json_encode(Tile::getAllIDs()));
       exit();
     }
   }
   else if($path_components[1]=="Colleges"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
+    if($path_components[2]=="CollegeID"){
       $CollegeID= intval($path_components[2]);
       $College_Info = College::findByID($CollegeID);
       if ($College_Info == null) {
@@ -129,19 +124,17 @@ require_once('SettlersOfCarolina-orm.php');
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(College::getAllIDs()));
       exit();
   }
-}
-header("HTTP/1.0 404 Not Found");
-print("Get Doesn't match any DB.");
-exit();
+  header("HTTP/1.0 404 No matching DB");
+  print("College id: " . $CollegeID . " not found.");
+  exit();
 }
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ((count($path_components) >= 2) &&
         ($path_components[1] != "")) {
-        global $DBname;
-        $DBname = $path_components[1];
+        global $DBname = $path_components[1];
         if($DBname=="Players"){
           postPlayer();
         }
@@ -158,16 +151,6 @@ exit();
           postCard();
         }
   }
-  header("HTTP/1.0 404 Not Found");
-  print("Post Doesn't match any DB.");
-  exit();
-}
-// If here, none of the above applied and URL could
-// not be interpreted with respect to RESTful conventions.
-
-header("HTTP/1.0 400 Bad Request");
-print("Did not understand URL");
-
 
   //helper functions
 
@@ -340,7 +323,6 @@ print("Did not understand URL");
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
   }
-
   function postCard(){
     if ((count($path_components) >= 3) &&
         ($path_components[2] != "")) {
