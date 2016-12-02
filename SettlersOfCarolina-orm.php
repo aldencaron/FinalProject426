@@ -421,6 +421,7 @@ class Tile {
    $result= mysqli_query($mysqli, $SQL);
    return $result;
   }
+
  private function __construct($TileID, $Robber){
  $this->TileID= $TileID;
  $this->Robber = $Robber;
