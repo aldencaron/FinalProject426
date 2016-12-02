@@ -378,23 +378,70 @@ class Tile {
   private $TileID;
   private $Robber;
 
-  public static function findByID($TileID){
-
+  public static function connect() {
+    return new mysqli("classroom.cs.unc.edu",
+          "mhb",
+          "MAXISCOOL",
+          "mhbdb");
   }
+
+  public static function findByID($TileID){
+    $mysqli= Tiles::connect();
+    $SQL= "Select * from Roads where TileID = $TileID ";
+    $result= mysqli_query($mysqli, $SQL);
+
+    if($result){
+      if($result->num_rows==0){
+        return null;
+      }
+      else{
+        $Tile_info = $result->fetch_array();
+        return new Tile($Tile_info['TileID'],
+                           $Tile_info['Robber']);
+      }
+    }
+  return null;
+  }
+
   public static function getAllIDs() {
 
   }
   public function getJSON(){
-
+  $json_obj = array('TileID' => $this->TileID,
+                     'Robber' => $this->Robber );
+  return json_encode($json_obj);
   }
-   private function update() {
 
-   }
-  private function __construct(){
+  private function update() {
+    $mysqli= Tile::connect();
 
+    $SQL = "Update Roads set
+    TileID = $mysqli->real_escape_string($this->TileID),
+    Robber= $mysqli->real_escape_string($this->Robber)";
+   $result= mysqli_query($mysqli, $SQL);
+   return $result;
+  }
+ private function __construct($TileID, $Robber){
+ $this->TileID= $TileID;
+ $this->Robber = $Robber;
+ }
+ public function getTileID() {
+     return $this->TileID;
+ }
+ public function getRobber() {
+     return $this->Robber;
+  }
+  public function setTileID(){
+    $this->TileID = $TileID;
+    return $this->update();
+  }
+  public function setRobber(){
+    $this->Robber = $Robber;
+    return $this->update();
   }
 
 }
+
 class Road{
   private $RoadID;
   private $PlayerID;
