@@ -696,12 +696,12 @@ return json_encode($json_obj);
   return $result;
  }
 
-private function __construct($RoadID, $PlayerID, $Available, $University){
-$this->PlayerID= $PlayerID;
-$this->Username= $Username;
-$this->RoadsCount= $RoadsCount;
-$this->SoldiersCount= $SoldiersCount;
-$this->Points= $Points;
+private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points){
+    $this->PlayerID= $PlayerID;
+    $this->Username= $Username;
+    $this->RoadsCount= $RoadsCount;
+    $this->SoldiersCount= $SoldiersCount;
+    $this->Points= $Points;
 }
 
 public function getPlayerID(){
