@@ -175,7 +175,7 @@ var addCollegeStart = function(event) {
     turn_over = false;
   }
 };
-var addRoadStart = function() {
+var addRoadStart = function(event) {
   turn_over = false;
   var rect = board_canvas.getBoundingClientRect();
   var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
