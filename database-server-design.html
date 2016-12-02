@@ -81,7 +81,7 @@
 
                     <li> Roads</li>
                     <ul class = "innerList">
-                        <li>RoadsID: INT, primary key, auto-increment</li>
+                        <li>RoadID: INT, primary key, auto-increment</li>
                         <li>PlayerID: INT, foreign key to Players ID</li>
                         <li>Available: INT, the number of available roads</li>
                     </ul>
@@ -90,7 +90,7 @@
 
                     <li> Tiles</li>
                     <ul class = "innerList">
-                        <li>TilesID: INT, primary key, auto-increment</li>
+                        <li>TileID: INT, primary key, auto-increment</li>
                         <li>Robber: INT, which tile the robber is on</li>
                     </ul>
 
@@ -108,7 +108,6 @@
 
                     <li>Cards</li>
                     <ul class = "innerList">
-                        <li>CardsID: INT, primary key, auto-increment</li>
                         <li>PlayerID: INT, foreign key to Players ID</li>
                         <li>Ram: INT, the number of Ram cards</li>
                         <li>Ramen: INT, the number of Ramen cards</li>
@@ -220,13 +219,13 @@
                 </tr>
                 <tr>
                     <td> Roads</td>
-                    <td> RoadsID, PlayerID, Available</td>
-                    <td> RoadsID, PlayerID, Available</td>
+                    <td> RoadID, PlayerID, Available</td>
+                    <td> RoadID, PlayerID, Available</td>
                 </tr>
                 <tr>
                     <td> Tiles</td>
-                    <td>TilesID, Robber</td>
-                    <td>TilesID, Robber</td>
+                    <td>TileID, Robber</td>
+                    <td>TileID, Robber</td>
                 </tr>
                 <tr>
                     <td>Colleges</td>
@@ -235,11 +234,11 @@
                 </tr>
                 <tr>
                     <td>Cards</td>
-                    <td>CardsID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                    <td>PlayerID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
                         ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
                         Monopoly
                     </td>
-                    <td>CardsID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
+                    <td>PlayerID, Ram, Ramen, Brick, Basketball, Book, Knight, OldWell,
                         ThePit, DavisLibrary, Sitterson, BellTower, Roads, Volunteer,
                         Monopoly
                     </td>
