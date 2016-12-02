@@ -482,15 +482,20 @@ class Road{
 
     public static function create($RoadID, $PlayerID, $Available){
     $mysqli= Road::connect();
+    $res = $mysqli->query("INSERT INTO Roads VAlUES('$RoadID', '$PlayerID', '$Available')");
+    if ($res) {} else {
+        header("HTTP/1.0 500 Server Error");
+        print($mysqli->error);
+        exit();
+    }
     return new Road($RoadID, $PlayerID, $Available);
-
     }
 
     public static function connect() {
       return new mysqli("classroom.cs.unc.edu",
-            "mhb",
-            "MAXISCOOL",
-            "mhbdb");
+            "naeimz",
+            "naeim410",
+            "naeimzdb");
     }
 
   public static function findByID($RoadID){

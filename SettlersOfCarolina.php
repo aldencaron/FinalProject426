@@ -140,6 +140,7 @@ exit();
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ((count($path_components) >= 2) &&
         ($path_components[1] != "")) {
+
         global $DBname;
         $DBname = $path_components[1];
         if($DBname=="Players"){
@@ -157,16 +158,35 @@ exit();
         else if($DBname=="Cards"){
           postCard();
         }
+  } else {
+      $DBname = $_REQUEST['Database'];
+      if($DBname=="Players"){
+        postPlayer();
+      }
+      else if($DBname=="Roads"){
+        postRoad();
+      }
+      else if($DBname=="College"){
+        postCollege();
+      }
+      else if($DBname=="Tiles"){
+        postTile();
+      }
+      else if($DBname=="Cards"){
+        postCard();
+      }
   }
+
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");
   exit();
 }
+
 // If here, none of the above applied and URL could
 // not be interpreted with respect to RESTful conventions.
 
-header("HTTP/1.0 400 Bad Request");
-print("Did not understand URL");
+//header("HTTP/1.0 400 Bad Request");
+//print("Did not understand URL");
 
 
   //helper functions
@@ -260,7 +280,47 @@ print("Did not understand URL");
             exit();
       }
       else{
-        //no ID, what now?
+        //no ID, what now? --> We must create a new Road. We
+        // assume that we are not updating.
+        $new_RoadID = false;
+        if (isset($_REQUEST['RoadID'])) {
+            $new_RoadID = intval(trim($_REQUEST['RoadID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("RoadID is is not given.");
+            exit();
+        }
+
+        $new_PlayerID = false;
+        if (isset($_REQUEST['PlayerID'])) {
+            $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("PlayerID is is not given.");
+            exit();
+        }
+
+        $new_Available = false;
+        if (isset($_REQUEST['Available'])) {
+            $new_Available = intval(trim($_REQUEST['Available']));
+
+        } else {
+            header("HTTP/1.0 400 Bad Request");
+            print("Available is is not given.");
+            exit();
+        }
+
+        if (new_RoadID && new_PlayerID && new_Available) {
+            $Road = Road::create($new_RoadID, $new_PlayerID, $new_Available);
+            if ($Road == null) {
+                header("Road was not inserted");
+                print($Road->getJSON());
+                exit();
+            }
+            header("Content-type: application/json");
+            print($Road->getJSON());
+            exit();
+        }
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
