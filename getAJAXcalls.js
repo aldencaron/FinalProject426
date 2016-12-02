@@ -41,6 +41,7 @@ $(document).ready(function() {
     this.Available= College_json.Available;
     this.University= College_json.University;
   }
+
   var ret1= getPlayerAJAX(1);
   var ret2= getRoadAJAX(1);
   var ret3= getCardAJAX(1);
