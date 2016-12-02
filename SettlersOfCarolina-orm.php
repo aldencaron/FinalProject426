@@ -307,102 +307,102 @@ class College {
       return new College($CollegeID, $PlayerID, $Available, $University);
   }
 
-public static function findByID($CollegeID){
-  $mysqli= College::connect();
-  $SQL= "Select * from Colleges where CollegeID = $CollegeID ";
+  public static function findByID($CollegeID){
+    $mysqli= College::connect();
+    $SQL= "Select * from Colleges where CollegeID = $CollegeID ";
 
-  $result= mysqli_query($mysqli, $SQL);
+    $result= mysqli_query($mysqli, $SQL);
 
-  if($result){
-    if($result->num_rows==0){
-      return null;
+    if($result){
+      if($result->num_rows==0){
+        return null;
+      }
+      else{
+        $College_info = $result->fetch_array();
+        return new College($College_info['CollegeID'],
+                           $College_info['PlayerID'],
+                           $College_info['Available'],
+                           $College_info['University'] );
+      }
     }
-    else{
-      $College_info = $result->fetch_array();
-      return new College($College_info['CollegeID'],
-                         $College_info['PlayerID'],
-                         $College_info['Available'],
-                         $College_info['University'] );
+  return null;
+  }
+
+  public static function getAllIDs() {
+    $mysqli = College::connect();
+    $SQL = "Select CollegeID from Colleges where 1";
+    $result= mysqli_query($mysqli, $SQL);
+    $id_array = array();
+
+    if ($result) {
+      while ($next_row = $result->fetch_array()) {
+    $id_array[] = intval($next_row['CollegeID']);
+      }
     }
-  }
-return null;
-}
-
-public static function getAllIDs() {
-  $mysqli = College::connect();
-  $SQL = "Select CollegeID from Colleges where 1";
-  $result= mysqli_query($mysqli, $SQL);
-  $id_array = array();
-
-  if ($result) {
-    while ($next_row = $result->fetch_array()) {
-  $id_array[] = intval($next_row['CollegeID']);
+    return $id_array;
     }
+  public function getJSON(){
+  $json_obj = array('CollegeID' => $this->CollegeID,
+                     'PlayerID' => $this->PlayerID,
+                     'Available' => $this->Available,
+                     'University' => $this->University );
+  return json_encode($json_obj);
   }
-  return $id_array;
-  }
-public function getJSON(){
-$json_obj = array('CollegeID' => $this->CollegeID,
-                   'PlayerID' => $this->PlayerID,
-                   'Available' => $this->Available,
-                   'University' => $this->University );
-return json_encode($json_obj);
-}
 
- private function update() {
-   $mysqli= College::connect();
+   private function update() {
+     $mysqli= College::connect();
 
-   $SQL = "Update Colleges set
-   CollegeID = $mysqli->real_escape_string($this->CollegeID),
-   PlayerID = $mysqli->real_escape_string($this->PlayerID),
-   Available = $mysqli->real_escape_string($this->Available),
-   Available = $mysqli->real_escape_string($this->University)";
-  $result= mysqli_query($mysqli, $SQL);
-  return $result;
- }
+     $SQL = "Update Colleges set
+     CollegeID = $mysqli->real_escape_string($this->CollegeID),
+     PlayerID = $mysqli->real_escape_string($this->PlayerID),
+     Available = $mysqli->real_escape_string($this->Available),
+     Available = $mysqli->real_escape_string($this->University)";
+    $result= mysqli_query($mysqli, $SQL);
+    return $result;
+   }
 
-private function __construct($CollegeID, $PlayerID, $Available, $University){
-$this->CollegeID = $CollegeID;
-$this->PlayerID = $PlayerID;
-$this->Available = $Available;
-$this->University = $University;
-}
-
-public function getCollegeID() {
-    return $this->CollegeID;
-}
-
-public function getPlayerID(){
-    return $this->PlayerID;
-}
-
-public function getAvailable(){
-    return $this->Available;
-}
-
-public function getUniversity(){
-  return $this->University;
-}
-
-public function setCollegeID(){
+  private function __construct($CollegeID, $PlayerID, $Available, $University){
   $this->CollegeID = $CollegeID;
-  return $this->update();
-}
-
-public function setPlayerID(){
   $this->PlayerID = $PlayerID;
-  return $this->update();
-}
-
-public function setAvailable(){
   $this->Available = $Available;
-  return $this->update();
-}
-
-public function setUniversity(){
   $this->University = $University;
-  return $this->update();
-}
+  }
+
+  public function getCollegeID() {
+      return $this->CollegeID;
+  }
+
+  public function getPlayerID(){
+      return $this->PlayerID;
+  }
+
+  public function getAvailable(){
+      return $this->Available;
+  }
+
+  public function getUniversity(){
+    return $this->University;
+  }
+
+  public function setCollegeID(){
+    $this->CollegeID = $CollegeID;
+    return $this->update();
+  }
+
+  public function setPlayerID(){
+    $this->PlayerID = $PlayerID;
+    return $this->update();
+  }
+
+  public function setAvailable(){
+    $this->Available = $Available;
+    return $this->update();
+  }
+
+  public function setUniversity(){
+    $this->University = $University;
+    return $this->update();
+  }
 }
 
 class Tile {
@@ -638,50 +638,50 @@ class Player {
       return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points);
   }
 
-public static function findByID($PlayerID){
-  $mysqli= Player::connect();
-  $SQL= "Select * from Players where PlayerID = $PlayerID ";
-  $result= mysqli_query($mysqli, $SQL);
+  public static function findByID($PlayerID){
+    $mysqli= Player::connect();
+    $SQL= "Select * from Players where PlayerID = $PlayerID ";
+    $result= mysqli_query($mysqli, $SQL);
 
-  if($result){
-    if($result->num_rows==0){
-      return null;
+    if($result){
+      if($result->num_rows==0){
+        return null;
+      }
+      else{
+        $Player_info = $result->fetch_array();
+        return new Player($Player_info['PlayerID'],
+                           $Player_info['Username'],
+                           $Player_info['RoadsCount'],
+                           $Player_info['SoldierCount'],
+                           $Player_info['Points']);
+      }
     }
-    else{
-      $Player_info = $result->fetch_array();
-      return new Player($Player_info['PlayerID'],
-                         $Player_info['Username'],
-                         $Player_info['RoadsCount'],
-                         $Player_info['SoldierCount'],
-                         $Player_info['Points']);
-    }
-  }
-return null;
-}
-
-public static function getAllIDs() {
-  $mysqli = Player::connect();
-  $SQL = "Select PlayerID from Players where 1";
-  $result= mysqli_query($mysqli, $SQL);
-  $id_array = array();
-
-  if ($result) {
-    while ($next_row = $result->fetch_array()) {
-  $id_array[] = intval($next_row['PlayerID']);
-    }
-  }
-  return $id_array;
+  return null;
   }
 
-public function getJSON(){
-$json_obj = array('PlayerID' => $this->PlayerID,
-                  'Username' => $this->Username,
-                  'RoadsCount' => $this->RoadsCount,
-                  'SoldiersCount' => $this->SoldiersCount,
-                  'Points' => $this->Points );
-return json_encode($json_obj);
+  public static function getAllIDs() {
+    $mysqli = Player::connect();
+    $SQL = "Select PlayerID from Players where 1";
+    $result= mysqli_query($mysqli, $SQL);
+    $id_array = array();
 
-}
+    if ($result) {
+      while ($next_row = $result->fetch_array()) {
+    $id_array[] = intval($next_row['PlayerID']);
+      }
+    }
+    return $id_array;
+  }
+
+  public function getJSON(){
+  $json_obj = array('PlayerID' => $this->PlayerID,
+                    'Username' => $this->Username,
+                    'RoadsCount' => $this->RoadsCount,
+                    'SoldiersCount' => $this->SoldiersCount,
+                    'Points' => $this->Points );
+  return json_encode($json_obj);
+  }
+
  private function update() {
    $mysqli= Player::connect();
 
@@ -694,7 +694,7 @@ return json_encode($json_obj);
   $result= mysqli_query($mysqli, $SQL);
 
   return $result;
- }
+  }
 
 private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points){
     $this->PlayerID= $PlayerID;
@@ -704,50 +704,50 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
     $this->Points= $Points;
 }
 
-public function getPlayerID(){
-    return $this->PlayerID;
-}
+  public function getPlayerID(){
+      return $this->PlayerID;
+  }
 
-public function getUsername(){
-    return $this->Username;
-}
+  public function getUsername(){
+      return $this->Username;
+  }
 
-public function getRoadsCount(){
-    return $this->RoadsCount;
-}
+  public function getRoadsCount(){
+      return $this->RoadsCount;
+  }
 
-public function getSoldiersCount(){
-    return $this->SoldiersCount;
-}
+  public function getSoldiersCount(){
+      return $this->SoldiersCount;
+  }
 
-public function getPoints(){
-  return $this->Points;
-}
+  public function getPoints(){
+    return $this->Points;
+  }
 
-public function setPlayerID(){
-  $this->PlayerID = $PlayerID;
-  return $this->update();
-}
+  public function setPlayerID(){
+    $this->PlayerID = $PlayerID;
+    return $this->update();
+  }
 
-public function setUsername(){
-  $this->Username = $Username;
-  return $this->update();
-}
+  public function setUsername(){
+    $this->Username = $Username;
+    return $this->update();
+  }
 
-public function setRoadsCount(){
-  $this->RoadsCount = $RoadsCount;
-  return $this->update();
-}
+  public function setRoadsCount(){
+    $this->RoadsCount = $RoadsCount;
+    return $this->update();
+  }
 
-public function setSoldiersCount(){
-  $this->SoldiersCount = $SoldiersCount;
-  return $this->update();
-}
+  public function setSoldiersCount(){
+    $this->SoldiersCount = $SoldiersCount;
+    return $this->update();
+  }
 
-public function setPoints(){
-  $this->Points = $Points;
-  return $this->update();
-}
+  public function setPoints(){
+    $this->Points = $Points;
+    return $this->update();
+  }
 
 }
 
