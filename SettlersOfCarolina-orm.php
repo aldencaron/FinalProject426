@@ -621,7 +621,8 @@ class Player {
           "naeimzdb");
   }
 
-  public function create() {
+  public function create($PlayerID, $Username, $RoadsCount,
+  $SoldiersCount, $Points) {
       $mysqli = Player::connect();
       $res = $mysqli->query(
           "INSERT INTO Players VAlUES('$PlayerID', '$Username',
