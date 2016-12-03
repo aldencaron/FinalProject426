@@ -15,6 +15,7 @@ global $path_components;
 //
 
  $path_components= explode('/', $_SERVER['PATH_INFO']);
+ //error_log(print_r($path_components, true), 3,  "debug.txt");
 
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if($path_components[1]=="Cards"){
@@ -39,7 +40,7 @@ global $path_components;
         // no ID, try returning all IDs.
         //TODO implement .getAllIDs
         header("Content-type: application/json");
-        print("Tried usong getAllIds()");
+        print(json_encode(Card::getALLIDs()));
         exit();
       }
     }
@@ -62,7 +63,7 @@ global $path_components;
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(Player::getALLIDs()));
       exit();
     }
   }
@@ -79,15 +80,15 @@ global $path_components;
       }
       header("Content-type: application/json");
       print($Road_Info->getJSON());
-      //error_log(print_r($Road_Info, true), 3,  "debug.txt");
+      error_log(print_r($Road_Info, true), 3,  "debug.txt");
       exit();
     }
     else{
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
-      exit();
+        print(json_encode(Road::getALLIDs()));
+        exit();
     }
   }
   else if($path_components[1]=="Tiles"){
@@ -132,7 +133,7 @@ global $path_components;
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(College::getALLIDs()));
       exit();
   }
 }
@@ -162,11 +163,11 @@ exit();
           postCard();
         }
   }
+      }
 
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");
   exit();
-}
 
 // If here, none of the above applied and URL could
 // not be interpreted with respect to RESTful conventions.

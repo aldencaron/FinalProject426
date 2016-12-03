@@ -1,3 +1,4 @@
+//TODO update point count 
 $(document).ready(function() {
 
   var size = 60;
@@ -136,26 +137,6 @@ $(document).ready(function() {
     document.getElementById("board").append(canvas);
   };
 
-  var moveRobber = function(event){
-    var board_canvas = document.getElementById("board_canvas");
-    var rect = board_canvas.getBoundingClientRect();
-    var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
-    var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
-
-    // Check hexagons
-    for (var i = 0; i < game.num_pieces; i++) {
-      if (game.checkLeft(game.tiles[i].x_coords[4], x)
-      && game.checkRight(game.tiles[i].x_coords[1], x)
-      && game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y)
-      && game.checkTopRight(game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], game.tiles[i].x_coords[1], game.tiles[i].y_coords[1], x, y)
-      && game.checkBottomLeft(game.tiles[i].x_coords[2], game.tiles[i].y_coords[2], game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], x, y)
-      && game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
-        game.tiles[i].robber = true;
-        break;
-      }
-    }
-  };
-
   // =============================================================================
   // EVENT HANDLERS
   // =============================================================================
@@ -263,13 +244,46 @@ $(document).ready(function() {
     //TODO
   }
 
+  var moveRobber = function(event){
+    partial_turn_over = false;
+    var board_canvas = document.getElementById("board_canvas");
+    var rect = board_canvas.getBoundingClientRect();
+    var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
+    var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
+
+    // Check hexagons
+    for (var i = 0; i < game.num_pieces; i++) {
+      game.tiles[i].robber = false;
+      if (game.checkLeft(game.tiles[i].x_coords[4], x)
+      && game.checkRight(game.tiles[i].x_coords[1], x)
+      && game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y)
+      && game.checkTopRight(game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], game.tiles[i].x_coords[1], game.tiles[i].y_coords[1], x, y)
+      && game.checkBottomLeft(game.tiles[i].x_coords[2], game.tiles[i].y_coords[2], game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], x, y)
+      && game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
+        partial_turn_over = true;
+        game.tiles[i].robber = true;
+      }
+    }
+    if(partial_turn_over){
+      board_canvas.removeEventListener('mousedown', moveRobber);
+      partial_turn_over = false;
+      drawBoard(false, false, false, false, false, 0);
+      game.turn_number++;
+      game.fireEvent(new game.TurnChangeEvent());
+    }
+  };
+
   var diceRoll = function() {
     var current_roll = game.rollDice(2);
+    $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
     //TODO post to server
     if(current_roll == 7){
-      //TODO robber shit yo
+      var board_canvas = document.getElementById("board_canvas");
+      board_canvas.addEventListener('mousedown', moveRobber);
+      drawBoard(false, false, false, true, false, 0);
+      game.fireEvent(new game.RobberEvent());
     }
-    // Is not a robber 
+    // Is not a robber
     else{
       drawBoard(false, false, false, false, true, current_roll);
 
@@ -277,13 +291,15 @@ $(document).ready(function() {
       for(var i = 0; i < game.player.colleges.length; i++){
         for(var j = 0; j < game.player.colleges[i].tiles.length; j++){
           if(game.player.colleges[i].tiles[j].number == current_roll){
-            game.player.cards[game.colleges[i].tiles[j].resources]++;
+            game.player.cards[game.player.colleges[i].tiles[j].resource]++;
             if(game.player.colleges[i].university){
-              game.player.cards[game.colleges[i].tiles[j].resources]++;
+              game.player.cards[game.player.colleges[i].tiles[j].resource]++;
             }
           }
         }
       }
+      game.turn_number++;
+      game.fireEvent(new game.TurnChangeEvent());
     }
   }
   // Query for dice roll from other players
