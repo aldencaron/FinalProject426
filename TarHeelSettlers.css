@@ -28,40 +28,76 @@ body {
 
 #player_one {
     float: left;
-    height: 605px;
+    height: 75%;
     border: 1pt solid black;
     background-color: #07889B;
+    overflow: auto;
 }
 
 #player_two {
     float: right;
-    height: 120px;
+    height: 20%;
     border: 1pt solid black;
     background-color: #E37222;
 }
 
 #player_three {
     float: left;
-    height: 120px;
+    height: 20%;
     border: 1pt solid black;
     background-color: #EEAA7B;
 }
 
 #player_four {
     float: right;
-    height: 120px;
+    height: 20%;
     border: 1pt solid black;
     background-color: #66B9BF;
 }
 
-#buying_info {
-  height: 240px;
+#chat-box {
+  height: 40%;
+  border: 1pt solid black;
+  background-color: #FFAABB;
+  overflow: scroll;
+}
+
+#chat-form{ 
+    position: fixed; 
+    bottom: 10px; 
+    width: 50%; }
+form input {  
+    padding: 10px; 
+    width: 35%; 
+    margin-right: .5%; }
+form button { 
+    width: 8%; 
+    background: 
+    rgb(130, 224, 255); 
+    border: none; 
+    padding: 10px; 
+}
+#messages { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+}
+#messages li { 
+    padding: 5px 10px; 
+}
+#messages li:nth-child(odd) { 
+    background: #eee; 
+}
+
+#buying_info{
+  height: 25%;
   border: 1pt solid black;
   background-color: #FFAABB;
 }
 
+
 #board {
-    height: 550px;
+    height: 552px;
     border: 1pt solid black;
     overflow: auto;
     text-align: center;
@@ -76,10 +112,10 @@ body {
 
 #turn_panel {
     border: 1pt solid black;
-    width: 100%;
     height: 125px;
     text-align: center;
     background-color: #F1F1EF;
+   
 }
 
 #player_one_cards td {

@@ -10,14 +10,18 @@ var SETTLERS_CONSTANTS =
   FINISHED: 6,
 
   // Events
-  TURN_CHANGE_EVENT: 0,
-  TRADE_EVENT: 1
+  SETUP_TURN_EVENT: 0,
+  DICE_ROLL_EVENT:1,
+  ROBBER_EVENT: 2,
+  BUY_EVENT: 3,
+  TRADE_EVENT: 4,
+  TURN_CHANGE_EVENT: 5
 };
 
 
 var SettlersGame = function() {
 
-  var imageNames = ["images/field.jpg", "images/paper.jpg",  "images/mountain.jpg",
+  var imageNames = ["images/field.jpg", "images/paper.jpg",  "images/balltexture.jpg",
   "images/brickwall.jpg", "images/pasta.jpg",  "images/desert.jpg"];
   var images = [];
   for (var i = 0; i < imageNames.length; i++) {
@@ -398,10 +402,38 @@ var SettlersGame = function() {
     }
 
     this.registerEventHandler = function(event_type, handler) {
-      if (registeredEventHandlers[event_type] == null) {
-        registeredEventHandlers[event_type] = new Array();
+      if (this.registered_event_handlers[event_type] == null) {
+        this.registered_event_handlers[event_type] = new Array();
       }
-      registeredEventHandlers[event_type].push(handler);
+      this.registered_event_handlers[event_type].push(handler);
+    }
+    this.fireEvent = function(e){
+      var handlers = this.registered_event_handlers[e.event_type];
+      if(handlers != null){
+        for(var i = 0; i < handlers.length; i++){
+          handlers[i](e);
+        }
+      }
+    }
+
+    // Events
+    this.SetupTurnEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.SETUP_TURN_EVENT;
+    }
+    this.DiceRollEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.DICE_ROLL_EVENT;
+    }
+    this.RobberEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.ROBBERT_EVENT;
+    }
+    this.BuyEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.BUY_EVENT;
+    }
+    this.TradeEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.TRADE_EVENT;
+    }
+    this.TurnChangeEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.TURN_CHANGE_EVENT;
     }
 
     this.startGame = function() {
