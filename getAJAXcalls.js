@@ -8,7 +8,7 @@ $(document).ready(function() {
       this.PlayerID = Player_json.PlayerID;
       this.Username = Player_json.Username;
       this.RoadsCount= Player_json.RoadsCount;
-      this.SoldiersCount = Player_json.RoadsCount;
+      this.SoldiersCount = Player_json.SoldiersCount;
       this.Points = Player_json.Points;
   };
 

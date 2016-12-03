@@ -1,3 +1,4 @@
+//TODO update point count 
 $(document).ready(function() {
 
   var size = 60;
@@ -267,7 +268,8 @@ $(document).ready(function() {
       board_canvas.removeEventListener('mousedown', moveRobber);
       partial_turn_over = false;
       drawBoard(false, false, false, false, false, 0);
-      //game.fireEvent(new game.TurnChangeEvent());
+      game.turn_number++;
+      game.fireEvent(new game.TurnChangeEvent());
     }
   };
 
@@ -296,10 +298,9 @@ $(document).ready(function() {
           }
         }
       }
+      game.turn_number++;
+      game.fireEvent(new game.TurnChangeEvent());
     }
-    if(current_roll==7){alert("who the fuck knows");}
-    game.turn_number++;
-    game.fireEvent(new game.TurnChangeEvent());
   }
   // Query for dice roll from other players
   var diceRollOther = function(current_roll){

@@ -108,7 +108,9 @@ var SettlersGame = function() {
 
   //TODO add player ids when gotten
   var gamePlayer = function() {
-    this.key = Math.floor(Math.random() * 100000);
+    this.id;
+    this.username;
+    this.points = 0;
     this.color = "green";
     this.num_cards = 0;
     this.cards = [];
@@ -131,6 +133,8 @@ var SettlersGame = function() {
     this.colleges = [];
     this.roads = [];
     this.color = color;
+    this.knights_count = 0;
+    this.points;
   }
 
   // Make one board object per game
