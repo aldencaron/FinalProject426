@@ -47,7 +47,15 @@ class Card {
     Roads = $mysqli->real_escape_string($this->Roads),
     Volunteer = $mysqli->real_escape_string($this->Volunteer),
     Monopoly = $mysqli->real_escape_string($this->Monopoly)";
+
    $result= mysqli_query($mysqli, $SQL);
+
+   if ($result == false) {
+       header("HTTP/1.0 503 Service Unavailable");
+       print("An error in the database occurred: " . $mysqli->error);
+       exit();
+
+   }
    return $result;
   }
 
@@ -215,63 +223,63 @@ class Card {
   public function getMonopoly() {
       return $this->Monopoly;
   }
-  public function setPlayerID(){
+  public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
     return $this->update();
   }
-  public function setRam(){
+  public function setRam($Ram){
     $this->Ram = $Ram;
     return $this->update();
   }
-  public function setRamen(){
+  public function setRamen($Ramen){
     $this->Ramen = $Ramen;
     return $this->update();
   }
-  public function setBrick(){
+  public function setBrick($Brick){
     $this->Brick = $Brick;
     return $this->update();
   }
-  public function setBasketball(){
+  public function setBasketball($Basketball){
     $this->Basketball = $Basketball;
     return $this->update();
   }
-  public function setBook(){
+  public function setBook($Book){
     $this->Book = $Book;
     return $this->update();
   }
-  public function setKnight(){
+  public function setKnight($Knight){
     $this->Knight = $Knight;
     return $this->update();
   }
-  public function setOldWell(){
+  public function setOldWell($OldWell){
     $this->OldWell = $OldWell;
     return $this->update();
   }
-  public function setThePit(){
+  public function setThePit($ThePit){
     $this->ThePit = $ThePit;
     return $this->update();
   }
-  public function setDavisLibrary(){
+  public function setDavisLibrary($DavisLibrary){
     $this->DavisLibrary = $DavisLibrary;
     return $this->update();
   }
-  public function setSitterson(){
+  public function setSitterson($Sitterson){
     $this->Sitterson = $Sitterson;
     return $this->update();
   }
-  public function setBellTower(){
+  public function setBellTower($BellTower){
     $this->BellTower = $BellTower;
     return $this->update();
   }
-  public function setRoads(){
+  public function setRoads($Roads){
     $this->Roads = $Roads;
     return $this->update();
   }
-  public function setVolunteer(){
+  public function setVolunteer($Volunteer){
     $this->Volunteer = $Volunteer;
     return $this->update();
   }
-  public function setMonopoly(){
+  public function setMonopoly($Monopoly){
     $this->Monopoly = $Monopoly;
     return $this->update();
   }
@@ -353,11 +361,18 @@ class College {
      $mysqli= College::connect();
 
      $SQL = "Update Colleges set
-     CollegeID = $mysqli->real_escape_string($this->CollegeID),
      PlayerID = $mysqli->real_escape_string($this->PlayerID),
      Available = $mysqli->real_escape_string($this->Available),
-     Available = $mysqli->real_escape_string($this->University)";
+     University = $mysqli->real_escape_string($this->University)";
     $result= mysqli_query($mysqli, $SQL);
+
+    if ($result == false) {
+        header("HTTP/1.0 503 Service Unavailable");
+        print("An error in the database occurred: " . $mysqli->error);
+        exit();
+
+    }
+
     return $result;
    }
 
@@ -384,22 +399,22 @@ class College {
     return $this->University;
   }
 
-  public function setCollegeID(){
+  public function setCollegeID($CollegeID){
     $this->CollegeID = $CollegeID;
     return $this->update();
   }
 
-  public function setPlayerID(){
+  public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
     return $this->update();
   }
 
-  public function setAvailable(){
+  public function setAvailable($Available){
     $this->Available = $Available;
     return $this->update();
   }
 
-  public function setUniversity(){
+  public function setUniversity($University){
     $this->University = $University;
     return $this->update();
   }
@@ -431,8 +446,8 @@ class Tile {
   }
 
   public static function findByID($TileID){
-    $mysqli= Tiles::connect();
-    $SQL= "Select * from Roads where TileID = $TileID ";
+    $mysqli= Tile::connect();
+    $SQL= "Select * from Tiles where TileID = $TileID ";
     $result= mysqli_query($mysqli, $SQL);
 
     if($result){
@@ -471,10 +486,17 @@ class Tile {
   private function update() {
     $mysqli= Tile::connect();
 
-    $SQL = "Update Roads set
-    TileID = $mysqli->real_escape_string($this->TileID),
+    $SQL = "Update Tiles set
     Robber= $mysqli->real_escape_string($this->Robber)";
    $result= mysqli_query($mysqli, $SQL);
+
+   if ($result == false) {
+       header("HTTP/1.0 503 Service Unavailable");
+       print("An error in the database occurred: " . $mysqli->error);
+       exit();
+
+   }
+
    return $result;
   }
 
@@ -488,11 +510,11 @@ class Tile {
  public function getRobber() {
      return $this->Robber;
   }
-  public function setTileID(){
+  public function setTileID($TileID){
     $this->TileID = $TileID;
     return $this->update();
   }
-  public function setRobber(){
+  public function setRobber($Robber){
     $this->Robber = $Robber;
     return $this->update();
   }
@@ -565,11 +587,19 @@ class Road{
    private function update() {
      $mysqli= Road::connect();
 
-     $SQL = "Update Roads set
-     RoadID = $mysqli->real_escape_string($this->RoadID),
+     $SQL =
+     "Update Roads set
      PlayerID = $mysqli->real_escape_string($this->PlayerID),
      Available = $mysqli->real_escape_string($this->Available)";
     $result= mysqli_query($mysqli, $SQL);
+
+    if ($result == false) {
+        header("HTTP/1.0 503 Service Unavailable");
+        print("An error in the database occurred: " . $mysqli->error);
+        exit();
+
+    }
+
     return $result;
    }
   private function __construct($RoadID, $PlayerID, $Available){
@@ -652,7 +682,7 @@ class Player {
         return new Player($Player_info['PlayerID'],
                            $Player_info['Username'],
                            $Player_info['RoadsCount'],
-                           $Player_info['SoldierCount'],
+                           $Player_info['SoldiersCount'],
                            $Player_info['Points']);
       }
     }
@@ -686,14 +716,20 @@ class Player {
    $mysqli= Player::connect();
 
    $SQL = "Update Players set
-   PlayerID = $mysqli->real_escape_string($this->PlayerID),
    Username = '$mysqli->real_escape_string($this->Username)',
    RoadsCount = $mysqli->real_escape_string($this->RoadsCount),
    SoldiersCount = $mysqli->real_escape_string($this->SoldiersCount),
    Points= $mysqli->real_escape_string($this->Points)";
   $result= mysqli_query($mysqli, $SQL);
 
-  return $result;
+
+  if ($result == false) {
+      header("HTTP/1.0 503 Service Unavailable");
+      print("An error in the database occurred: " . $mysqli->error);
+      exit();
+  }
+
+    return $result;
   }
 
 private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points){
@@ -724,27 +760,27 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
     return $this->Points;
   }
 
-  public function setPlayerID(){
+  public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
     return $this->update();
   }
 
-  public function setUsername(){
+  public function setUsername($Username){
     $this->Username = $Username;
     return $this->update();
   }
 
-  public function setRoadsCount(){
+  public function setRoadsCount($RoadsCount){
     $this->RoadsCount = $RoadsCount;
     return $this->update();
   }
 
-  public function setSoldiersCount(){
+  public function setSoldiersCount($SoldiersCount){
     $this->SoldiersCount = $SoldiersCount;
     return $this->update();
   }
 
-  public function setPoints(){
+  public function setPoints($Points){
     $this->Points = $Points;
     return $this->update();
   }

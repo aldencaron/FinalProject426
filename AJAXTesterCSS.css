@@ -1,0 +1,82 @@
+body {
+    font-family: "Ubuntu";
+}
+
+#leftContainer {
+    float: left;
+}
+
+#rightContainer {
+    position: relative;
+    float: right;
+    right: 200px;
+}
+
+form.green {
+    width: 400px;
+    background-color: #A7DDB1;
+    border-radius: 10px;
+}
+
+#form {
+    height: 250px;
+}
+
+#form1 {
+    height: 350px;
+}
+
+#form2 {
+    height: 200px;
+}
+
+#form3 {
+    height: 300px;
+}
+
+#form4 {
+    height: 875px;
+}
+
+label, input {
+    display: block;
+}
+
+label {
+    margin-bottom: 15px;
+}
+
+h1 {
+    display: inline;
+}
+
+h1.title {
+    display: block;
+    text-decoration: underline;
+}
+
+#controls {
+    position: relative;
+    float: right;
+    right: 350px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 150px;
+    height: 500px;
+    background-color: #F6F9FA;
+}
+
+#controls h4 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+#controls input {
+    font-size: 5px;
+    display: inline;
+}
+
+#controls button {
+    position: relative;
+    left: 35px;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <link rel = "stylesheet" type="text/css" href="AJAXTesterCSS.css" />
+        <script src="AJAXTesterJS.js"></script>
+    </head>
+
+    <body>
+        <!-- POST Tester -->
+        <div id = "leftContainer">
+            <h1 class = "title"> AJAX TESTER (POST)</h1>
+
+            <h1> Roads Table</h1>
+            <form id = "form" class = "green" method = "post" action = "SettlersOfCarolina.php/Roads/">
+                <label>
+                    RoadID: <input type = "text" name = "RoadID" />
+                </label>
+                <label>
+                    PlayerID: <input type = "text" name = "PlayerID" />
+                </label>
+                <label>
+                    Available: <input type ="text" name = "Available" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+
+            <br />
+
+            <h1> Players Table </h1>
+            <form id = "form1" class = "green" method = "post" action ="SettlersOfCarolina.php/Players/">
+                <label>
+                    PlayerID: <input type = "text" name = "PlayerID" />
+                </label>
+                <label>
+                    Username: <input type = "text" name = "Username" />
+                </label>
+                <label>
+                    RoadsCount: <input type = "text" name = "RoadsCount" />
+                </label>
+                <label>
+                    SoldiersCount: <input type = "text" name = "SoldiersCount" />
+                </label>
+                <label>
+                    Points: <input type = "text" name = "Points" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+
+            <br />
+
+            <h1> Tiles Table </h1>
+            <form id = "form2" class = "green" method = "get" action ="SettlersOfCarolina.php/Tiles/">
+                <label>
+                    TileID: <input type = "text" name = "TileID" />
+                </label>
+                <label>
+                    Robber: <input type = "text" name = "Robber" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+
+            <br />
+
+            <h1> Colleges Table </h1>
+            <form id = "form3" class = "green" method = "post" action ="SettlersOfCarolina.php/Colleges/">
+                <label>
+                    CollegeID: <input type = "text" name = "CollegeID" />
+                </label>
+                <label>
+                    PlayerID: <input type = "text" name = "PlayerID" />
+                </label>
+                <label>
+                    Available: <input type = "text" name = "Available" />
+                </label>
+                <label>
+                    University: <input type = "text" name = "University" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+
+            <br />
+
+            <h1> Cards Table </h1>
+            <form id = "form4" class = "green" method = "post" action ="SettlersOfCarolina.php/Cards/">
+                <label>
+                    PlayerID: <input type = "text" name = "PlayerID" />
+                </label>
+                <label>
+                    Ram: <input type = "text" name = "Ram" />
+                </label>
+                <label>
+                    Ramen: <input type = "text" name = "Ramen" />
+                </label>
+                <label>
+                    Brick: <input type = "text" name = "Brick" />
+                </label>
+                <label>
+                    Basketball: <input type = "text" name = "Basketball" />
+                </label>
+                <label>
+                    Book: <input type = "text" name = "Book"/>
+                </label>
+                <label>
+                    Knight: <input type = "text" name = "Knight" />
+                </label>
+                <label>
+                    OldWell: <input type = "text" name = "OldWell" />
+                </label>
+                <label>
+                    ThePit: <input type = "text" name = "ThePit" />
+                </label>
+                <label>
+                    DavisLibrary: <input type = "text" name = "DavisLibrary" />
+                </label>
+                <label>
+                    Sitterson: <input type = "text" name = "Sitterson" />
+                </label>
+                <label>
+                    BellTower: <input type = "text" name = "BellTower" />
+                </label>
+                <label>
+                    Roads: <input type = "text" name = "Roads" />
+                </label>
+                <label>
+                    Volunteer: <input type = "text" name = "Volunteer" />
+                </label>
+                <label>
+                    Monopoly: <input type = "text" name = "Monopoly" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- GET Tester -->
+        <div id = "rightContainer">
+            <h1 class = "title"> AJAX TESTER (GET)</h1>
+
+            <h1> Roads Table</h1>
+            <form id = "form" class = "green" method = "get" action = "SettlersOfCarolina.php/Roads/">
+                <label>
+                    RoadID: <input type = "text" name = "RoadID" />
+                </label>
+                <label>
+                    PlayerID: <input type = "text" name = "PlayerID" />
+                </label>
+                <label>
+                    Available: <input type ="text" name = "Available" />
+                </label>
+                <button type = "submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
