@@ -245,7 +245,6 @@ $(document).ready(function() {
 
   var moveRobber = function(event){
     partial_turn_over = false;
-    drawBoard(false, false, false, true, false, 0);
     var board_canvas = document.getElementById("board_canvas");
     var rect = board_canvas.getBoundingClientRect();
     var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
@@ -253,6 +252,7 @@ $(document).ready(function() {
 
     // Check hexagons
     for (var i = 0; i < game.num_pieces; i++) {
+      game.tiles[i].robber = false;
       if (game.checkLeft(game.tiles[i].x_coords[4], x)
       && game.checkRight(game.tiles[i].x_coords[1], x)
       && game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y)
@@ -261,23 +261,24 @@ $(document).ready(function() {
       && game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
         partial_turn_over = true;
         game.tiles[i].robber = true;
-        break;
       }
     }
     if(partial_turn_over){
       board_canvas.removeEventListener('mousedown', moveRobber);
       partial_turn_over = false;
-      game.fireEvent(new game.TurnChangeEvent());
+      drawBoard(false, false, false, false, false, 0);
+      //game.fireEvent(new game.TurnChangeEvent());
     }
   };
 
   var diceRoll = function() {
     var current_roll = game.rollDice(2);
-    $('current_dice_roll_text').text=("Dice Roll: " + current_roll);
+    $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
     //TODO post to server
     if(current_roll == 7){
       var board_canvas = document.getElementById("board_canvas");
       board_canvas.addEventListener('mousedown', moveRobber);
+      drawBoard(false, false, false, true, false, 0);
       game.fireEvent(new game.RobberEvent());
     }
     // Is not a robber
@@ -296,6 +297,7 @@ $(document).ready(function() {
         }
       }
     }
+    if(current_roll==7){alert("who the fuck knows");}
     game.turn_number++;
     game.fireEvent(new game.TurnChangeEvent());
   }

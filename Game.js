@@ -200,24 +200,24 @@ var SettlersGame = function() {
       var new_tile = new gameTile(tile_image, tile_type, tile_number, i);
       switch(new_tile.type){
         case "DESERT":
-          new_tile.robber = true;
-          new_tile.resource = null;
-          break;
+        new_tile.robber = true;
+        new_tile.resource = null;
+        break;
         case "PASTA":
-          new_tile.resource = "ramen";
-          break;
+        new_tile.resource = "ramen";
+        break;
         case "PAPER":
-          new_tile.resource = "book";
-          break;
+        new_tile.resource = "book";
+        break;
         case "FIELD":
-          new_tile.resource = "ram";
-          break;
+        new_tile.resource = "ram";
+        break;
         case "BRICK":
-          new_tile.resource = "brick";
-          break;
+        new_tile.resource = "brick";
+        break;
         case "BALLTEXTURE":
-          new_tile.resource = "basketball";
-          break;
+        new_tile.resource = "basketball";
+        break;
       }
       if(new_tile.type == "DESERT") {
         new_tile.robber = true;
