@@ -72,10 +72,15 @@ alert("hey");
            dataType: "json",
              success: function(Road_json, status, jqXHR) {
                alert("success");
+<<<<<<< HEAD
                alert(Road_json.RoadID);
                  console.log(Road_json);
              ret = Road_json;
               },
+=======
+               getValue(Road_json);
+             return new Road(Road_json);},
+>>>>>>> origin/master
              error: function(jqXHR, status, error) {
              alert(jqXHR.responseText);
        }
@@ -136,6 +141,7 @@ alert("hey");
              });
             }
 
+<<<<<<< HEAD
           function getAllIDs(DBname){
               var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/" + DBname,
@@ -289,4 +295,10 @@ alert("hey");
                }
              });
             }
+=======
+        function postRoadAJAX() {
+
+        }
+
+>>>>>>> origin/master
   });

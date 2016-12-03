@@ -21,6 +21,9 @@ global $path_components;
     if($path_components[1]=="Cards"){
       if($path_components[2]!="" &&
     count($path_components) >= 3){
+        header("HTTP/1.0 500 Server Error");
+        print("Error");
+        exit();
         $PlayerID= intval($path_components[2]);
         $requested_hand = Card::findByID($PlayerID);
         if ($requested_hand == null) {
@@ -292,10 +295,12 @@ exit();
   }
 
   function postRoad(){
+    global $path_components;
     if ((count($path_components) >= 3) &&
         ($path_components[2] != "")) {
           $RoadID= intval($path_components[2]);
-          $Road = Road::findbyID($RoadID);
+          $Road = Road::findByID($RoadID);
+
           if($RoadID==null){
               header("HTTP/1.0 404 Not Found");
               print("Road id: " . $RoadID . " not found while attempting update.");
@@ -718,6 +723,10 @@ exit();
             print("Knight is not given.");
             exit();
         }
+
+        header("HTTP/1.0 500 Server Error");
+        print("OldWell: " . $_request['OldWell']);
+        exit();
 
         $new_OldWell = false;
         if (isset($_REQUEST['OldWell'])) {

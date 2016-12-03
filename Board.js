@@ -7,6 +7,7 @@ $(document).ready(function() {
   var num_sides = 6;
   var board;
   var turn_over = false;
+  var partial_turn_over = false;
 
   var drawBoard = function(available_roads, available_colleges, available_universities, available_robber) {
     // Set up canvas
@@ -45,13 +46,32 @@ $(document).ready(function() {
         ctx.stroke();
 
         // Draw on the number
+        ctx.fillStyle = 'black';
+        if(game.tiles[i].robber){ctx.fillStyle = 'white';}
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = "center";
+        ctx.font = "bold 26px Arial";
         if(!game.tiles[i].robber){
-          ctx.fillStyle = 'black';
-          ctx.textBaseline = 'middle';
-          ctx.textAlign = "center";
-          ctx.font = "bold 26px Arial";
           ctx.fillText(game.tiles[i].number, game.tiles[i].x_center, game.tiles[i].y_center);
         }
+        else{
+          ctx.fillText("R", game.tiles[i].x_center, game.tiles[i].y_center);
+        }
+      }
+      // When robber is on the desert
+      else if(game.tiles[i].number == 0 && game.tiles[i].robber){
+        ctx.beginPath();
+        ctx.arc(game.tiles[i].x_center, game.tiles[i].y_center, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = '#001A57';
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'white';
+        ctx.stroke();
+        ctx.fillStyle = 'white';
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = "center";
+        ctx.font = "bold 26px Arial";
+        ctx.fillText("R", game.tiles[i].x_center, game.tiles[i].y_center);
       }
     }
     // Draw on roads
@@ -112,117 +132,119 @@ $(document).ready(function() {
     document.getElementById("board").append(canvas);
   };
 
-  /*var board_canvas = document.getElementById("board_canvas");
-  board_canvas.addEventListener('mousedown', function(e) {
-  var rect = board_canvas.getBoundingClientRect();
-  var x = (((e.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
-  var y = (((e.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
+  var moveRobber = function(event){
+    var board_canvas = document.getElementById("board_canvas");
+    var rect = board_canvas.getBoundingClientRect();
+    var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
+    var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
 
+    // Check hexagons
+    for (var i = 0; i < game.num_pieces; i++) {
+      if (game.checkLeft(game.tiles[i].x_coords[4], x)
+      && game.checkRight(game.tiles[i].x_coords[1], x)
+      && game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y)
+      && game.checkTopRight(game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], game.tiles[i].x_coords[1], game.tiles[i].y_coords[1], x, y)
+      && game.checkBottomLeft(game.tiles[i].x_coords[2], game.tiles[i].y_coords[2], game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], x, y)
+      && game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
+        game.tiles[i].robber = true;
+        break;
+      }
+    }
+  };
+  // Add colleges at set up of game
+  var addCollegeStart = function(event) {
+    partial_turn_over = false;
+    var rect = board_canvas.getBoundingClientRect();
+    var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
+    var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
 
-  // Check hexagons
-  for (var i = 0; i < game.num_pieces; i++) {
-  if (game.checkLeft(game.tiles[i].x_coords[4], x)
-  && game.checkRight(game.tiles[i].x_coords[1], x)
-  && game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y)
-  && game.checkTopRight(game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], game.tiles[i].x_coords[1], game.tiles[i].y_coords[1], x, y)
-  && game.checkBottomLeft(game.tiles[i].x_coords[2], game.tiles[i].y_coords[2], game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], x, y)
-  && game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
-  alert(game.tiles[i].type + ", " + game.tiles[i].number);
-  break;
-}
-}
-
-})*/
-
-var addCollegeStart = function(event) {
-  turn_over = false;
-  var rect = board_canvas.getBoundingClientRect();
-  var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
-  var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
-
-  // Check colleges
-  for (var i = 0; i < game.num_colleges; i++) {
-    // TODO add in an if statement to check if on the game -- available here only works for first
-    if(game.colleges[i].available){
-      if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
-        turn_over = true;
-        game.colleges[i].used = true;
-        game.colleges[i].available = false;
-        game.player.colleges.push(game.colleges[i]);
-        game.colleges[i].player = game.player;
-        for(var j = 0; j < game.num_roads; j++){
-          game.roads[j].available = false;
-          if(game.roads[j].connections[0].id == game.colleges[i].id){
-            game.roads[j].connections[1].available = false;
-            if(!game.roads[j].used){
-              game.roads[j].available = true;
+    // Check colleges
+    for (var i = 0; i < game.num_colleges; i++) {
+      // TODO add in an if statement to check if on the game -- available here only works for first
+      if(game.colleges[i].available){
+        if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
+          partial_turn_over = true;
+          game.colleges[i].used = true;
+          game.colleges[i].available = false;
+          game.player.colleges.push(game.colleges[i]);
+          game.colleges[i].player = game.player;
+          for(var j = 0; j < game.num_roads; j++){
+            game.roads[j].available = false;
+            if(game.roads[j].connections[0].id == game.colleges[i].id){
+              game.roads[j].connections[1].available = false;
+              if(!game.roads[j].used){
+                game.roads[j].available = true;
+              }
             }
-          }
-          else if(game.roads[j].connections[1].id == game.colleges[i].id){
-            game.roads[j].connections[0].available = false;
-            if(!game.roads[j].used){
-              game.roads[j].available = true;
+            else if(game.roads[j].connections[1].id == game.colleges[i].id){
+              game.roads[j].connections[0].available = false;
+              if(!game.roads[j].used){
+                game.roads[j].available = true;
+              }
             }
+            game.colleges[i].radius = 10;
+            drawBoard(true, false, false, false);
           }
-          game.colleges[i].radius = 10;
-          drawBoard(true, false, false, false);
         }
       }
     }
-  }
-  if(turn_over){
-    board_canvas.removeEventListener('mousedown', addCollegeStart);
-    turn_over = false;
-  }
-};
-var addRoadStart = function(event) {
-  turn_over = false;
-  var rect = board_canvas.getBoundingClientRect();
-  var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
-  var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
+    if(partial_turn_over){
+      board_canvas.removeEventListener('mousedown', addCollegeStart);
+      partial_turn_over = false;
+    }
+  };
+  var addRoadStart = function(event) {
+    partial_turn_over = false;
+    var rect = board_canvas.getBoundingClientRect();
+    var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
+    var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
 
-  // Check roads
-  for (var i = 0; i < game.num_roads; i++) {
-    if(game.roads[i].available){
-      if (game.pointDistance(x, y, game.roads[i].x_center, game.roads[i].y_center) <= game.roads[i].radius) {
-        turn_over = true;
-        game.roads[i].used = true;
-        game.roads[i].available = false;
-        game.player.roads.push(game.roads[i]);
-        game.roads[i].player = game.player;
-        //TODO add new available colleges as we come
-        game.roads[i].radius = 12;
-        drawBoard(false, false, false, false);
+    // Check roads
+    for (var i = 0; i < game.num_roads; i++) {
+      if(game.roads[i].available){
+        if (game.pointDistance(x, y, game.roads[i].x_center, game.roads[i].y_center) <= game.roads[i].radius) {
+          partial_turn_over = true;
+          game.roads[i].used = true;
+          game.roads[i].available = false;
+          game.player.roads.push(game.roads[i]);
+          game.roads[i].player = game.player;
+          //TODO add new available colleges as we come
+          game.roads[i].radius = 12;
+          drawBoard(false, false, false, false);
+        }
       }
     }
+    if(partial_turn_over){
+      board_canvas.removeEventListener('mousedown', addRoadStart);
+      game.turn_number++;
+      if(game.turn_number == 2){
+        game.fireEvent(new game.SetupTurnEvent());
+      }
+    }
+  };
+  var firstTurn = function() {
+    partial_turn_over = false;
+    drawBoard(false, true, false, false);
+    var board_canvas = document.getElementById("board_canvas");
+    board_canvas.addEventListener('mousedown', addCollegeStart);
+    board_canvas.addEventListener('mousedown', addRoadStart);
+  };
+  var updatePlayerInfo = function() {
+
   }
-  if(turn_over){
-    board_canvas.removeEventListener('mousedown', addRoadStart);
-    game.turn_number++;
-    //TODO right here check if other turns have passed or not idk what
-    // while(game.turn_number != 2){hang until is turn again then proceed}
-    if(game.turn_number == 2){firstTurn();}
+  var updateOtherPlayerInfo = function() {
+
   }
-};
-var firstTurn = function() {
-  turn_over = false;
-  drawBoard(false, true, false, false);
-  var board_canvas = document.getElementById("board_canvas");
-  board_canvas.addEventListener('mousedown', addCollegeStart);
-  board_canvas.addEventListener('mousedown', addRoadStart);
-};
-var updatePlayerInfo = function() {
 
-}
-var updateOtherPlayerInfo = function() {
+  var game = new SettlersGame();
+  game.startGame();
+  game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, firstTurn);
+  game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
+  drawBoard(false, false, false, false);
+  /*if(game.turn_number == 1){
+    alert("First Turn");
+    firstTurn();
+  }*/
+  game.fireEvent(new game.SetupTurnEvent());
 
-}
-
-var game = new SettlersGame();
-game.startGame();
-drawBoard(false, false, false, false);
-if(game.turn_number == 1){
-  alert("First Turn");
-  firstTurn();
-}
 });
