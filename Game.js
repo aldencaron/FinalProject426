@@ -55,7 +55,7 @@ var SettlersGame = function() {
   this.status;
 
   // Roll dice
-  this.diceRoll = function(num_dice) {
+  this.rollDice = function(num_dice) {
     var sum = 0;
     for (var i = 0; i < num_dice; i++) {
       sum += (Math.floor(Math.random() * 6) + 1);
@@ -98,31 +98,34 @@ var SettlersGame = function() {
     this.id = id;
     this.image = image;
     this.type = type;
+    this.resource;
     this.number = number;
     this.x_coords = [];
     this.y_coords = [];
     this.colleges = [];
     this.robber = false;
   }
+
   //TODO add player ids when gotten
   var gamePlayer = function() {
     this.key = Math.floor(Math.random() * 100000);
     this.color = "green";
     this.num_cards = 0;
     this.cards = [];
-    this.cards["ramen"] = [];
-    this.cards["book"] = [];
-    this.cards["ram"] = [];
-    this.cards["brick"] = [];
-    this.cards["basketball"] = [];
-    this.cards["knight"] = [];
+    this.cards["ramen"] = 0;
+    this.cards["book"] = 0;
+    this.cards["ram"] = 0;
+    this.cards["brick"] = 0
+    this.cards["basketball"] = 0;
+    this.cards["knight"] = 0;
     this.cards["victory_points"] = [];
-    this.cards["monopoly"] = [];
-    this.cards["volunteer"] = [];
-    this.cards["roads"] = [];
+    this.cards["monopoly"] = 0;
+    this.cards["volunteer"] = 0;
+    this.cards["roads"] = 0;
     this.colleges = [];
     this.roads = [];
   }
+
   var gameOtherPlayer = function(color){
     this.num_cards = 0;
     this.colleges = [];
@@ -155,7 +158,7 @@ var SettlersGame = function() {
 
     // Set up tile types
     this.types = ["FIELD", "FIELD", "FIELD", "FIELD", "PAPER", "PAPER", "PAPER", "PAPER",
-    "MOUNTAIN", "MOUNTAIN", "MOUNTAIN", "BRICK", "BRICK", "BRICK", "PASTA", "PASTA", "PASTA", "PASTA", "DESERT"];
+    "BALLTEXTURE", "BALLTEXTURE", "BALLTEXTURE", "BRICK", "BRICK", "BRICK", "PASTA", "PASTA", "PASTA", "PASTA", "DESERT"];
 
     // Set up tile coordinates
     var x_center, y_center;
@@ -195,8 +198,30 @@ var SettlersGame = function() {
         tile_number = this.numbers_placement[i];
       }
       var new_tile = new gameTile(tile_image, tile_type, tile_number, i);
+      switch(new_tile.type){
+        case "DESERT":
+          new_tile.robber = true;
+          new_tile.resource = null;
+          break;
+        case "PASTA":
+          new_tile.resource = "ramen";
+          break;
+        case "PAPER":
+          new_tile.resource = "book";
+          break;
+        case "FIELD":
+          new_tile.resource = "ram";
+          break;
+        case "BRICK":
+          new_tile.resource = "brick";
+          break;
+        case "BALLTEXTURE":
+          new_tile.resource = "basketball";
+          break;
+      }
       if(new_tile.type == "DESERT") {
         new_tile.robber = true;
+
       }
       this.tiles.push(new_tile);
       new_tile.x_center = x_centers[i];
