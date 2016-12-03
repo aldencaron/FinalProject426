@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  var Road = function Road(Road_json) {
+  var Road = function(Road_json) {
       this.RoadID = Road_json.RoadID;
       this.PlayerID = Road_json.PlayerID;
       this.Available= Road_json.Available;
   };
-
+alert("hey");
   var Player = function Player(Player_json) {
       this.PlayerID = Player_json.PlayerID;
       this.Username = Player_json.Username;
@@ -44,21 +44,43 @@ $(document).ready(function() {
 
   var ret1= getPlayerAJAX(1);
   var ret2= getRoadAJAX(1);
+  console.log(ret2);
+  var count = 0;
+  while(count!=10000000000){
+    count++;
+  }
+  console.log(ret2);
+  alert(ret2);
   var ret3= getCardAJAX(1);
   var ret4= getCollegeAJAX(1);
+  var ret5= updateRoad(ret2);
+  // alert(ret5.RoadID);
+    var ret5= updateRoad(ret2);
+    // alert(ret5.Basketball);
+
+    //calling getRoadAJAX
+    //(want to make stop here)
+    //continues to alert
+    //roadajax aactually finishes in background
 
   function getRoadAJAX(ID){
     var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+    var ret;
+
         $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/"+ ID,
           type: "GET",
            dataType: "json",
              success: function(Road_json, status, jqXHR) {
                alert("success");
-             return new Road(Road_json);},
+               alert(Road_json.RoadID);
+                 console.log(Road_json);
+             ret = Road_json;
+              },
              error: function(jqXHR, status, error) {
              alert(jqXHR.responseText);
        }
      });
+      return ret;
     }
 
     function getPlayerAJAX(ID){
@@ -114,8 +136,157 @@ $(document).ready(function() {
              });
             }
 
-        function postRoadAJAX() {
-            
-        }
-
+          function getAllIDs(DBname){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/" + DBname,
+                  type: "GET",
+                   dataType: "json",
+                     success: function(array, status, jqXHR) {
+                        alert("success");
+                     return array;},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
+            function updateRoad(Road){
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                  $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + Road.RoadID,
+                    type: "GET",
+                     dataType: "json",
+                     data: $(Road).serialize(),
+                     success: function(Road_json, status, jqXHR) {
+                       alert("success");
+                     return new Road(Road_json);},
+                       error: function(jqXHR, status, error) {
+                       alert(jqXHR.responseText);
+                 }
+               });
+              }
+            function createRoad(Road){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads",
+                  type: "GET",
+                   dataType: "json",
+                   data: $(Road).serialize(),
+                   success: function(Road_json, status, jqXHR) {
+                     alert("success");
+                     return new Road(Road_json);},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
+            function updateCard(Card){
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                  $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + Card.CardID,
+                    type: "GET",
+                     dataType: "json",
+                     data: $(Card).serialize(),
+                     success: function(Card_json, status, jqXHR) {
+                       alert("success");
+                     return new Card(Card_json);},
+                       error: function(jqXHR, status, error) {
+                       alert(jqXHR.responseText);
+                 }
+               });
+              }
+            function createCard(Card){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards",
+                  type: "GET",
+                   dataType: "json",
+                   data: $(Card).serialize(),
+                   success: function(Card_json, status, jqXHR) {
+                     alert("success");
+                     return new Card(Card_json);},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
+            function updatePlayer(Player){
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                  $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + Player.PlayerID,
+                    type: "GET",
+                     dataType: "json",
+                     data: $(Player).serialize(),
+                     success: function(Player_json, status, jqXHR) {
+                       alert("success");
+                     return new Player(Player_json);},
+                       error: function(jqXHR, status, error) {
+                       alert(jqXHR.responseText);
+                 }
+               });
+              }
+            function createPlayer(Player){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/Players",
+                  type: "GET",
+                   dataType: "json",
+                   data: $(Player).serialize(),
+                   success: function(Player_json, status, jqXHR) {
+                     alert("success");
+                     return new Player(Player_json);},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
+            function updateCollege(College){
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                  $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges/" + College.CollegeID,
+                    type: "GET",
+                     dataType: "json",
+                     data: $(College).serialize(),
+                     success: function(College_json, status, jqXHR) {
+                       alert("success");
+                     return new College(College_json);},
+                       error: function(jqXHR, status, error) {
+                       alert(jqXHR.responseText);
+                 }
+               });
+              }
+            function createCollege(College){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges",
+                  type: "GET",
+                   dataType: "json",
+                   data: $(College).serialize(),
+                   success: function(College_json, status, jqXHR) {
+                     alert("success");
+                     return new College(College_json);},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
+            function updateTile(Tile){
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                  $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles/" + Tile.TileID,
+                    type: "GET",
+                     dataType: "json",
+                     data: $(Tile).serialize(),
+                     success: function(Tile_json, status, jqXHR) {
+                       alert("success");
+                     return new Tile(Tile_json);},
+                       error: function(jqXHR, status, error) {
+                       alert(jqXHR.responseText);
+                 }
+               });
+              }
+            function createTile(Tile){
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles",
+                  type: "GET",
+                   dataType: "json",
+                   data: $(Tile).serialize(),
+                   success: function(Tile_json, status, jqXHR) {
+                     alert("success");
+                     return new Tile(Tile_json);},
+                     error: function(jqXHR, status, error) {
+                     alert(jqXHR.responseText);
+               }
+             });
+            }
   });

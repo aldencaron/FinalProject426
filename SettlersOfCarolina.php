@@ -11,10 +11,11 @@ require_once('SettlersOfCarolina-orm.php');
 //Classes: Player, Road, Tile, Card, College
 
 //Get/SettlersofCarolina/Cards/PlayerID and POST/SettlersofCarolina/Cards/PlayerID
-//global $path_components;
+global $path_components;
 //
 
  $path_components= explode('/', $_SERVER['PATH_INFO']);
+ error_log(print_r($path_components, true), 3,  "debug.txt");
 
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if($path_components[1]=="Cards"){
@@ -36,7 +37,7 @@ require_once('SettlersOfCarolina-orm.php');
         // no ID, try returning all IDs.
         //TODO implement .getAllIDs
         header("Content-type: application/json");
-        print("Tried usong getAllIds()");
+        print(json_encode(Card::getALLIDs()));
         exit();
       }
     }
@@ -59,7 +60,7 @@ require_once('SettlersOfCarolina-orm.php');
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(Player::getALLIDs()));
       exit();
     }
   }
@@ -76,15 +77,15 @@ require_once('SettlersOfCarolina-orm.php');
       }
       header("Content-type: application/json");
       print($Road_Info->getJSON());
-      //error_log(print_r($Road_Info, true), 3,  "debug.txt");
+      error_log(print_r($Road_Info, true), 3,  "debug.txt");
       exit();
     }
     else{
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
-      exit();
+        print(json_encode(Road::getALLIDs()));
+        exit();
     }
   }
   else if($path_components[1]=="Tiles"){
@@ -129,7 +130,7 @@ require_once('SettlersOfCarolina-orm.php');
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
       header("Content-type: application/json");
-      print("Tried usong getAllIds()");
+      print(json_encode(College::getALLIDs()));
       exit();
   }
 }
@@ -158,24 +159,7 @@ exit();
         else if($DBname=="Cards"){
           postCard();
         }
-  } else {
-      $DBname = $_REQUEST['Database'];
-      if($DBname=="Players"){
-        postPlayer();
       }
-      else if($DBname=="Roads"){
-        postRoad();
-      }
-      else if($DBname=="Colleges"){
-        postCollege();
-      }
-      else if($DBname=="Tiles"){
-        postTile();
-      }
-      else if($DBname=="Cards"){
-        postCard();
-      }
-  }
 
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");

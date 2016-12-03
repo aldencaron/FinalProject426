@@ -67,7 +67,7 @@ class Card {
                         $card_info['Ram'],
                         $card_info['Ramen'],
                         $card_info['Brick'],
-                        $card_info['BasketBall'],
+                        $card_info['Basketball'],
                         $card_info['Book'],
                         $card_info['Knight'],
                         $card_info['OldWell'],
@@ -84,13 +84,13 @@ class Card {
   }
   public static function getAllIDs() {
     $mysqli = Card::connect();
-    $SQL = "Select CardID from Cards where 1";
+    $SQL = "Select PlayerID from Cards where 1";
     $result= mysqli_query($mysqli, $SQL);
     $id_array = array();
 
     if ($result) {
       while ($next_row = $result->fetch_array()) {
-    $id_array[] = intval($next_row['CardID']);
+    $id_array[] = intval($next_row['PlayerID']);
       }
     }
     return $id_array;
@@ -752,4 +752,3 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 }
 
  ?>
- 
