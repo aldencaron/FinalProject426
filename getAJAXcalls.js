@@ -54,6 +54,7 @@ $(document).ready(function() {
            dataType: "json",
              success: function(Road_json, status, jqXHR) {
                alert("success");
+               getValue(Road_json);
              return new Road(Road_json);},
              error: function(jqXHR, status, error) {
              alert(jqXHR.responseText);
@@ -115,7 +116,7 @@ $(document).ready(function() {
             }
 
         function postRoadAJAX() {
-            
+
         }
 
   });

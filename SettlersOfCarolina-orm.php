@@ -525,7 +525,7 @@ class Road{
   public static function findByID($RoadID){
     $mysqli= Road::connect();
     $SQL= "Select * from Roads where RoadID = $RoadID ";
-    $result= mysqli_query($mysqli, $SQL);
+    $result= $mysqli->query($SQL);
 
     if($result){
       if($result->num_rows==0){
@@ -595,12 +595,12 @@ class Road{
     return $this->update();
   }
 
-  public function setPlayerID(){
+  public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
     return $this->update();
   }
 
-  public function setAvailable(){
+  public function setAvailable($Available){
     $this->Available = $Available;
     return $this->update();
   }
@@ -752,4 +752,3 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 }
 
  ?>
- 

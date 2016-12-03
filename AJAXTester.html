@@ -85,7 +85,7 @@
         <h1 class = "title"> AJAX TESTER (POST)</h1>
 
         <h1> Roads Table</h1>
-        <form id = "form" class = "green" method = "post" action = "SettlersOfCarolina.php">
+        <form id = "form" class = "green" method = "post" action = "SettlersOfCarolina.php/Roads/">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Roads" />
             </label>
@@ -129,7 +129,7 @@
         <br />
 
         <h1> Tiles Table </h1>
-        <form id = "form2" class = "green" method = "post" action ="SettlersOfCarolina.php">
+        <form id = "form2" class = "green" method = "get" action ="SettlersOfCarolina.php/Tiles/1">
             <label>
                 Table Name: <input type = "text" name = "Database" value = "Tiles" />
             </label>
@@ -224,9 +224,10 @@
             $("#form").submit(function(event) {
                 event.preventDefault();
                 var formData = $("#form").serialize();
+                var url = $("#form").attr("action") + $("#form input[name='RoadID']").val();
                 $.ajax({
                     type: 'POST',
-                    url: $("#form").attr('action'),
+                    url: url,
                     data: formData
                 }).done(function (response) {
                     console.log(response);
