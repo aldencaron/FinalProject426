@@ -9,7 +9,10 @@ $(document).ready(function() {
   var turn_over = false;
   var partial_turn_over = false;
 
-  var drawBoard = function(available_roads, available_colleges, available_universities, available_robber) {
+  // =============================================================================
+  // BOARD DRAWING
+  // =============================================================================
+  var drawBoard = function(available_roads, available_colleges, available_universities, available_robber, resources, dice_roll) {
     // Set up canvas
     var canvas = document.getElementById("board_canvas");
     canvas.style = "margin: 0 auto;";
@@ -43,6 +46,7 @@ $(document).ready(function() {
         ctx.fill();
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'black';
+        if(resources && game.tiles[i].number == dice_roll){ctx.lineWidth = 10;}
         ctx.stroke();
 
         // Draw on the number
@@ -151,6 +155,11 @@ $(document).ready(function() {
       }
     }
   };
+
+  // =============================================================================
+  // EVENT HANDLERS
+  // =============================================================================
+
   // Add colleges at set up of game
   var addCollegeStart = function(event) {
     partial_turn_over = false;
@@ -167,6 +176,14 @@ $(document).ready(function() {
           game.colleges[i].used = true;
           game.colleges[i].available = false;
           game.player.colleges.push(game.colleges[i]);
+
+          // If second turn give the player resources
+          if(game.turn_number == 2){
+            for(var j = 0; j < game.colleges[i].tiles.length; j++){
+              game.player.cards[game.colleges[i].tiles[j].resource]++;
+            }
+          }
+          // Update roads
           game.colleges[i].player = game.player;
           for(var j = 0; j < game.num_roads; j++){
             game.roads[j].available = false;
@@ -183,7 +200,7 @@ $(document).ready(function() {
               }
             }
             game.colleges[i].radius = 10;
-            drawBoard(true, false, false, false);
+            drawBoard(true, false, false, false, false, 0);
           }
         }
       }
@@ -210,41 +227,93 @@ $(document).ready(function() {
           game.roads[i].player = game.player;
           //TODO add new available colleges as we come
           game.roads[i].radius = 12;
-          drawBoard(false, false, false, false);
+          drawBoard(false, false, false, false, false, 0);
         }
       }
     }
     if(partial_turn_over){
       board_canvas.removeEventListener('mousedown', addRoadStart);
       game.turn_number++;
-      if(game.turn_number == 2){
-        game.fireEvent(new game.SetupTurnEvent());
-      }
+      game.fireEvent(new game.TurnChangeEvent());
     }
   };
-  var firstTurn = function() {
+
+  var setupTurn = function() {
     partial_turn_over = false;
-    drawBoard(false, true, false, false);
+    drawBoard(false, true, false, false, false, 0);
     var board_canvas = document.getElementById("board_canvas");
     board_canvas.addEventListener('mousedown', addCollegeStart);
     board_canvas.addEventListener('mousedown', addRoadStart);
   };
+
+  // Update html for player
   var updatePlayerInfo = function() {
+    //Update card counts
+    $("#player_one_ram_cards").text(game.player.cards["ram"]);
+    $("#player_one_brick_cards").text(game.player.cards["brick"]);
+    $("#player_one_basketball_cards").text(game.player.cards["basketball"]);
+    $("#player_one_ramen_cards").text(game.player.cards["ramen"]);
+    $("#player_one_book_cards").text(game.player.cards["book"]);
+    //Other cards TODO
+    //Total point //TODO
+    //Special points //TODO
 
   }
   var updateOtherPlayerInfo = function() {
+    //TODO
+  }
+
+  var diceRoll = function() {
+    var current_roll = game.rollDice(2);
+    //TODO post to server
+    if(current_roll == 7){
+      //TODO robber shit yo
+    }
+    // Is not a robber 
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+
+      // Add cards
+      for(var i = 0; i < game.player.colleges.length; i++){
+        for(var j = 0; j < game.player.colleges[i].tiles.length; j++){
+          if(game.player.colleges[i].tiles[j].number == current_roll){
+            game.player.cards[game.colleges[i].tiles[j].resources]++;
+            if(game.player.colleges[i].university){
+              game.player.cards[game.colleges[i].tiles[j].resources]++;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Query for dice roll from other players
+  var diceRollOther = function(current_roll){
 
   }
 
+  // =============================================================================
+  // GAME RUNNING
+  // =============================================================================
+
+  var turnChecks = function(){
+    updatePlayerInfo();
+    if(game.turn_number == 1){
+      game.fireEvent(new game.SetupTurnEvent());
+    }
+    else if(game.turn_number == 2){
+      game.fireEvent(new game.SetupTurnEvent());
+    }
+    else if(game.turn_number > 2 && game.turn_number < 8){
+      game.fireEvent(new game.DiceRollEvent());
+    }
+  }
   var game = new SettlersGame();
   game.startGame();
-  game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, firstTurn);
+  game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
-  drawBoard(false, false, false, false);
-  /*if(game.turn_number == 1){
-    alert("First Turn");
-    firstTurn();
-  }*/
-  game.fireEvent(new game.SetupTurnEvent());
+  game.registerEventHandler(SETTLERS_CONSTANTS.TURN_CHANGE_EVENT, turnChecks);
+  game.registerEventHandler(SETTLERS_CONSTANTS.DICE_ROLL_EVENT, diceRoll);
+  drawBoard(false, false, false, false, false, 0);
+  turnChecks();
 
 });
