@@ -121,6 +121,11 @@ var SettlersGame = function() {
     this.cards["basketball"] = 0;
     this.cards["knight"] = 0;
     this.cards["victory_points"] = [];
+    this.cards["victory_points"]["oldwell"] = 0;
+    this.cards["victory_points"]["davis"] = 0;
+    this.cards["victory_points"]["pit"] = 0;
+    this.cards["victory_points"]["sitterson"] = 0;
+    this.cards["victory_points"]["bell"] = 0;
     this.cards["monopoly"] = 0;
     this.cards["volunteer"] = 0;
     this.cards["roads"] = 0;
@@ -168,6 +173,7 @@ var SettlersGame = function() {
     var x_center, y_center;
     var x_centers = [];
     var y_centers = [];
+
 
     for (var x = 0; x < 3; x++) {
       x_centers.push(this.x_initial + (Math.sqrt(3) * this.size * x));

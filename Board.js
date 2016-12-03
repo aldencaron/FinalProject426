@@ -1,4 +1,4 @@
-//TODO update point count 
+//TODO update point count
 $(document).ready(function() {
 
   var size = 60;
@@ -157,7 +157,7 @@ $(document).ready(function() {
           game.colleges[i].used = true;
           game.colleges[i].available = false;
           game.player.colleges.push(game.colleges[i]);
-
+          game.player.points++;
           // If second turn give the player resources
           if(game.turn_number == 2){
             for(var j = 0; j < game.colleges[i].tiles.length; j++){
