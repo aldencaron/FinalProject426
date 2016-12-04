@@ -25,7 +25,7 @@
             }
         } else { // Query was unsuccesful
             header("HTTP/1.0 400 Bad Request");
-            print("Query was unsuccessful");
+            print("Query error: " . $mysqli->error);
             exit();
         }
     }

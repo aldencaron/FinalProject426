@@ -249,6 +249,9 @@ $(document).ready(function() {
             response.responseText == "Query was unsuccessful") {
             $("#consoleOutput").append(response.responseText);
             $("#consoleOutput").append($("<br />"));
+        } else if (response.responseText.indexOf("Query error") > -1) {
+            $output = $("<p>" + response.responseText + "</p>");
+            $("#consoleOutput").append($output);
         }
 
         var arr = [];
