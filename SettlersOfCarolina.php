@@ -21,9 +21,6 @@ global $path_components;
     if($path_components[1]=="Cards"){
       if($path_components[2]!="" &&
     count($path_components) >= 3){
-        header("HTTP/1.0 500 Server Error");
-        print("Error");
-        exit();
         $PlayerID= intval($path_components[2]);
         $requested_hand = Card::findByID($PlayerID);
         if ($requested_hand == null) {
@@ -80,7 +77,7 @@ global $path_components;
       }
       header("Content-type: application/json");
       print($Road_Info->getJSON());
-      error_log(print_r($Road_Info, true), 3,  "debug.txt");
+      //error_log(print_r($Road_Info, true), 3,  "debug.txt");
       exit();
     }
     else{
@@ -162,8 +159,8 @@ exit();
         else if($DBname=="Cards"){
           postCard();
         }
+    }
   }
-      }
 
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");

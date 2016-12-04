@@ -28,11 +28,10 @@ class Card {
   private $Volunteer;
   private $Monopoly;
 
-  private function update() {
+  private function update($PlayerID) {
     $mysqli= Card::connect();
 
     $SQL = "Update Cards set
-    PlayerID = $mysqli->real_escape_string($this->PlayerID),
     Ram = $mysqli->real_escape_string($this->Ram),
     Ramen = $mysqli->real_escape_string($this->Ramen),
     Brick = $mysqli->real_escape_string($this->Brick),
@@ -46,7 +45,8 @@ class Card {
     BellTower = $mysqli->real_escape_string($this->BellTower),
     Roads = $mysqli->real_escape_string($this->Roads),
     Volunteer = $mysqli->real_escape_string($this->Volunteer),
-    Monopoly = $mysqli->real_escape_string($this->Monopoly)";
+    Monopoly = $mysqli->real_escape_string($this->Monopoly)
+    WHERE PlayerID = '$PlayerID'";
 
    $result= mysqli_query($mysqli, $SQL);
 
@@ -225,63 +225,63 @@ class Card {
   }
   public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setRam($Ram){
     $this->Ram = $Ram;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setRamen($Ramen){
     $this->Ramen = $Ramen;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setBrick($Brick){
     $this->Brick = $Brick;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setBasketball($Basketball){
     $this->Basketball = $Basketball;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setBook($Book){
     $this->Book = $Book;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setKnight($Knight){
     $this->Knight = $Knight;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setOldWell($OldWell){
     $this->OldWell = $OldWell;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setThePit($ThePit){
     $this->ThePit = $ThePit;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setDavisLibrary($DavisLibrary){
     $this->DavisLibrary = $DavisLibrary;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setSitterson($Sitterson){
     $this->Sitterson = $Sitterson;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setBellTower($BellTower){
     $this->BellTower = $BellTower;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setRoads($Roads){
     $this->Roads = $Roads;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setVolunteer($Volunteer){
     $this->Volunteer = $Volunteer;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
   public function setMonopoly($Monopoly){
     $this->Monopoly = $Monopoly;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 }
 
@@ -357,13 +357,14 @@ class College {
   return json_encode($json_obj);
   }
 
-   private function update() {
+   private function update($CollegeID) {
      $mysqli= College::connect();
 
      $SQL = "Update Colleges set
      PlayerID = $mysqli->real_escape_string($this->PlayerID),
      Available = $mysqli->real_escape_string($this->Available),
-     University = $mysqli->real_escape_string($this->University)";
+     University = $mysqli->real_escape_string($this->University)
+     WHERE CollegeID = '$CollegeID'";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -401,22 +402,22 @@ class College {
 
   public function setCollegeID($CollegeID){
     $this->CollegeID = $CollegeID;
-    return $this->update();
+    return $this->update($this->CollegeID);
   }
 
   public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
-    return $this->update();
+    return $this->update($this->CollegeID);
   }
 
   public function setAvailable($Available){
     $this->Available = $Available;
-    return $this->update();
+    return $this->update($this->CollegeID);
   }
 
   public function setUniversity($University){
     $this->University = $University;
-    return $this->update();
+    return $this->update($this->CollegeID);
   }
 }
 
@@ -483,11 +484,12 @@ class Tile {
   return json_encode($json_obj);
   }
 
-  private function update() {
+  private function update($TileID) {
     $mysqli= Tile::connect();
 
     $SQL = "Update Tiles set
-    Robber= $mysqli->real_escape_string($this->Robber)";
+    Robber= $mysqli->real_escape_string($this->Robber)
+    WHERE TileID = '$TileID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -512,11 +514,11 @@ class Tile {
   }
   public function setTileID($TileID){
     $this->TileID = $TileID;
-    return $this->update();
+    return $this->update($this->$TileID);
   }
   public function setRobber($Robber){
     $this->Robber = $Robber;
-    return $this->update();
+    return $this->update($this->TileID);
   }
 
 }
@@ -584,13 +586,14 @@ class Road{
   return json_encode($json_obj);
   }
 
-   private function update() {
+   private function update($RoadID) {
      $mysqli= Road::connect();
 
      $SQL =
      "Update Roads set
      PlayerID = $mysqli->real_escape_string($this->PlayerID),
-     Available = $mysqli->real_escape_string($this->Available)";
+     Available = $mysqli->real_escape_string($this->Available)
+     WHERE RoadID = '$RoadID'";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -599,7 +602,6 @@ class Road{
         exit();
 
     }
-
     return $result;
    }
   private function __construct($RoadID, $PlayerID, $Available){
@@ -620,19 +622,19 @@ class Road{
       return $this->Available;
   }
 
-  public function setRoadID(){
+  public function setRoadID($RoadID){
     $this->RoadID = $RoadID;
-    return $this->update();
+    return $this->update($this->RoadID);
   }
 
   public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
-    return $this->update();
+    return $this->update($this->RoadID);
   }
 
   public function setAvailable($Available){
     $this->Available = $Available;
-    return $this->update();
+    return $this->update($this->RoadID);
   }
 
 }
@@ -712,14 +714,15 @@ class Player {
   return json_encode($json_obj);
   }
 
- private function update() {
+ private function update($PlayerID) {
    $mysqli= Player::connect();
 
    $SQL = "Update Players set
    Username = '$mysqli->real_escape_string($this->Username)',
    RoadsCount = $mysqli->real_escape_string($this->RoadsCount),
    SoldiersCount = $mysqli->real_escape_string($this->SoldiersCount),
-   Points= $mysqli->real_escape_string($this->Points)";
+   Points= $mysqli->real_escape_string($this->Points)
+   WHERE PlayerID = '$PlayerID'";
   $result= mysqli_query($mysqli, $SQL);
 
 
@@ -762,27 +765,27 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 
   public function setPlayerID($PlayerID){
     $this->PlayerID = $PlayerID;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 
   public function setUsername($Username){
     $this->Username = $Username;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 
   public function setRoadsCount($RoadsCount){
     $this->RoadsCount = $RoadsCount;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 
   public function setSoldiersCount($SoldiersCount){
     $this->SoldiersCount = $SoldiersCount;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 
   public function setPoints($Points){
     $this->Points = $Points;
-    return $this->update();
+    return $this->update($this->PlayerID);
   }
 
 }

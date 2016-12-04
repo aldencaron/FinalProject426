@@ -3,39 +3,70 @@ body {
 }
 
 #leftContainer {
+    position: relative;
     float: left;
+    width: 240px;
 }
 
 #rightContainer {
     position: relative;
-    float: right;
-    right: 200px;
+    float: left;
+    left: 0px;
+    width: 225px;
 }
+
+#rightmostContainer {
+    position: relative;
+    float: left;
+    left: 10px;
+}
+
+#console {
+    position: absolute;
+    width: 650px;
+    height: 500px;
+    background-color: #151515;
+    color: #7AFA4E;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: courier;
+    overflow: auto;
+}
+
+#flashLabel {
+    position: relative;
+    width: 5px;
+    height: 25px;
+    color: #7AFA4E;
+    border-radius: 5px;
+}
+
+#consoleOutput {
+    word-wrap: break-word;
+}
+
+#consoleDescription {
+    position: absolute;
+    top: 550px;
+    left: 480px;
+    width: 650px;
+}
+
+.consoleLabel {
+    background-color: #DBDBDB;
+    width: 650px;
+    height: 25px;
+    border-radius: 5px;
+    text-align: center;
+    color: #151515;
+    font-size: 16px;
+}
+
 
 form.green {
-    width: 400px;
+    width: 150px;
     background-color: #A7DDB1;
-    border-radius: 10px;
-}
-
-#form {
-    height: 250px;
-}
-
-#form1 {
-    height: 350px;
-}
-
-#form2 {
-    height: 200px;
-}
-
-#form3 {
-    height: 300px;
-}
-
-#form4 {
-    height: 875px;
+    border-radius: 5px;
 }
 
 label, input {
@@ -48,11 +79,15 @@ label {
 
 h1 {
     display: inline;
+    color: #2A2251;
+    font-size: 18px;
 }
 
 h1.title {
     display: block;
     text-decoration: underline;
+    color: #2A2251;
+    font-size: 22px;
 }
 
 #controls {
@@ -74,9 +109,4 @@ h1.title {
 #controls input {
     font-size: 5px;
     display: inline;
-}
-
-#controls button {
-    position: relative;
-    left: 35px;
 }
