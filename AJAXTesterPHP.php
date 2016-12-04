@@ -1,6 +1,6 @@
 <?php
     if (isset($_GET['request'])) {
-        $mysqli = new mysqli("classroom.cs.unc.edu", "mhb", "MAXISCOOL","mhbdb");
+        $mysqli = new mysqli("classroom.cs.unc.edu", "naeimz", "naeim410","naeimzdb");
 
         // Connection error
         if ($mysqli == false) {
