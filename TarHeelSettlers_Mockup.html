@@ -93,6 +93,16 @@
         <div id="turn_panel">    Turn Panel<br>
     Do you want to trade? <button id="trade_button" type="button">Trade</button><br>
     Turn over? <button id="turn_over_button" type="button">Yes</button><br>
+    <script>
+          var socket = io();
+         $("#turn_over_button").click(function() {
+                  socket.emit('turn event' ,"Turn Over!");
+                  alert("Turn Over");
+          });
+          socket.on('turn event', function(msg){
+            alert(msg);
+          });
+      </script>
   </div>
 		</div>
 	<div id="col_three">
