@@ -196,7 +196,7 @@
         <div id = "console">
             <div class = "consoleLabel">Console</div>
             <div id = "flash">
-                <p>dhcp-v000-0-00XYZ:~ user<span id = "flashLabel">$</span></p>
+                <p>dhcp-v000-0-00XYZ:~ <span id = "flashLabel">$</span></p>
             </div>
             <div id = "consoleOutput">
             </div>
@@ -205,12 +205,18 @@
         </div>
     </div>
     <div id = "consoleDescription">
+        <h1 class = "title" style = "text-decoration: none;">Console Description</h1>
         <p>
             Use this console to make SQL queries to the database
             as you normally would. Make sure to enter one-line
             statements. If you want to clear the console, type
             'clear' on a single line. Be sure to have the mouse
-            focus on the console before typing.
+            focus on the console before typing. If you want to insert
+            into your own database, simply go to AJAXTesterPHP.php and
+            change the mysqli connection. Note, you can only change
+            the connection when using the console. The GET and
+            POST interfaces will require the change of all mysqli connections
+            from the SettlersOfCarolina_orm.php.
         </p>
     </div>
 

@@ -115,6 +115,10 @@ $(document).ready(function() {
             setConsoleOutput(response);
         }).fail(function(response) {
             console.log("Error: " + response.responseText);
+            if (response.responseText.indexOf("not found") > - 1) {
+                $("#consoleOutput").append($("<p>" + response.responseText + "</p>"));
+                return;
+            }
             setConsoleOutput(response.responseText);
         });
     });
@@ -133,6 +137,10 @@ $(document).ready(function() {
             setConsoleOutput(response);
         }).fail(function(response) {
             console.log("Error: " + response.responseText);
+            if (response.responseText.indexOf("not found") > - 1) {
+                $("#consoleOutput").append($("<p>" + response.responseText + "</p>"));
+                return;
+            }
             setConsoleOutput(response.responseText);
         });
     });
@@ -151,6 +159,10 @@ $(document).ready(function() {
             setConsoleOutput(response);
         }).fail(function(response) {
             console.log("Error: " + response.responseText);
+            if (response.responseText.indexOf("not found") > - 1) {
+                $("#consoleOutput").append($("<p>" + response.responseText + "</p>"));
+                return;
+            }
             setConsoleOutput(response.responseText);
         });
     });
@@ -169,6 +181,10 @@ $(document).ready(function() {
             setConsoleOutput(response);
         }).fail(function(response) {
             console.log("Error: " + response.responseText);
+            if (response.responseText.indexOf("not found") > - 1) {
+                $("#consoleOutput").append($("<p>" + response.responseText + "</p>"));
+                return;
+            }
             setConsoleOutput(response.responseText);
         });
     });
@@ -187,6 +203,10 @@ $(document).ready(function() {
             setConsoleOutput(response);
         }).fail(function(response) {
             console.log("Error: " + response.responseText);
+            if (response.responseText.indexOf("not found") > - 1) {
+                $("#consoleOutput").append($("<p>" + response.responseText + "</p>"));
+                return;
+            }
             var temp = response.responseText;
             temp = temp.substring(2, temp.length - 1);
             setConsoleOutput(temp);
@@ -216,12 +236,11 @@ $(document).ready(function() {
             str = JSON.stringify(response.responseText);
             str = str.substring(1, str.length);
         } else { // If there is no JSON object returned
-            var counter = 0;
             for (var key in response) {
-                $output = $("<p>" + "[" + counter + "] " + "=> " + key + "</p>");
+                $output = $("<p>" + key + " => " + response[key] + "</p>");
                 $("#consoleOutput").append($output);
-                counter++;
             }
+            $("#consoleOutput").append($output);
             return;
         }
 
