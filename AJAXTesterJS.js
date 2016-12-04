@@ -211,9 +211,21 @@ $(document).ready(function() {
     /* Updates console output */
     function setConsoleOutput(response) {
         // Convert json object to string
-        var str = JSON.stringify(response.responseText);
-        str = str.substring(1, str.length);
+        var str;
+        if (JSON.stringify(response.responseText) != null) {
+            str = JSON.stringify(response.responseText);
+            str = str.substring(1, str.length);
+        } else { // If there is no JSON object returned
+            var counter = 0;
+            for (var key in response) {
+                $output = $("<p>" + "[" + counter + "] " + "=> " + key + "</p>");
+                $("#consoleOutput").append($output);
+                counter++;
+            }
+            return;
+        }
 
+        // Query with no JSON result
         if (response.responseText == "Query was successful" ||
             response.responseText == "Query was unsuccessful") {
             $("#consoleOutput").append(response.responseText);
@@ -245,7 +257,7 @@ $(document).ready(function() {
         for (var i = 0; i < arr.length; i++) {
             $output = $("<p>" + "[" + i + "] " + "=> " + arr[i] + "</p>");
             $("#consoleOutput").append($output);
-            $("#consoleOutput").append($("<br />"));
+            //$("#consoleOutput").append($("<br />"));
         }
     }
 
