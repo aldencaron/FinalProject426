@@ -71,7 +71,6 @@ var cardsAJAX_otherPlayerGame = function(cards_ajax, other_players_game){
 var roadGame_roadAJAX = function(game_road){
   this.RoadID = game_road.id;
   this.PlayerID = game_road.player.id;
-  this.Available = game_road.available;
 }
 /* Update roads on client that other people have bought
 **TODO idk check with max idgaf

@@ -15,7 +15,11 @@ var SETTLERS_CONSTANTS =
   ROBBER_EVENT: 2,
   BUY_EVENT: 3,
   TRADE_EVENT: 4,
-  TURN_CHANGE_EVENT: 5
+  TURN_CHANGE_EVENT: 5,
+  BUY_ROAD_EVENT: 6,
+  BUY_COLLEGE_EVENT: 7,
+  BUY_UNIVERSITY_EVENT: 8,
+  BUY_CARD_EVENT: 9
 };
 
 
@@ -74,6 +78,7 @@ var SettlersGame = function() {
     this.university = false;
     this.radius = 8;
     this.player = null;
+    this.roads = [];
   }
 
   // Road Objects
@@ -405,6 +410,15 @@ var SettlersGame = function() {
       this.other_players.push(new gameOtherPlayer('yellow'));
     }
 
+    // Add roads to colleges
+    for(var k = 0; k < this.colleges.len; k++){
+      for(var l = 0; l < this.roads.len; l++){
+        if(this.roads[l].connections[0] == this.colleges[k] || this.roads[l].connections[1] == this.colleges[k]){
+          this.colleges[k].push(this.roads[l]);
+        }
+      }
+    }
+
     // Helper methods
     this.pointDistance = function(a1, a2, b1, b2) {
       return (Math.sqrt((Math.pow(a1 - b1, 2)) + Math.pow(a2 - b2, 2)));
@@ -469,6 +483,18 @@ var SettlersGame = function() {
     }
     this.TurnChangeEvent = function(){
       this.event_type = SETTLERS_CONSTANTS.TURN_CHANGE_EVENT;
+    }
+    this.BuyRoadEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.BUY_ROAD_EVENT;
+    }
+    this.BuyCollegeEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.BUY_COLLEGE_EVENT;
+    }
+    this.BuyUniversityEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.BUY_UNIVERSITY_EVENT;
+    }
+    this.BuyCardEvent = function(){
+      this.event_type = SETTLERS_CONSTANTS.BUY_CARD_EVENT;
     }
 
     this.startGame = function() {
