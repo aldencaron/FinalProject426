@@ -1,6 +1,14 @@
 <?php
     if (isset($_GET['request'])) {
-        $mysqli = new mysqli("classroom.cs.unc.edu", "naeimz", "naeim410", "naeimzdb");
+        $mysqli = new mysqli("classroom.cs.unc.edu", "mhb", "MAXISCOOL","mhbdb");
+
+        // Connection error
+        if ($mysqli == false) {
+            header("HTTP/1.0 500 Server Error");
+            print("Incorrect mysqli connection");
+            exit();
+        }
+
         $result = $mysqli->query(trim($_GET['request']));
         if ($result) { // Query was successful
             // There is no output (updating database)
