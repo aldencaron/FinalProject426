@@ -210,17 +210,43 @@ $(document).ready(function() {
 
     /* Updates console output */
     function setConsoleOutput(response) {
-        var res = JSON.stringify(response).split(",");
-        res[0] = res[0].replace("{", "");
-        res[res.length - 1] = res[res.length - 1].replace("}", "");
-        res[0] = res[0].replace(/["']/g, "");
-        res[res.length - 1] = res[res.length - 1].replace(/["']/g, "");
+        // Convert json object to string
+        var str = JSON.stringify(response.responseText);
+        str = str.substring(1, str.length);
 
-        for (var i = 0; i < res.length; i++) {
-            var $output = $("<p>" + res[i] + "</p>");
-            $("#consoleOutput").append($output);
+        if (response.responseText == "Query was successful" ||
+            response.responseText == "Query was unsuccessful") {
+            $("#consoleOutput").append(response.responseText);
+            $("#consoleOutput").append($("<br />"));
         }
-        $("#consoleOutput").append($("<br />"));
+
+        var arr = [];
+        var oldIndex = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) == "}") {
+                var substr = str.substring(oldIndex, i + 1);
+                arr.push(substr);
+                oldIndex = i + 1;
+            }
+        }
+
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].charAt(0) == "}") {
+                arr[i] = arr[i].substring(1, arr[i].length);
+            }
+        }
+
+        // Remove slashes
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].replace(/\\/g, "");
+        }
+
+        // Update console
+        for (var i = 0; i < arr.length; i++) {
+            $output = $("<p>" + "[" + i + "] " + "=> " + arr[i] + "</p>");
+            $("#consoleOutput").append($output);
+            $("#consoleOutput").append($("<br />"));
+        }
     }
 
     /* Clears the entire console */
@@ -281,13 +307,16 @@ $(document).ready(function() {
                 $.ajax({
                     type: "GET",
                     url: "AJAXTesterPHP.php/",
-                    data: {"request": input}
+                    data: {"request": input},
+                    dataType: "JSON"
                 }).done(function(response) {
                     console.log(response);
-                    setConsoleOutput(response);
+                    $output = $("<p>" + JSON.stringify(response) + "</p>");
+                    $("#consoleOutput").append($output);
+                    $("#consoleOutput").append($("<br />"));
                 }).fail(function(response) {
                     console.log(response);
-                    setConsoleOutput();
+                    setConsoleOutput(response);
                 });
                 clearUserInput();
             }
