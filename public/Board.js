@@ -153,7 +153,7 @@ $(document).ready(function() {
     for (var i = 0; i < game.num_colleges; i++) {
       if(game.colleges[i].available){
         if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
-          alert("in the loop");
+          
           partial_turn_over = true;
           game.colleges[i].used = true;
           game.colleges[i].available = false;
