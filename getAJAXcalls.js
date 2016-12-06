@@ -105,7 +105,11 @@ $(document).ready(function() {
       return ret;
     }
 
+<<<<<<< HEAD
   //  console.log(getRoadAJAX(1));
+=======
+    //console.log(getRoadAJAX(1));
+>>>>>>> origin/master
 
 
 
