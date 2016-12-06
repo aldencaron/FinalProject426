@@ -40,6 +40,10 @@ $(document).ready(function() {
     this.Available = College_json.Available;
     this.University = College_json.University;
   }
+  var DiceRoll = function DiceRoll(DiceRoll_json){
+    this.DiceID = College_json.DiceID;
+    this.RollResult = College_json.RollResult;
+  }
 })
 
   // var ret1= getPlayerAJAX(1);
