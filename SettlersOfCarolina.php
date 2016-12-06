@@ -931,5 +931,6 @@ exit();
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
 }
+}
 
  ?>
