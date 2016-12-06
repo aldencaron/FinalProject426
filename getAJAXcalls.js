@@ -105,14 +105,6 @@ $(document).ready(function() {
       return ret;
     }
 
-<<<<<<< HEAD
-  //  console.log(getRoadAJAX(1));
-=======
-    //console.log(getRoadAJAX(1));
->>>>>>> origin/master
-
-
-
     // function getPlayerAJAX(ID){
     //   var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
     //       $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/"+ ID,
