@@ -552,6 +552,82 @@ $(document).ready(function() {
         }
     };
 
+    var giveResourceCard = function(card_name){
+      switch(card_name){
+        case "RAM":
+          game.player.cards["ram"]++;
+          return true;
+        case "RAMEN":
+          game.player.cards["ramen"]++;
+          return true;
+        case "BRICK":
+          game.player.cards["brick"]++;
+          return true;
+        case "BASKETBALL":
+          game.player.cards["basketball"]++;
+          return true;
+        case "BOOK":
+          game.player.cards["book"]++;
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    var useKnightCard = function(){
+      if(game.player.cards["knight"] < 1){
+        alert("You do not have a knight card!");
+      }
+      else{
+        game.player.cards["knight"]--;
+        //TODO update solider count for largest army
+        alert("Move the robber!");
+        game.fireEvent(new game.RobberEvent());
+      }
+    }
+    var useRoadCard = function(){
+      if(game.player.cards["roads"] < 1){
+        alert("You do not have a roads card!");
+      }
+      else{
+        game.player.cards["roads"]--;
+        alert("You receive 2 book cards and 2 brick cards with which to build 2 roads!");
+        game.player.cards["book"]+=2;
+        game.player.cards["brick"]+=2;
+        updatePlayerInfo();
+      }
+    }
+
+    var useVolunteerCard = function(){
+      if(game.player.cards["volunteer"] < 1){
+        alert("You do not have a volunteering card!");
+      }
+      else{
+        game.player.cards["volunteer"]--;
+        alert("You volunteered for medical research to make extra cash. You may pick two cards to receive for your troubles.");
+        var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        while(!giveResourceCard(first_card)){
+          first_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        }
+        var second_card = prompt("Pick a second card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        while(!giveResourceCard(second_card)){
+          second_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        }
+      }
+    }
+    var useMonopolyCard = function(){
+      if(game.player.cards["monopoly"] < 1){
+        alert("You do not have a monopoly card!");
+      }
+      else{
+        alert("You declared a monopoly!")
+        var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.")
+        while(!giveResourceCard(monopoly_resource)){
+          monopoly_resource = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        }
+      }
+    }
+
     var diceRoll = function() {
         var current_roll = game.rollDice(2);
         $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
@@ -591,50 +667,6 @@ $(document).ready(function() {
             game.turn_number++;
         }
 
-        useKnightCard = function(){
-          if(game.player.cards["knight"] < 1){
-            alert("You do not have a knight card!");
-          }
-          else{
-            game.player.cards[knight]--;
-            //TODO update solider count for largest army
-            alert("Move the robber!");
-            game.fireEvent(new game.RobberEvent());
-          }
-        }
-        useRoadCard = function(){
-          if(game.player.cards["roads"] < 1){
-            alert("You do not have a roads card!");
-          }
-          else{
-            game.player.cards["roads"]--;
-            alert("You receive 2 book cards and 2 brick cards with which to build 2 roads!");
-            game.player.cards["book"]+=2;
-            game.player.cards["brick"]+=2;
-            updatePlayerInfo();
-          }
-        }
-        useVolunteerCard = function(){
-          if(game.player.cards["volunteer"] < 1){
-            alert("You do not have a volunteering card!");
-          }
-          else{
-            game.player.cards["volunteer"]--;
-            alert("You volunteered for medical research to make extra cash. You may pick two cards to receive for your troubles.");
-            var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK");
-            if(first_card == "RAM"){
-              player.cards["ram"]++;
-            }
-            else if(fist_card == "BRICK"){
-              player.cards["brick"]++;
-            }
-          }
-        }
-        useMonopolyCard = function(){
-          if(game.player.cards["monopoly"] < 1){
-            alert("You do not have a monopoly card!");
-          }
-        }
         // Listeners for buying
         var buy_road = document.getElementById("buy_road");
         buy_road.addEventListener('click', checkBuyRoad);
