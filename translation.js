@@ -10,13 +10,13 @@
 var playerGame_playerAJAX = function (player_game){
   this.PlayerID = player_game.id;
   this.Username = player_game.username;
-  this.RoadsCount = player_game.roads.len;
-  this.SoldiersCount = player_game.cards["knight"].len;
+  this.RoadsCount = player_game.roads.length;
+  this.SoldiersCount = player_game.cards["knight"].length;
   this.Points = player_game.points;
 }
 /* Pass in ajax object return, and game.other_players */
 var otherPlayerAJAX_otherPlayerGame = function(other_player_ajax, other_players_game){
-  for(var i = 0; i < other_players_game.len; i++){
+  for(var i = 0; i < other_players_game.length; i++){
     if(other_players_game[i].id == other_player_ajax.id){
       other_players_game[i].knights_count = other_player_ajax.SoldiersCount;
       other_players_game[i].points = other_player_ajax.Points;
@@ -46,7 +46,7 @@ var playerGame_cardsAJAX = function(game_player){
 
 /* Update client side for other players from server */
 var cardsAJAX_otherPlayerGame = function(cards_ajax, other_players_game){
-  for(var i = 0; i < other_players_game.len; i++){
+  for(var i = 0; i < other_players_game.length; i++){
     if(other_players_game[i].id == other_player_ajax.id){
       other_players_game[i].knights_count = cards_ajax.Knight;
       other_players_game[i].num_cards = cards_ajax.Ram + cards_ajax.Ramen
@@ -86,6 +86,6 @@ var roadGame_roadAJAX = function(game_road){
 var collegeGame_collegeAJAX = function(game_college){
    this.CollegeID = game_college.id;
    this.PlayerID = game_college.player.id;
-   this.Available = game_college.available;
+   this.Available = game_college.too_close;
    this.University = game_college.university;
 }
