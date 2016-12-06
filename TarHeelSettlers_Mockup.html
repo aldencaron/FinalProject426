@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html>
@@ -37,13 +38,17 @@
     <!-- External CSS -->
     <link rel="stylesheet" type="text/css" href="TarHeelSettlers.css">
   <!-- Board drawing -->
+=======
+<!DOCTYPE html>
+<html><head>    <title>Settlers of Carolina</title>    <!--JQuery -->    <script src="http://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js"></script>    <link rel="preload" as="image" href="images/desert.jpg">    <link rel="preload" as="image" href="images/paper.jpg">    <link rel="preload" as="image" href="images/pasta.jpg">    <link rel="preload" as="image" href="images/balltexture.jpg">    <link rel="preload" as="image" href="images/brickwall.jpg">    <link rel="preload" as="image" href="images/field.jpg">    <!-- Socket -->    <script src="/socket.io/socket.io.js"></script>    <!-- External JavaScript -->    <script src="TarHeelSettlers.js"></script>    <!-- External CSS -->    <link rel="stylesheet" type="text/css" href="TarHeelSettlers.css">  <!-- Board drawing -->
+>>>>>>> origin/master
   <script src="getAJAXcalls.js"></script>
   <script src="translation.js"></script>
 	<script src="Game.js"></script>
 	<script src="Board.js"></script>
 </head>
 
-<body>
+<body>    <!-- Obtain username, make player query in database -->    <div id = "startup">        <h1> GAME SETTINGS</h1>        <form id = "settings">            Username: <input type = "text" name = "username"/>        </form>    </div>    <script>        username = "";        $("#settings").on("submit", function(e) {            e.preventDefault();            username = $("#settings input").val();            var id = 0;            function getData() {                $.ajax({                    url: "SettlersOfCarolina.php/Players/",                    type: "GET",                    dataType: "JSON",                    success: function(response) {                        if (response == false) {                            id = 1;                        } else {                            id = response.length + 1;                        }                        var roads_count = 0;                        var soldiers_count = 0;                        var points = 0;                        var form_data = "Username=" + username +                        "&RoadsCount=" + roads_count + "&SoldiersCount=" +                        soldiers_count + "&Points=" + points + "&PlayerID=" + id;                        postPlayer(id, form_data);                    },                    fail: function() {                        console.log("Fail");                    }                });            }            getData();            function postPlayer(id, form_data) {                $.ajax({                    url: "SettlersOfCarolina.php/Players/" + id,                    type: "POST",                    data: form_data,                    success: function(response) {                        console.log(response);                        $("#top_container").show();                        $("#startup").hide();                    }                });            }        });    </script>
 	<div id="top_container">
 		<div id="col_one">
 			<div id="player_one" class="players">
@@ -176,7 +181,10 @@
     </div>
 	</div>
 
+    <!-- Hide container during game startup -->
+    <script>
+        $("#top_container").hide();
+    </script>
 
-</body>
-
+</body>
 </html>

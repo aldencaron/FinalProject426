@@ -213,7 +213,7 @@ exit();
                   if (isset($_REQUEST['PlayerID'])) {
                       $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad PlayerID Request");
                       print("PlayerID is is not given.");
                       exit();
                   }
@@ -222,7 +222,7 @@ exit();
                   if (isset($_REQUEST['Username'])) {
                       $new_Username = trim($_REQUEST['Username']);
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad Username Request");
                       print("Username is is not given.");
                       exit();
                   }
@@ -231,7 +231,7 @@ exit();
                   if (isset($_REQUEST['RoadsCount'])) {
                       $new_RoadsCount = intval(trim($_REQUEST['RoadsCount']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad RoadsCount Request");
                       print("RoadsCount is is not given.");
                       exit();
                   }
@@ -240,7 +240,7 @@ exit();
                   if (isset($_REQUEST['SoldiersCount'])) {
                       $new_SoldiersCount = intval(trim($_REQUEST['SoldiersCount']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad SoldiersCount Request");
                       print("SoldiersCount is is not given.");
                       exit();
                   }
@@ -249,15 +249,16 @@ exit();
                   if (isset($_REQUEST['Points'])) {
                       $new_Points = intval(trim($_REQUEST['Points']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad Points Request");
                       print("Points is is not given.");
                       exit();
                   }
 
-                  if ($new_PlayerID && $new_Username && $new_RoadsCount && $new_SoldiersCount && $new_Points) {
+                  if (isset($_REQUEST['PlayerID']) && isset($_REQUEST['Username']) &&
+                    isset($_REQUEST['Points']) && isset($_REQUEST['SoldiersCount']) &&
+                    isset($_REQUEST['RoadsCount'])) {
                       $Player = Player::create($new_PlayerID, $new_Username,
                       $new_RoadsCount, $new_SoldiersCount, $new_Points);
-
                       if ($Player == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Player was not inserted");
@@ -281,7 +282,7 @@ exit();
           if(isset($_REQUEST['Username'])){
             $new_Username= trim($_REQUEST['Username']);
             if ($new_Username == "") {
-              header("HTTP/1.0 400 Bad Request");
+              header("HTTP/1.0 400 Bad Username Request");
               print("Bad Username");
               exit();
               }
