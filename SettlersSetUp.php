@@ -86,6 +86,11 @@ for($i = 0; $i <= 54; $i++){
     username VARCHAR(50) NOT NULL,
     chat-text TEXT NOT NULL)";
     mysqli_query($mysqli, $SQL);
+
+  $SQL = "Create Table dice-rolls (
+  DiceID int primary key not null auto_increment,
+  Roll-result int)";
+  mysqli_query($mysqli, $SQL);
     
 
  ?>

@@ -5,6 +5,8 @@
 //Tile has TileID, robber
 //Card has CardID and cardnames
 //College has CollegeID, PlayerID, Available, University
+//DiceRoll has DiceID, RollResult
+
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -786,6 +788,108 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
   public function setPoints($Points){
     $this->Points = $Points;
     return $this->update($this->PlayerID);
+  }
+
+}
+
+class DiceRoll {
+  private $DiceID;
+  private $RollResult;
+
+  public static function connect() {
+    return new mysqli("classroom.cs.unc.edu",
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function create($DiceID, $RollResult) {
+      $mysqli = DiceRoll::connect();
+      $res = $mysqli->query(
+          "INSERT INTO DiceRolls VAlUES ('$DiceID', '$RollResult')"
+      );
+
+      if ($res) {} else {
+          header("HTTP/1.0 500 Server Error");
+          print($mysqli->error);
+          exit();
+      }
+      return new DiceRoll($DiceID, $RollResult);
+  }
+
+  public static function findByID($DiceID){
+    $mysqli= DiceRoll::connect();
+    $SQL= "Select * from DiceRolls where DiceID = $DiceID ";
+    $result= mysqli_query($mysqli, $SQL);
+
+    if($result){
+      if($result->num_rows==0){
+        return null;
+      }
+      else{
+        $DiceRoll_info = $result->fetch_array();
+        return new DiceRoll($DiceRoll_info['DiceID'],
+                           $DiceRoll_info['RollResult']);
+      }
+    }
+  return null;
+  }
+
+  public static function getAllIDs() {
+    $mysqli = DiceRoll::connect();
+    $SQL = "Select DiceID from DiceRolls where 1";
+    $result= mysqli_query($mysqli, $SQL);
+    $id_array = array();
+
+    if ($result) {
+      while ($next_row = $result->fetch_array()) {
+    $id_array[] = intval($next_row['DiceID']);
+      }
+    }
+    return $id_array;
+    }
+
+  public function getJSON(){
+  $json_obj = array('DiceID' => $this->DiceID,
+                     'RollResult' => $this->RollResult );
+  return json_encode($json_obj);
+  }
+
+  private function update($DiceID) {
+    $mysqli= DiceRoll::connect();
+
+    $SQL = "Update DiceRolls set
+    RollResult= $mysqli->real_escape_string($this->RollResult
+    WHERE DiceID = '$DiceID'";
+   $result= mysqli_query($mysqli, $SQL);
+
+   if ($result == false) {
+       header("HTTP/1.0 503 Service Unavailable");
+       print("An error in the database occurred: " . $mysqli->error);
+       exit();
+
+   }
+
+   return $result;
+  }
+
+ private function __construct($DiceID, $RollResult){
+ $this->DiceID= $DiceID;
+ $this->RollResult = $RollResult;
+ }
+ public function getDiceID() {
+     return $this->DiceID;
+ }
+ public function getRollResult() {
+     return $this->RollResult;
+  }
+  public function setDiceID($DiceID){
+    $this->DiceID = $DiceID;
+    return $this->update($this->$DiceID);
+  }
+  public function setRollResult($RollResult){
+    $this->RollResult = $RollResult;
+    return $this->update($this->DiceID;
   }
 
 }
