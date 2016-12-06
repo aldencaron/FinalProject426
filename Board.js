@@ -591,6 +591,50 @@ $(document).ready(function() {
             game.turn_number++;
         }
 
+        useKnightCard = function(){
+          if(game.player.cards["knight"] < 1){
+            alert("You do not have a knight card!");
+          }
+          else{
+            game.player.cards[knight]--;
+            //TODO update solider count for largest army
+            alert("Move the robber!");
+            game.fireEvent(new game.RobberEvent());
+          }
+        }
+        useRoadCard = function(){
+          if(game.player.cards["roads"] < 1){
+            alert("You do not have a roads card!");
+          }
+          else{
+            game.player.cards["roads"]--;
+            alert("You receive 2 book cards and 2 brick cards with which to build 2 roads!");
+            game.player.cards["book"]+=2;
+            game.player.cards["brick"]+=2;
+            updatePlayerInfo();
+          }
+        }
+        useVolunteerCard = function(){
+          if(game.player.cards["volunteer"] < 1){
+            alert("You do not have a volunteering card!");
+          }
+          else{
+            game.player.cards["volunteer"]--;
+            alert("You volunteered for medical research to make extra cash. You may pick two cards to receive for your troubles.");
+            var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK");
+            if(first_card == "RAM"){
+              player.cards["ram"]++;
+            }
+            else if(fist_card == "BRICK"){
+              player.cards["brick"]++;
+            }
+          }
+        }
+        useMonopolyCard = function(){
+          if(game.player.cards["monopoly"] < 1){
+            alert("You do not have a monopoly card!");
+          }
+        }
         // Listeners for buying
         var buy_road = document.getElementById("buy_road");
         buy_road.addEventListener('click', checkBuyRoad);
@@ -600,6 +644,14 @@ $(document).ready(function() {
         buy_university.addEventListener('click', checkBuyUniversity);
         var buy_card = document.getElementById("buy_card");
         buy_card.addEventListener('click', checkBuyCard);
+        var use_knight_card = document.getElementById("use_knight");
+        use_knight_card.addEventListener('click', useKnightCard);
+        var use_roads_card = document.getElementById("use_roads");
+        use_roads_card.addEventListener('click', useRoadCard);
+        var use_volunteer_card = document.getElementById("use_volunteer");
+        use_volunteer_card.addEventListener('click', useVolunteerCard);
+        var use_monopoly_card = document.getElementById("use_monopoly");
+        use_monopoly_card.addEventListener('click', useMonopolyCard);
     };
     // Query for dice roll from other players
     var diceRollOther = function(current_roll) {
