@@ -105,7 +105,7 @@ $(document).ready(function() {
       return ret;
     }
 
-    console.log(getRoadAJAX(1));
+    //console.log(getRoadAJAX(1));
 
 
 
