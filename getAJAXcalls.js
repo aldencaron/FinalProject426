@@ -64,7 +64,7 @@ $(document).ready(function() {
     var tester=false;
     var t;
     var c = setInterval(intervalstuff, 1);
-    var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+    var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/naeimz/final";
         $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/1",
           type: "GET",
            dataType: "json",
