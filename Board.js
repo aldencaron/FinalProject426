@@ -143,7 +143,6 @@ $(document).ready(function() {
 
   // Add colleges at set up of game
   var addCollegeStart = function(event) {
-    alert("here2");
     partial_turn_over = false;
     var rect = board_canvas.getBoundingClientRect();
     var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
@@ -153,12 +152,25 @@ $(document).ready(function() {
     for (var i = 0; i < game.num_colleges; i++) {
       if(game.colleges[i].available){
         if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
-          alert("in the loop");
           partial_turn_over = true;
           game.colleges[i].used = true;
           game.colleges[i].available = false;
           game.player.colleges.push(game.colleges[i]);
           game.player.points++;
+          game.colleges[i].player = game.player;
+          game.player.id = 1; //TODO wrong
+          // TODO AJAX CALL to update college
+          $.ajax({url: "/SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
+          type: "GET",
+          dataType: "json",
+          data: $(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          success: function(College_json, status, jqXHR) {
+            alert("success");
+            return new College(College_json);},
+            error: function(jqXHR, status, error) {
+              alert(jqXHR.responseText);
+            }
+          });
           // If second turn give the player resources
           if(game.turn_number == 2){
             for(var j = 0; j < game.colleges[i].tiles.length; j++){
@@ -166,7 +178,6 @@ $(document).ready(function() {
             }
           }
             // Update roads
-            game.colleges[i].player = game.player;
             for(var j = 0; j < game.num_roads; j++){
               game.roads[j].available = false;
               if(game.roads[j].connections[0].id == game.colleges[i].id){
@@ -199,7 +210,6 @@ $(document).ready(function() {
     }
   };
   var addRoadStart = function(event) {
-    alert("here3");
     partial_turn_over = false;
     var rect = board_canvas.getBoundingClientRect();
     var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
@@ -214,7 +224,7 @@ $(document).ready(function() {
           game.roads[i].available = false;
           game.player.roads.push(game.roads[i]);
           game.roads[i].player = game.player;
-          //TODO add new available colleges as we come
+          // TODO ajax call here
           game.roads[i].radius = 12;
           drawBoard(false, false, false, false, false, 0);
         }
@@ -246,7 +256,6 @@ $(document).ready(function() {
   };
 
   var setupTurn = function() {
-    alert("here1");
     partial_turn_over = false;
     drawBoard(false, true, false, false, false, 0);
     var board_canvas = document.getElementById("board_canvas");

@@ -37,8 +37,8 @@ $(document).ready(function() {
   var College = function College(College_json){
     this.CollegeID = College_json.CollegeID;
     this.PlayerID = College_json.PlayerID;
-    this.Available= College_json.Available;
-    this.University= College_json.University;
+    this.Available = College_json.Available;
+    this.University = College_json.University;
   }
 
   // var ret1= getPlayerAJAX(1);
@@ -91,7 +91,7 @@ $(document).ready(function() {
   function getRoadAJAX(ID){
     var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
 
-        $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/"+ ID,
+        $.ajax({url:"/SettlersOfCarolina.php/Roads/"+ ID,
           type: "GET",
            dataType: "json",
              success: function(Road_json, status, jqXHR) {
@@ -105,7 +105,7 @@ $(document).ready(function() {
       return ret;
     }
 
-    console.log(getRoadAJAX(1));
+  //  console.log(getRoadAJAX(1));
 
 
 
