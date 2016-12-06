@@ -153,12 +153,13 @@ $(document).ready(function() {
     for (var i = 0; i < game.num_colleges; i++) {
       if(game.colleges[i].available){
         if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
-          alert("in the loop");
+
           partial_turn_over = true;
           game.colleges[i].used = true;
           game.colleges[i].available = false;
           game.player.colleges.push(game.colleges[i]);
           game.player.points++;
+
           // If second turn give the player resources
           if(game.turn_number == 2){
             for(var j = 0; j < game.colleges[i].tiles.length; j++){
