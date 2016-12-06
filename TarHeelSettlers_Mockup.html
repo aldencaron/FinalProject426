@@ -1,9 +1,27 @@
-<!DOCTYPE html><html><head>    <title>Settlers of Carolina</title>    <!--JQuery -->    <script src="http://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js"></script>    <link rel="preload" as="image" href="images/desert.jpg">    <link rel="preload" as="image" href="images/paper.jpg">    <link rel="preload" as="image" href="images/pasta.jpg">    <link rel="preload" as="image" href="images/balltexture.jpg">    <link rel="preload" as="image" href="images/brickwall.jpg">    <link rel="preload" as="image" href="images/field.jpg">    <!-- Socket -->    <script src="/socket.io/socket.io.js"></script>    <!-- External JavaScript -->    <script src="TarHeelSettlers.js"></script>    <!-- External CSS -->    <link rel="stylesheet" type="text/css" href="TarHeelSettlers.css">  <!-- Board drawing -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Settlers of Carolina</title>
+    <!--JQuery -->
+    <script src="http://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js"></script>
+    <link rel="preload" as="image" href="images/desert.jpg">
+    <link rel="preload" as="image" href="images/paper.jpg">
+    <link rel="preload" as="image" href="images/pasta.jpg">
+    <link rel="preload" as="image" href="images/balltexture.jpg">
+    <link rel="preload" as="image" href="images/brickwall.jpg">
+    <link rel="preload" as="image" href="images/field.jpg">
+
+    <!-- External JavaScript -->
+    <script src="TarHeelSettlers.js"></script>
+    <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" href="public/TarHeelSettlers.css">
+  <!-- Board drawing -->
 	<script src="Game.js"></script>
 	<script src="Board.js"></script>
 </head>
 
-<body>	<div id="top_container">
+<body>
+	<div id="top_container">
 		<div id="col_one">
 			<div id="player_one" class="players">
         <table id="player_one_cards">
@@ -89,20 +107,13 @@
 				<canvas id="board_canvas">
 			</div>
 			<div id="turn_info">Currently Player 2's Turn!<br>
-        <div id="current_dice_roll_text">Dice Roll: </div>      </div>
-        <div id="turn_panel">    Turn Panel<br>
+        <div id="current_dice_roll_text">Dice Roll: </div>
+      </div>
+        <div id="turn_panel">
+    Turn Panel<br>
     Do you want to trade? <button id="trade_button" type="button">Trade</button><br>
     Turn over? <button id="turn_over_button" type="button">Yes</button><br>
-    <script>
-          var socket = io();
-         $("#turn_over_button").click(function() {
-                  socket.emit('turn event' ,"Turn Over!");
-                  alert("Turn Over");
-          });
-          socket.on('turn event', function(msg){
-            alert(msg);
-          });
-      </script>
+
   </div>
 		</div>
 	<div id="col_three">
@@ -130,20 +141,12 @@
           <input id = "m" autocomplete="off">
           <button>Send</button>
         </form>
-         <script>
-            var socket = io();
-            $('form').submit(function(){
-              socket.emit('chat message', $('#m').val());
-              $('#m').val('');
-              return false;
-            });
-            socket.on('chat message', function(msg){
-              $('#messages').append($('<li>').text(msg));
-            });
-        </script>
+
       </div>
     </div>
 	</div>
 
-</body>
-</html>
+
+</body>
+
+</html>
