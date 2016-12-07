@@ -155,8 +155,6 @@ var SettlersGame = function(tiles_array, dev_array) {
   this.gameBoard = function() {
 
     //==========================================================================
-<<<<<<< HEAD
-=======
     // Set up dev cards
     // =========================================================================
 
@@ -185,7 +183,6 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.dev_cards = dev_cards_mixed;
 
     //==========================================================================
->>>>>>> trading, robber bug fix
     // Set up tiles
     // =========================================================================
 
