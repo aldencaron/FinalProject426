@@ -73,8 +73,15 @@ var roadGame_roadAJAX = function(game_road){
   this.PlayerID = game_road.player.id;
 }
 /* Update roads on client that other people have bought
-**TODO idk check with max idgaf
+**
 */
+var roadAJAX_roadGame = function(AJAX_road, game_road, other_players_game){
+  for(var i = 0; i < other_players_game.length; i++){
+    if(other_players_game[i].id == AJAX_road.PlayerID){
+      game_road.player = other_players_game[i];
+    }
+  }
+}
 
 // =============================================================================
 // COLLEGE TRANSITONS

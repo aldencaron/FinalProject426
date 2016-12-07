@@ -2,7 +2,7 @@ $(document).ready(function() {
   var Road = function(Road_json) {
       this.RoadID = Road_json.RoadID;
       this.PlayerID = Road_json.PlayerID;
-      this.Available= Road_json.Available;
+      this.Available = Road_json.Available;
   };
   var Player = function Player(Player_json) {
       this.PlayerID = Player_json.PlayerID;
