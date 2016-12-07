@@ -265,7 +265,6 @@ var addRoadStart = function(event) {
         }
       }
     }
-    game.turn_number++;
     drawBoard(false, false, false, false, false, 0);
     game.fireEvent(new game.TurnChangeEvent());
   }
@@ -576,7 +575,6 @@ var checkBuyUniversity = function() {
       board_canvas.removeEventListener('mousedown', moveRobber);
       partial_turn_over = false;
       drawBoard(false, false, false, false, false, 0);
-      game.turn_number++;
     }
   };
 
@@ -727,7 +725,6 @@ var checkBuyUniversity = function() {
         }
       }
       updatePlayerInfo();
-      game.turn_number++;
     }
     // Listeners for buttons
     var buy_road = document.getElementById("buy_road");
@@ -781,7 +778,6 @@ var checkBuyUniversity = function() {
         }
       }
       updatePlayerInfo();
-      //game.turn_number++;
     }
   };
 
