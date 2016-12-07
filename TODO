@@ -3,6 +3,7 @@ THINGS TO UPDATE CLIENT TO SERVER
   Turn number/turn end
   Player info - points, cards number, special points (eventually)
   Development card index
+  Update other player IDs by going off what our ID is 
 
 THINGS TO UPDATE SERVER TO CLIENT
   Dice roll
@@ -22,4 +23,4 @@ GENERAL THINGS
   (Alden - check on radius drawing)
   Refactor AJAX calls into separate functions client side
   Finish transitions
-  Want to be able to query for a whole table at once 
+  Want to be able to query for a whole table at once

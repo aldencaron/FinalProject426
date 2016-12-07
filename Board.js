@@ -594,10 +594,13 @@ var checkBuyUniversity = function() {
   };
   var updateOtherPlayerInfo = function() {
     //TODO can do in order if I know their IDs but idk
+    $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text(game.other_players[0].num_cards);
     $('#player_two_points').text(game.other_players[0].points);
+    $('#player_three_username').text(game.other_players[1].username);
     $('#player_three_num_cards').text(game.other_players[1].num_cards);
     $('#player_three_points').text(game.other_players[1].points);
+    $('#player_four_username').text(game.other_players[2].username);
     $('#player_four_cards').text(game.other_players[2].num_cards);
     $('#player_four_points').text(game.other_players[2].points);
   };
@@ -843,11 +846,14 @@ var checkBuyUniversity = function() {
     }
   };
 
+  // TODO ALL THESE ARRAY INDEXING MAY BE SUPER WRONG OOPS
+
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
       for(var j = 0; j < game.other_players; j++){
         if(roads_array[i]["PlayerID"] == game.others_players[j].id){
           game.roads[roads_array[i]["RoadID"] - 1].player = game.other_players[j];
+          game.other_players[j].roads.push(game.colleges[roads_array[i]["RoadID"] - 1]);
           game.roads[roads_array[i]["RoadID"] - 1].used = true;
           game.roads[roads_array[i]["RoadID"] - 1].available = false;
         }
@@ -861,6 +867,7 @@ var checkBuyUniversity = function() {
       for(var j = 0; j < game.other_players; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
           game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
+          game.other_players[j].colleges.push(game.colleges[colleges_array[i]["CollegeID"] - 1]);
           game.colleges[colleges_array[i]["CollegeID"] - 1].university = colleges_array[i]["University"];
           game.colleges[colleges_array[i]["CollegeID"] - 1].used = true;
           game.colleges[colleges_array[i]["CollegeID"] - 1].available = false;
@@ -879,6 +886,30 @@ var checkBuyUniversity = function() {
     for(var i = 0; i < tiles_array.length; i++){
       game.tiles[tiles_array[i]["TileID"] - 1].robber = tiles_array[i]["Robber"];
     }
+  }
+
+  var updateOtherPlayers_Players = function(players_array){
+    for(var i = 0; i < game.other_players.length; i++){
+      for(var j = 0; j < players_array.length; j++){
+        if(game.other_players[i].id == players_array[j]["PlayerID"]){
+          game.other_players[i].username = players_array[j]["Username"];
+          game.other_players[i].knights_count = players_array[j]["SolidersCount"];
+          game.other_players[i].points = players_array[j]["Points"];
+        }
+      }
+    }
+    updateOtherPlayerInfo();
+  }
+  var updateOtherPlayers_Cards = function(cards_array){
+    for(var i = 0; i < game.other_players.length; i++){
+      for(var j = 0; j < cards_array.length; j++){
+        if(game.other_players.length == cards_array[j]["PlayerID"]){
+          game.other_players[i].num_cards = cards_array[j]["Ram"] + cards_array[j]["Ramen"]
+           + cards_array[j]["Brick"] + cards_array[j]["Book"] + cards_array[j]["Basketball"];
+        }
+      }
+    }
+    updateOtherPlayerInfo();
   }
 
   var end_turn_button = document.getElementById("turn_over_button");
