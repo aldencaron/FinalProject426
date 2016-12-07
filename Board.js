@@ -794,8 +794,7 @@ var checkBuyUniversity = function() {
   // GAME RUNNING
   // =============================================================================
 
-  // Keep track of turns
-  var turnChecks = function() {
+  var turnEnd = function(){
     updatePlayerInfo();
 
     // Remove all current board listeners
@@ -819,6 +818,18 @@ var checkBuyUniversity = function() {
     use_monopoly_card.removeEventListener('click', useMonopolyCard);
     var trading = document.getElementById("trade_button");
     trade_button.removeEventListener('click', tradeWithBank);
+
+    // TODO UPDATE INFORMATION
+    // TODO UPDATE TURN END
+
+    // Call next turn
+    game.turn_number++;
+    turnChecks();
+  }
+
+  // Keep track of turns
+  var turnChecks = function() {
+    updatePlayerInfo();
 
     // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
@@ -877,7 +888,7 @@ var checkBuyUniversity = function() {
   game.player.id = id;
   game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
-  game.registerEventHandler(SETTLERS_CONSTANTS.TURN_CHANGE_EVENT, turnChecks);
+  game.registerEventHandler(SETTLERS_CONSTANTS.TURN_CHANGE_EVENT, turnEnd);
   game.registerEventHandler(SETTLERS_CONSTANTS.DICE_ROLL_EVENT, diceRoll);
   drawBoard(false, false, false, false, false, 0);
   turnChecks();
