@@ -1,22 +1,17 @@
 <?php
 require_once('SettlersOfCarolina-orm.php');
-
 //NUMBER ONE: Get Multiple People in One Game
 //we need function to update/get cards
 //to get/update roads
 //To get/update colleges
 //To find/set robber
 //Get and update Player Information.
-
 //Classes: Player, Road, Tile, Card, College
-
 //Get/SettlersofCarolina/Cards/PlayerID and POST/SettlersofCarolina/Cards/PlayerID
 global $path_components;
 //
-
  $path_components= explode('/', $_SERVER['PATH_INFO']);
  //error_log(print_r($path_components, true), 3,  "debug.txt");
-
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if($path_components[1]=="Cards"){
       if($path_components[2]!="" &&
@@ -134,28 +129,6 @@ global $path_components;
       exit();
   }
 }
-  else if($path_components[1]=="DiceRolls"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
-      $DiceID= intval($path_components[2]);
-      $DiceRoll_Info = DiceRoll::findByID($DiceID);
-      if ($DiceRoll_Info == null) {
-        // not found.
-        header("HTTP/1.0 404 Not Found");
-        print("Dice id: " . $DiceRoll_info . " not found.");
-        exit();
-      }
-      header("Content-type: application/json");
-      print($DiceRoll_Info->getJSON());
-      exit();
-    }
-    else{
-      // no ID, try returning all IDs.
-      //TODO implement .getAllIDs
-      //header("Content-type: application/json");
-      //print(json_encode(Tile::getAllIDs()));
-      exit();
-    }
 header("HTTP/1.0 404 Not Found");
 print("Get Doesn't match any DB.");
 exit();
@@ -163,7 +136,6 @@ exit();
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ((count($path_components) >= 2) &&
         ($path_components[1] != "")) {
-
         global $DBname;
         $DBname = $path_components[1];
         if($DBname=="Players"){
@@ -181,25 +153,16 @@ exit();
         else if($DBname=="Cards"){
           postCard();
         }
-        else if($DBname=="DiceRolls"){
-          postDiceRoll();
-        }
     }
   }
-
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");
   exit();
-
 // If here, none of the above applied and URL could
 // not be interpreted with respect to RESTful conventions.
-
 //header("HTTP/1.0 400 Bad Request");
 //print("Did not understand URL");
-
-
   //helper functions
-
   function postPlayer(){
       global $path_components;
     if ((count($path_components) >= 3) &&
@@ -217,7 +180,6 @@ exit();
                       print("PlayerID is is not given.");
                       exit();
                   }
-
                   $new_Username = false;
                   if (isset($_REQUEST['Username'])) {
                       $new_Username = trim($_REQUEST['Username']);
@@ -226,7 +188,6 @@ exit();
                       print("Username is is not given.");
                       exit();
                   }
-
                   $new_RoadsCount = false;
                   if (isset($_REQUEST['RoadsCount'])) {
                       $new_RoadsCount = intval(trim($_REQUEST['RoadsCount']));
@@ -235,7 +196,6 @@ exit();
                       print("RoadsCount is is not given.");
                       exit();
                   }
-
                   $new_SoldiersCount = false;
                   if (isset($_REQUEST['SoldiersCount'])) {
                       $new_SoldiersCount = intval(trim($_REQUEST['SoldiersCount']));
@@ -244,7 +204,6 @@ exit();
                       print("SoldiersCount is is not given.");
                       exit();
                   }
-
                   $new_Points = false;
                   if (isset($_REQUEST['Points'])) {
                       $new_Points = intval(trim($_REQUEST['Points']));
@@ -253,7 +212,6 @@ exit();
                       print("Points is is not given.");
                       exit();
                   }
-
                   if (isset($_REQUEST['PlayerID']) && isset($_REQUEST['Username']) &&
                     isset($_REQUEST['Points']) && isset($_REQUEST['SoldiersCount']) &&
                     isset($_REQUEST['RoadsCount'])) {
@@ -271,13 +229,11 @@ exit();
               }
               createPlayer();
           }
-
           //check which values to update
           $new_PlayerID = false;
           if (isset($_REQUEST['PlayerID'])) {
               $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
           }
-
           $new_Username = false;
           if(isset($_REQUEST['Username'])){
             $new_Username= trim($_REQUEST['Username']);
@@ -291,7 +247,6 @@ exit();
           if(isset($_REQUEST['RoadsCount'])){
             $new_RoadsCount=intval(trim($_REQUEST['RoadsCount']));
           }
-
           $new_SoldiersCount= false;
           if(isset($_REQUEST['SoldiersCount'])){
             $new_SoldiersCount=intval(trim($_REQUEST['SoldiersCount']));
@@ -325,15 +280,12 @@ exit();
     print("Did not understand URL");
     exit();
   }
-
   function postRoad(){
     global $path_components;
-
     if ((count($path_components) >= 3) &&
         ($path_components[2] != "")) {
           $RoadID= intval($path_components[2]);
           $Road = Road::findByID($RoadID);
-
           if($Road==null){
               // Inner function goes here
               function createRoad() {
@@ -345,7 +297,6 @@ exit();
                       print("RoadID is not given.");
                       exit();
                   }
-
                   $new_PlayerID = false;
                   if (isset($_REQUEST['PlayerID'])) {
                       $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
@@ -354,17 +305,14 @@ exit();
                       print("PlayerID is not given.");
                       exit();
                   }
-
                   $new_Available = false;
                   if (isset($_REQUEST['Available'])) {
                       $new_Available = intval(trim($_REQUEST['Available']));
-
                   } else {
                       header("HTTP/1.0 400 Bad Request");
                       print("Available is not given.");
                       exit();
                   }
-
                   if ($new_RoadID && $new_PlayerID && $new_Available) {
                       $Road = Road::create($new_RoadID, $new_PlayerID, $new_Available);
                       if ($Road == null) {
@@ -404,7 +352,6 @@ exit();
     print("Did not understand URL");
     exit();
   }
-
   function postCollege(){
     global $path_components;
     if ((count($path_components) >= 3) &&
@@ -422,7 +369,6 @@ exit();
                       print("CollegeID is not given.");
                       exit();
                   }
-
                   $new_PlayerID = false;
                   if (isset($_REQUEST['CollegeID'])) {
                       $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
@@ -431,7 +377,6 @@ exit();
                       print("PlayerID is not given.");
                       exit();
                   }
-
                   $new_Available = false;
                   if (isset($_REQUEST['Available'])) {
                       $new_Available = intval(trim($_REQUEST['Available']));
@@ -440,7 +385,6 @@ exit();
                       print("Available is not given.");
                       exit();
                   }
-
                   $new_University = false;
                   if (isset($_REQUEST['University'])) {
                       $new_University = intval(trim($_REQUEST['University']));
@@ -449,10 +393,8 @@ exit();
                       print("University is not given.");
                       exit();
                   }
-
                   if ($new_CollegeID && $new_PlayerID && $new_Available && $new_University) {
                       $College = College::create($new_CollegeID, $new_PlayerID, $new_Available, $new_University);
-
                       if ($College == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("College was not inserted");
@@ -509,7 +451,6 @@ exit();
         ($path_components[2] != "")) {
           $TileID= intval($path_components[2]);
           $Tile = Tile::findByID($TileID);
-
           if($Tile==null){
               function createTile() {
                   // Create new Tile
@@ -521,7 +462,6 @@ exit();
                       print("TileID is is not given.");
                       exit();
                   }
-
                   $new_Robber = false;
                   if (isset($_REQUEST['Robber'])) {
                       $new_Robber = intval(trim($_REQUEST['Robber']));
@@ -530,10 +470,8 @@ exit();
                       print("Robber is is not given.");
                       exit();
                   }
-
                   if ($new_TileID && $new_Robber) {
                       $Tile = Tile::create($new_TileID, $new_Robber);
-
                       if ($Tile == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Tile was not inserted");
@@ -546,13 +484,11 @@ exit();
               }
               createTile();
           }
-
           //check which values to update
           $new_TileID = false;
           if (isset($_REQUEST["TileID"])) {
               $new_TileID = intval(trim($_REQUEST['TileID']));
           }
-
           $new_Robber=false;
           if(isset($_REQUEST["Robber"])){
             $new_Robber= intval(trim($_REQUEST['Robber']));
@@ -572,7 +508,6 @@ exit();
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
 }
-
   function postCard(){
       global $path_components;
     if ((count($path_components) >= 3) &&
@@ -590,7 +525,6 @@ exit();
                       print("PlayerID is not given.");
                       exit();
                   }
-
                   $new_Ram = false;
                   if (isset($_REQUEST['Ram'])) {
                       $new_Ram = intval(trim($_REQUEST['Ram']));
@@ -599,7 +533,6 @@ exit();
                       print("Ram is not given.");
                       exit();
                   }
-
                   $new_Ramen = false;
                   if (isset($_REQUEST['Ramen'])) {
                       $new_Ramen = intval(trim($_REQUEST['Ramen']));
@@ -608,7 +541,6 @@ exit();
                       print("Ramen is not given.");
                       exit();
                   }
-
                   $new_Brick = false;
                   if (isset($_REQUEST['Brick'])) {
                       $new_Brick = intval(trim($_REQUEST['Brick']));
@@ -617,7 +549,6 @@ exit();
                       print("Brick is not given.");
                       exit();
                   }
-
                   $new_Basketball = false;
                   if (isset($_REQUEST['Basketball'])) {
                       $new_Basketball = intval(trim($_REQUEST['Basketball']));
@@ -626,7 +557,6 @@ exit();
                       print("Basketball is not given.");
                       exit();
                   }
-
                   $new_Book = false;
                   if (isset($_REQUEST['Book'])) {
                       $new_Book = intval(trim($_REQUEST['Book']));
@@ -635,7 +565,6 @@ exit();
                       print("Book is not given.");
                       exit();
                   }
-
                   $new_Knight = false;
                   if (isset($_REQUEST['Knight'])) {
                       $new_Knight = intval(trim($_REQUEST['Knight']));
@@ -644,7 +573,6 @@ exit();
                       print("Knight is not given.");
                       exit();
                   }
-
                   $new_OldWell = false;
                   if (isset($_REQUEST['OldWell'])) {
                       $new_OldWell = intval(trim($_REQUEST['OldWell']));
@@ -653,7 +581,6 @@ exit();
                       print("OldWell is not given.");
                       exit();
                   }
-
                   $new_ThePit = false;
                   if (isset($_REQUEST['ThePit'])) {
                       $new_ThePit = intval(trim($_REQUEST['ThePit']));
@@ -662,7 +589,6 @@ exit();
                       print("ThePit is not given.");
                       exit();
                   }
-
                   $new_DavisLibrary = false;
                   if (isset($_REQUEST['DavisLibrary'])) {
                       $new_DavisLibrary = intval(trim($_REQUEST['DavisLibrary']));
@@ -671,7 +597,6 @@ exit();
                       print("DavisLibrary is not given.");
                       exit();
                   }
-
                   $new_Sitterson = false;
                   if (isset($_REQUEST['Sitterson'])) {
                       $new_Sitterson = intval(trim($_REQUEST['Sitterson']));
@@ -680,7 +605,6 @@ exit();
                       print("Sitterson is not given.");
                       exit();
                   }
-
                   $new_BellTower = false;
                   if (isset($_REQUEST['BellTower'])) {
                       $new_BellTower = intval(trim($_REQUEST['BellTower']));
@@ -689,7 +613,6 @@ exit();
                       print("BellTower is not given.");
                       exit();
                   }
-
                   $new_Roads = false;
                   if (isset($_REQUEST['Roads'])) {
                       $new_Roads = intval(trim($_REQUEST['Roads']));
@@ -698,7 +621,6 @@ exit();
                       print("Roads is not given.");
                       exit();
                   }
-
                   $new_Volunteer = false;
                   if (isset($_REQUEST['Volunteer'])) {
                       $new_Volunteer = intval(trim($_REQUEST['Volunteer']));
@@ -707,7 +629,6 @@ exit();
                       print("Volunteer is not given.");
                       exit();
                   }
-
                   $new_Monopoly = false;
                   if (isset($_REQUEST['Monopoly'])) {
                       $new_Monopoly = intval(trim($_REQUEST['Monopoly']));
@@ -716,18 +637,15 @@ exit();
                       print("Monopoly is not given.");
                       exit();
                   }
-
                   if ($new_PlayerID && $new_Ram && $new_Ramen && $new_Brick
                       && $new_Basketball && $new_Book && $new_Knight && $new_OldWell
                       && $new_ThePit && $new_DavisLibrary && $new_Sitterson
                       && $new_BellTower && $new_Roads && $new_Volunteer
                       && $new_Monopoly) {
-
                       $Card = Card::create($new_PlayerID, $new_Ram, $new_Ramen, $new_Brick,
                       $new_Basketball, $new_Book, $new_Knight, $new_OldWell, $new_ThePit,
                       $new_DavisLibrary, $new_Sitterson, $new_BellTower, $new_Roads,
                       $new_Volunteer, $new_Monopoly);
-
                       if ($Card == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Card was not inserted");
@@ -740,13 +658,11 @@ exit();
               }
               createCard();
           }
-
           //check which values to update
           $new_PlayerID = false;
           if (isset($_REQUEST['PlayerID'])) {
               $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
           }
-
           $new_Ram=false;
           if(isset($_REQUEST['Ram'])){
             $new_Ram= intval(trim($_REQUEST['Ram']));
@@ -771,7 +687,6 @@ exit();
           if(isset($_REQUEST['Knight'])){
             $new_Knight= intval(trim($_REQUEST['Knight']));
           }
-
           $new_OldWell=false;
           if(isset($_REQUEST['OldWell'])){
             $new_OldWell= intval(trim($_REQUEST['OldWell']));
@@ -804,7 +719,6 @@ exit();
           if(isset($_REQUEST['Monopoly'])){
             $new_Monopoly= intval(trim($_REQUEST['Monopoly']));
           }
-
           //update via ORM
           if ($new_PlayerID != false) {
               $Card->setPlayerID($new_PlayerID);
@@ -851,7 +765,6 @@ exit();
           if($new_Monopoly != false){
             $Card->setMonopoly($new_Monopoly);
           }
-
              //return json
             header("Content-type: application/json");
             print($Card->getJSON());
@@ -861,76 +774,4 @@ exit();
     print("Did not understand URL");
     exit();
   }
-
-    function postDiceRoll(){
-      global $path_components;
-    if ((count($path_components) >= 3) &&
-        ($path_components[2] != "")) {
-          $DiceID= intval($path_components[2]);
-          $DiceRoll = DiceRoll::findByID($DiceID);
-
-          if($DiceRoll==null){
-              function createDiceRoll() {
-                  // Create new Tile
-                  $new_DiceID = false;
-                  if (isset($_REQUEST['DiceID'])) {
-                      $new_DiceID = intval(trim($_REQUEST['DiceID']));
-                  } else {
-                      header("HTTP/1.0 400 Bad Request");
-                      print("DiceID is is not given.");
-                      exit();
-                  }
-
-                  $new_RollResult = false;
-                  if (isset($_REQUEST['RollResult'])) {
-                      $new_RollResult = intval(trim($_REQUEST['RollResult']));
-                  } else {
-                      header("HTTP/1.0 400 Bad Request");
-                      print("RollResult is is not given.");
-                      exit();
-                  }
-
-                  if ($new_DiceID && $new_RollResult) {
-                      $DiceRoll = DiceRoll::create($new_DiceID, $new_RollResult);
-
-                      if ($DiceRoll == null) {
-                          header("HTTP/1.0 500 Server Error");
-                          print("DiceRoll was not inserted");
-                          exit();
-                      }
-                      header("Content-type: application/json");
-                      print($Tile->getJSON());
-                      exit();
-                  }
-              }
-              createDiceRoll();
-          }
-
-          //check which values to update
-          $new_DiceID = false;
-          if (isset($_REQUEST["DiceID"])) {
-              $new_DiceID = intval(trim($_REQUEST['DiceID']));
-          }
-
-          $new_RollResult=false;
-          if(isset($_REQUEST["RollResult"])){
-            $new_RollResult= intval(trim($_REQUEST['RollResult']));
-          }
-          //update via ORM
-          if ($new_DiceID != false) {
-              $Dice->setDiceID($new_DiceID);
-          }
-          if($new_RollResult != false){
-            $DiceRoll->setRollResult($new_RollResult);
-          }
-             //return json
-            header("Content-type: application/json");
-            print($Tile->getJSON());
-            exit();
-      }
-    header("HTTP/1.0 400 Bad Request");
-    print("Did not understand URL");
-}
-}
-
  ?>
