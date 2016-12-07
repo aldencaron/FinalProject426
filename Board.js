@@ -843,6 +843,44 @@ var checkBuyUniversity = function() {
     }
   };
 
+  var updateRoads = function(roads_array){
+    for(var i = 0; i < roads_array.length; i++){
+      for(var j = 0; j < game.other_players; j++){
+        if(roads_array[i]["PlayerID"] == game.others_players[j].id){
+          game.roads[roads_array[i]["RoadID"] - 1].player = game.other_players[j];
+          game.roads[roads_array[i]["RoadID"] - 1].used = true;
+          game.roads[roads_array[i]["RoadID"] - 1].available = false;
+        }
+      }
+    }
+    drawBoard(false, false, false, false, false, 0);
+  }
+  // Also updates universities
+  var updateColleges = function(colleges_array){
+    for(var i = 0; i < colleges_array.length; i++){
+      for(var j = 0; j < game.other_players; j++){
+        if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
+          game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
+          game.colleges[colleges_array[i]["CollegeID"] - 1].university = colleges_array[i]["University"];
+          game.colleges[colleges_array[i]["CollegeID"] - 1].used = true;
+          game.colleges[colleges_array[i]["CollegeID"] - 1].available = false;
+          for(var k = 0; k < game.colleges[colleges_array[i]["CollegeID"] - 1].roads.length; k++){
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[0].available = false;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[1].available = false;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[0].too_close = true;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[1].too_close = true;
+          }
+        }
+      }
+    }
+    drawBoard(false, false, false, false, false, 0);
+  }
+  var updateTiles = function(tiles_array){
+    for(var i = 0; i < tiles_array.length; i++){
+      game.tiles[tiles_array[i]["TileID"] - 1].robber = tiles_array[i]["Robber"];
+    }
+  }
+
   var end_turn_button = document.getElementById("turn_over_button");
   end_turn_button.addEventListener('click', function() {
     game.fireEvent(new game.TurnChangeEvent())

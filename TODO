@@ -22,3 +22,4 @@ GENERAL THINGS
   (Alden - check on radius drawing)
   Refactor AJAX calls into separate functions client side
   Finish transitions
+  Want to be able to query for a whole table at once 
