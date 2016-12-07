@@ -889,7 +889,7 @@ class DiceRoll {
   }
   public function setRollResult($RollResult){
     $this->RollResult = $RollResult;
-    return $this->update($this->DiceID;
+    return $this->update($this->DiceID);
   }
 
 }

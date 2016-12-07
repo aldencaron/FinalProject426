@@ -128,7 +128,22 @@ global $path_components;
       print(json_encode(College::getALLIDs()));
       exit();
   }
-}
+}  else if($path_components[1]=="DiceRolls"){
+        if($path_components[2]!="" &&
+        count($path_components) >= 3) {
+            $DiceID= intval($path_components[2]);
+            $DiceRoll_Info = DiceRoll::findByID($DiceID);
+            if ($DiceRoll_Info == null) {
+                // not found.
+                header("HTTP/1.0 404 Not Found");
+                print("Dice id: " . $DiceRoll_info . " not found.");
+                exit();
+            }
+      header("Content-type: application/json");
+      print($DiceRoll_Info->getJSON());
+      exit();
+    }
+ }
 header("HTTP/1.0 404 Not Found");
 print("Get Doesn't match any DB.");
 exit();
@@ -152,6 +167,8 @@ exit();
         }
         else if($DBname=="Cards"){
           postCard();
+        } else if($DBname=="DiceRolls"){
+          postDiceRoll();
         }
     }
   }
@@ -768,6 +785,74 @@ exit();
              //return json
             header("Content-type: application/json");
             print($Card->getJSON());
+            exit();
+      }
+
+      function postDiceRoll(){
+      global $path_components;
+        if ((count($path_components) >= 3) &&
+            ($path_components[2] != "")) {
+            $DiceID= intval($path_components[2]);
+            $DiceRoll = DiceRoll::findByID($DiceID);
+
+          if($DiceRoll==null){
+              function createDiceRoll() {
+                  // Create new Tile
+                  $new_DiceID = false;
+                  if (isset($_REQUEST['DiceID'])) {
+                      $new_DiceID = intval(trim($_REQUEST['DiceID']));
+                  } else {
+                      header("HTTP/1.0 400 Bad Request");
+                      print("DiceID is is not given.");
+                      exit();
+                  }
+
+                  $new_RollResult = false;
+                  if (isset($_REQUEST['RollResult'])) {
+                      $new_RollResult = intval(trim($_REQUEST['RollResult']));
+                  } else {
+                      header("HTTP/1.0 400 Bad Request");
+                      print("RollResult is is not given.");
+                      exit();
+                  }
+
+                  if ($new_DiceID && $new_RollResult) {
+                      $DiceRoll = DiceRoll::create($new_DiceID, $new_RollResult);
+
+                      if ($DiceRoll == null) {
+                          header("HTTP/1.0 500 Server Error");
+                          print("DiceRoll was not inserted");
+                          exit();
+                      }
+                      header("Content-type: application/json");
+                      print($DiceRoll->getJSON());
+                      exit();
+                  }
+              }
+              createDiceRoll();
+          }
+      }
+
+          //check which values to update
+          $new_DiceID = false;
+          if (isset($_REQUEST["DiceID"])) {
+              $new_DiceID = intval(trim($_REQUEST['DiceID']));
+          }
+
+          $new_RollResult=false;
+          if(isset($_REQUEST["RollResult"])){
+            $new_RollResult= intval(trim($_REQUEST['RollResult']));
+          }
+          //update via ORM
+          if ($new_DiceID != false) {
+              $Dice->setDiceID($new_DiceID);
+          }
+          if($new_RollResult != false){
+            $DiceRoll->setRollResult($new_RollResult);
+          }
+             //return json
+            header("Content-type: application/json");
+            print($DiceRoll->getJSON());
             exit();
       }
     header("HTTP/1.0 400 Bad Request");
