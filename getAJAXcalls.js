@@ -64,7 +64,6 @@ function getRoad(ID){
    });
     return ret;
   }
-
   function updateRoad(Road){
       var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
         $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + Road.RoadID,
@@ -80,7 +79,7 @@ function getRoad(ID){
        }
      });
     }
-   var ret1= getRoadAJAX(1);
+   var ret1= getRoad(1);
    c = setInterval(function(){
     if(typeof ret1!= 'undefined'){
       //console.log(ret1);
@@ -109,6 +108,7 @@ function getRoad(ID){
         $.ajax({url:"/SettlersOfCarolina.php/Roads/"+ ID,
           type: "GET",
            dataType: "json",
+           async:false,
              success: function(Road_json, status, jqXHR) {
                  console.log(Road_json);
              ret = Road_json;
@@ -184,10 +184,13 @@ function getRoad(ID){
                }
              });
             }
+
+
+
             function updateRoad(Road){
                 var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + Road.RoadID,
-                    type: "GET",
+                    type: "PSOT",
                      dataType: "json",
                      data: $(Road).serialize(),
                      success: function(Road_json, status, jqXHR) {

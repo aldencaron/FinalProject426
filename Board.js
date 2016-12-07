@@ -166,17 +166,27 @@ $(document).ready(function() {
           game.player.points++;
           game.colleges[i].player = game.player;
           // AJAX POST to update college
-          /*$.ajax({url: "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
+          //"CollegeID=5&PlayerID=1&Avialable=1&Unviersity=1"
+          //var temp = new collegeGame_collegeAJAX(game.colleges[i]);
+          //alert(temp.CollegeID);
+          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
+          $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" +  5,//game.colleges[i].id,
           type: "POST",
           dataType: "json",
-          data: $(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          async: false,
+          data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
           alert("success");
-        }
+        },
         error: function(jqXHR, status, error) {
         alert(jqXHR.responseText);
       }
-    });*/
+    });
+    function collegeSerialize(College){
+
+    }
+
+
     // If second turn give the player resources
     if (game.turn_number == 2) {
       for (var j = 0; j < game.colleges[i].tiles.length; j++) {

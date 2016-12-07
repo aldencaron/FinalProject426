@@ -95,4 +95,7 @@ var collegeGame_collegeAJAX = function(game_college){
    this.PlayerID = game_college.player.id;
    this.Available = game_college.too_close;
    this.University = game_college.university;
+
+   return "CollegeID=" + College.CollegeID + "&PlayerID=" + College.PlayerID +
+   "&Available=" + College.Available + "&Univerisity=" + College.University;
 }
