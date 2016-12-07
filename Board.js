@@ -332,6 +332,18 @@ var buyRoad = function(event) {
         game.player.roads.push(game.roads[i]);
         game.roads[i].player = game.player;
         game.roads[i].radius = 12;
+        $.ajax({url:url_base + "SettlersOfCarolina.php/Roads/" + game.roads[i].id,
+          type: "POST",
+          dataType: "json",
+          async: false,
+          data: roadsGame_roadsAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          success: function(College_json, status, jqXHR) {
+          alert("success");
+        },
+        error: function(jqXHR, status, error) {
+        alert(jqXHR.responseText);
+        }
+      });
 
         drawBoard(false, false, false, false, false, 0);
       }
