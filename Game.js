@@ -22,7 +22,7 @@ var SETTLERS_CONSTANTS =
 // =============================================================================
 // Full Game Object
 // =============================================================================
-var SettlersGame = function() {
+var SettlersGame = function(tiles_array, dev_array) {
 
   // Set up images
   var imageNames = ["images/field.jpg", "images/paper.jpg",  "images/balltexture.jpg",
@@ -41,7 +41,7 @@ var SettlersGame = function() {
   this.y_initial = 98;
   this.num_sides = 6;
 
-  this.num_pieces = 19;
+  this.num_tiles = 19;
   this.num_colleges = 54;
   this.num_roads = 73;
 
@@ -53,11 +53,9 @@ var SettlersGame = function() {
   this.board;
   this.player;
   this.other_players = [];
-  this.dev_cards = [];
   this.registered_event_handlers = {};
 
   this.turn_number = 0;
-  this.next_dev_card = 0;
   this.status;
 
   // ===========================================================================
@@ -123,6 +121,7 @@ var SettlersGame = function() {
     this.color = "green"; // player color
     this.num_cards = 0; // number of resource cards
     this.cards = []; // cards array
+    this.used_knights = 0;
     this.cards["ramen"] = 0;
     this.cards["book"] = 0;
     this.cards["ram"] = 0;
@@ -152,26 +151,23 @@ var SettlersGame = function() {
     this.points;
   }
 
-  var devCard = function(type, id){
-    this.type = type;
-    this.id = id;
-  }
-
   // Make one board object per game
   this.gameBoard = function() {
 
     //==========================================================================
+<<<<<<< HEAD
+=======
     // Set up dev cards
     // =========================================================================
 
-    var dev_card_placement = [];
+    /*var dev_card_placement = [];
     for (var i = 0; i < 25; i++) {
       var random = Math.floor(Math.random() * 25);
       while (dev_card_placement[random] != null) {
         random = Math.floor(Math.random() * 25);
       }
       dev_card_placement[random] = i;
-    }
+    }*/
     var dev_card_types = ["knight", "knight", "knight", "knight", "knight",
     "knight", "knight", "knight", "knight", "knight", "knight", "knight",
     "knight", "knight", "roads", "roads", "volunteer", "volunteer", "monopoly", "monopoly",
@@ -184,25 +180,25 @@ var SettlersGame = function() {
       dev_cards.push(new devCard(dev_card_types[i], i));
     }
     for(var i = 0; i < 25; i++){
-      dev_cards_mixed[i] = dev_cards[dev_card_placement[i]];
+      dev_cards_mixed[i] = dev_cards[dev_array[i]];
     }
     this.dev_cards = dev_cards_mixed;
 
     //==========================================================================
+>>>>>>> trading, robber bug fix
     // Set up tiles
     // =========================================================================
 
-    var pieces_placement = [];
+    /*var pieces_placement = [];
 
-    for (var i = 0; i < this.num_pieces; i++) {
-      var random = Math.floor(Math.random() * this.num_pieces);
+    for (var i = 0; i < this.num_tiles; i++) {
+      var random = Math.floor(Math.random() * this.num_tiles);
       while (pieces_placement[random] != null) {
-        random = Math.floor(Math.random() * this.num_pieces);
+        random = Math.floor(Math.random() * this.num_tiles);
       }
       pieces_placement[random] = i;
-    }
+    }*/
 
-    this.pieces_placement = pieces_placement;
     this.numbers_placement = [6, 5, 9, 4, 3, 8, 10, 6, 5, 9, 12, 3, 2, 10, 11, 11, 4, 8];
 
     // Need certain amounts of each pattern type
@@ -244,9 +240,9 @@ var SettlersGame = function() {
       y_centers.push(this.y_initial + (6 * this.size));
     }
 
-    for (var i = 0; i < this.num_pieces; i++) {
-      var tile_image = this.pieces[this.pieces_placement[i]];
-      var tile_type = this.types[this.pieces_placement[i]];
+    for (var i = 0; i < this.num_tiles; i++) {
+      var tile_image = this.pieces[tiles_array[i]];
+      var tile_type = this.types[tiles_array[i]];
 
       var tile_number;
       if (tile_type == "DESERT") {
@@ -255,7 +251,7 @@ var SettlersGame = function() {
       } else {
         tile_number = this.numbers_placement[i];
       }
-      var new_tile = new gameTile(tile_image, tile_type, tile_number, i);
+      var new_tile = new gameTile(tile_image, tile_type, tile_number, i+1);
       switch(new_tile.type){
         case "DESERT":
         new_tile.robber = true;
@@ -366,7 +362,7 @@ var SettlersGame = function() {
         adj_tiles_loop.push(this.tiles[colleges_adj_tiles[i][j]]);
       }
       colleges[i] = new gameCollege(this.tiles[colleges_tiles[i]].x_coords[colleges_coords[i]],
-        this.tiles[colleges_tiles[i]].y_coords[colleges_coords[i]], adj_tiles_loop, i);
+        this.tiles[colleges_tiles[i]].y_coords[colleges_coords[i]], adj_tiles_loop, i+1);
     }
 
     this.colleges = colleges;
@@ -451,7 +447,7 @@ var SettlersGame = function() {
         [50, 53]
       ]
       for (var i = 0; i < connections.length; i++) {
-        roads.push(new gameRoad(colleges[connections[i][0]], colleges[connections[i][1]], i));
+        roads.push(new gameRoad(colleges[connections[i][0]], colleges[connections[i][1]], i+1));
       }
       this.roads = roads;
       this.player = new gamePlayer();
