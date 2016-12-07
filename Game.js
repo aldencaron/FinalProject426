@@ -53,11 +53,9 @@ var SettlersGame = function() {
   this.board;
   this.player;
   this.other_players = [];
-  this.dev_cards = [];
   this.registered_event_handlers = {};
 
   this.turn_number = 0;
-  this.next_dev_card = 0;
   this.status;
 
   // ===========================================================================
@@ -152,41 +150,8 @@ var SettlersGame = function() {
     this.points;
   }
 
-  var devCard = function(type, id){
-    this.type = type;
-    this.id = id;
-  }
-
   // Make one board object per game
   this.gameBoard = function() {
-
-    //==========================================================================
-    // Set up dev cards
-    // =========================================================================
-
-    var dev_card_placement = [];
-    for (var i = 0; i < 25; i++) {
-      var random = Math.floor(Math.random() * 25);
-      while (dev_card_placement[random] != null) {
-        random = Math.floor(Math.random() * 25);
-      }
-      dev_card_placement[random] = i;
-    }
-    var dev_card_types = ["knight", "knight", "knight", "knight", "knight",
-    "knight", "knight", "knight", "knight", "knight", "knight", "knight",
-    "knight", "knight", "roads", "roads", "volunteer", "volunteer", "monopoly", "monopoly",
-    "oldwell", "davis", "sitterson", "pit", "bell"];
-
-    var dev_cards = [];
-    var dev_cards_mixed = [];
-
-    for(var i = 0; i < 25; i++){
-      dev_cards.push(new devCard(dev_card_types[i], i));
-    }
-    for(var i = 0; i < 25; i++){
-      dev_cards_mixed[i] = dev_cards[dev_card_placement[i]];
-    }
-    this.dev_cards = dev_cards_mixed;
 
     //==========================================================================
     // Set up tiles

@@ -327,28 +327,31 @@ $(document).ready(function() {
         }
         if (partial_turn_over) {
             board_canvas.removeEventListener('mousedown', buyRoad);
-            for(var k = 0; k < game.roads.length; k++){
-              game.roads[k].available = false;
-            }
+
             // Set available colleges
-            for (var k = 0; k < game.player.roads.length; k++) {
-                if(!game.player.roads[k].connections[0].used && !game.player.roads[k].connections[0].too_close){
-                  game.player.roads[k].connections[0].available = true;
+            for (var k = 0; k < game.roads.length; k++) {
+                game.roads[k].available = false;
+                if(!game.roads[k].connection[0].used && !game.roads[k].connection[0].too_close){
+                  alert("here1");
+                  game.roads[k].connection[0].available = true;
                 }
-                if(!game.player.roads[k].connections[1].used && !game.player.roads[k].connections[1].too_close){
-                  game.player.roads[k].connections[1].available = true;
+                if(!game.roads[k].connection[1].used && !game.roads[k].connection[1].too_close){
+                  alert("here2");
+                  game.roads[k].connection[1].available = true;
                 }
             }
             // Set available roads
             for (var k = 0; k < game.player.roads.length; k++) {
-                for (var l = 0; l < game.player.roads[k].connections[0].roads.length; l++) {
-                    if (!game.player.roads[k].connections[0].roads[l].used) {
-                        game.player.roads[k].connections[0].roads[l].available = true;
+                for (var l = 0; l < game.player.roads[k].connection[0].roads.length; l++) {
+                    if (!game.player.roads[k].connection[0].roads[l].used) {
+                      alert("here3");
+                        game.player.roads[k].connection[0].roads[l].available = true;
                     }
                 }
-                for (var l = 0; l < game.player.roads[k].connections[1].roads.length; l++) {
-                    if (!game.player.roads[k].connections[1].roads[l].used) {
-                        game.player.roads[k].connections[1].roads[l].available = true;
+                for (var l = 0; l < game.player.roads[k].connection[1].roads.length; l++) {
+                    if (!game.player.roads[k].connection[1].roads[l].used) {
+                        alert("here4");
+                        game.player.roads[k].connection[1].roads[l].available = true;
                     }
                 }
             }
@@ -431,10 +434,10 @@ $(document).ready(function() {
     };
     var checkBuyUniversity = function() {
         // Resource problem
-        /*if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
+        if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
             alert("Insufficient amounts of resources!");
             return;
-        }*/
+        }
         var available = false;
         for (var i = 0; i < game.player.colleges.length; i++) {
             if (!game.colleges[i].university) {
@@ -447,63 +450,21 @@ $(document).ready(function() {
         }
         // Can buy university
         else {
-          drawBoard(false, false, true, false, false, 0);
-          game.player.cards["ramen"] = game.player.cards["ramen"] - 2;
-          game.player.cards["basketball"] = game.player.cards["basketball"] - 3;
-          updatePlayerInfo();
-          alert("Pick a university.");
-          var board_canvas = document.getElementById("board_canvas");
-          board_canvas.addEventListener('mousedown', buyUniversity);        }
+            //game.fireEvent(new game.BuyUniversityEvent());
+        }
     };
     var buyUniversity = function() {
-      partial_turn_over = false;
-      var rect = board_canvas.getBoundingClientRect();
-      var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
-      var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
-
-      // Check colleges
-      for (var i = 0; i < game.num_colleges; i++) {
-          if (!game.colleges[i].university && game.colleges[i].player == game.player) {
-              if (game.pointDistance(x, y, game.colleges[i].x, game.colleges[i].y) <= game.colleges[i].radius) {
-                  partial_turn_over = true;
-                  game.colleges[i].university = true;
-                  game.player.points++;
-
-                  game.colleges[i].radius = 14;
-              }
-          }
-      }
-      if (partial_turn_over) {
-          board_canvas.removeEventListener('mousedown', buyUniversity);
-          updatePlayerInfo();
-          drawBoard(false, false, false, false, false, 0);
-          partial_turn_over = false;
-      }
+        alert("empty");
     };
     var checkBuyCard = function() {
-        /*if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
+        if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
             game.player.cards["basketball"] < 1) {
             alert("Insufficient amounts of resources!");
         }
-        else if(game.next_dev_card > 24){
-          alert("No more development cards");
-        }
-        else{*/
-          buyCard();
-        //}
+        //TODO if no dev cards left!
     };
     var buyCard = function() {
-        var card = game.dev_cards[game.next_dev_card];
-        game.next_dev_card++;
-        alert("You got " + card.type + "!");
-        if(card.type == "oldwell" || card.type == "sitterson" || card.type == "pit" || card.type == "bell" || card.type == "davis"){
-          game.player.cards["victory_points"][card.type]++;
-          game.player.points++;
-        }
-        else{
-          game.player.cards[card.type]++;
-        }
-        updatePlayerInfo();
+        alert("empty");
     };
 
     // Update html for player
@@ -514,16 +475,9 @@ $(document).ready(function() {
         $("#player_one_basketball_cards").text(game.player.cards["basketball"]);
         $("#player_one_ramen_cards").text(game.player.cards["ramen"]);
         $("#player_one_book_cards").text(game.player.cards["book"]);
-        $("#player_one_knight_cards").text(game.player.cards["knight"]);
-        $("#player_one_road_cards").text(game.player.cards["roads"]);
-        $("#player_one_volunteer_cards").text(game.player.cards["volunteer"]);
-        $("#player_one_monopoly_cards").text(game.player.cards["monopoly"]);
-        $("#player_one_well_cards").text(game.player.cards["victory_points"]["oldwell"]);
-        $("#player_one_pit_cards").text(game.player.cards["victory_points"]["pit"]);
-        $("#player_one_davis_cards").text(game.player.cards["victory_points"]["davis"]);
-        $("#player_one_sitterson_cards").text(game.player.cards["victory_points"]["sitterson"]);
-        $("#player_one_bell_cards").text(game.player.cards["victory_points"]["bell"]);
-        $("#player_one_points").text("Points: " + parseInt(game.player.points));
+        //Other cards TODO
+        //Total point //TODO
+        //Special points //TODO
 
     };
     var updateOtherPlayerInfo = function() {
@@ -557,82 +511,6 @@ $(document).ready(function() {
             game.turn_number++;
         }
     };
-
-    var giveResourceCard = function(card_name){
-      switch(card_name){
-        case "RAM":
-          game.player.cards["ram"]++;
-          return true;
-        case "RAMEN":
-          game.player.cards["ramen"]++;
-          return true;
-        case "BRICK":
-          game.player.cards["brick"]++;
-          return true;
-        case "BASKETBALL":
-          game.player.cards["basketball"]++;
-          return true;
-        case "BOOK":
-          game.player.cards["book"]++;
-          return true;
-        default:
-          return false;
-      }
-    }
-
-    var useKnightCard = function(){
-      if(game.player.cards["knight"] < 1){
-        alert("You do not have a knight card!");
-      }
-      else{
-        game.player.cards["knight"]--;
-        //TODO update solider count for largest army
-        alert("Move the robber!");
-        game.fireEvent(new game.RobberEvent());
-      }
-    }
-    var useRoadCard = function(){
-      if(game.player.cards["roads"] < 1){
-        alert("You do not have a roads card!");
-      }
-      else{
-        game.player.cards["roads"]--;
-        alert("You receive 2 book cards and 2 brick cards with which to build 2 roads!");
-        game.player.cards["book"]+=2;
-        game.player.cards["brick"]+=2;
-        updatePlayerInfo();
-      }
-    }
-
-    var useVolunteerCard = function(){
-      if(game.player.cards["volunteer"] < 1){
-        alert("You do not have a volunteering card!");
-      }
-      else{
-        game.player.cards["volunteer"]--;
-        alert("You volunteered for medical research to make extra cash. You may pick two cards to receive for your troubles.");
-        var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        while(!giveResourceCard(first_card)){
-          first_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        }
-        var second_card = prompt("Pick a second card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        while(!giveResourceCard(second_card)){
-          second_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        }
-      }
-    }
-    var useMonopolyCard = function(){
-      if(game.player.cards["monopoly"] < 1){
-        alert("You do not have a monopoly card!");
-      }
-      else{
-        alert("You declared a monopoly!")
-        var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.")
-        while(!giveResourceCard(monopoly_resource)){
-          monopoly_resource = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        }
-      }
-    }
 
     var diceRoll = function() {
         var current_roll = game.rollDice(2);
@@ -682,14 +560,6 @@ $(document).ready(function() {
         buy_university.addEventListener('click', checkBuyUniversity);
         var buy_card = document.getElementById("buy_card");
         buy_card.addEventListener('click', checkBuyCard);
-        var use_knight_card = document.getElementById("use_knight");
-        use_knight_card.addEventListener('click', useKnightCard);
-        var use_roads_card = document.getElementById("use_roads");
-        use_roads_card.addEventListener('click', useRoadCard);
-        var use_volunteer_card = document.getElementById("use_volunteer");
-        use_volunteer_card.addEventListener('click', useVolunteerCard);
-        var use_monopoly_card = document.getElementById("use_monopoly");
-        use_monopoly_card.addEventListener('click', useMonopolyCard);
     };
     // Query for dice roll from other players
     var diceRollOther = function(current_roll) {

@@ -134,6 +134,28 @@ global $path_components;
       exit();
   }
 }
+  else if($path_components[1]=="DiceRolls"){
+    if($path_components[2]!="" &&
+  count($path_components) >= 3){
+      $DiceID= intval($path_components[2]);
+      $DiceRoll_Info = DiceRoll::findByID($DiceID);
+      if ($DiceRoll_Info == null) {
+        // not found.
+        header("HTTP/1.0 404 Not Found");
+        print("Dice id: " . $DiceRoll_info . " not found.");
+        exit();
+      }
+      header("Content-type: application/json");
+      print($DiceRoll_Info->getJSON());
+      exit();
+    }
+    else{
+      // no ID, try returning all IDs.
+      //TODO implement .getAllIDs
+      //header("Content-type: application/json");
+      //print(json_encode(Tile::getAllIDs()));
+      exit();
+    }
 header("HTTP/1.0 404 Not Found");
 print("Get Doesn't match any DB.");
 exit();
@@ -158,6 +180,9 @@ exit();
         }
         else if($DBname=="Cards"){
           postCard();
+        }
+        else if($DBname=="DiceRolls"){
+          postDiceRoll();
         }
     }
   }
@@ -188,7 +213,7 @@ exit();
                   if (isset($_REQUEST['PlayerID'])) {
                       $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad PlayerID Request");
                       print("PlayerID is is not given.");
                       exit();
                   }
@@ -197,7 +222,7 @@ exit();
                   if (isset($_REQUEST['Username'])) {
                       $new_Username = trim($_REQUEST['Username']);
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad Username Request");
                       print("Username is is not given.");
                       exit();
                   }
@@ -206,7 +231,7 @@ exit();
                   if (isset($_REQUEST['RoadsCount'])) {
                       $new_RoadsCount = intval(trim($_REQUEST['RoadsCount']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad RoadsCount Request");
                       print("RoadsCount is is not given.");
                       exit();
                   }
@@ -215,7 +240,7 @@ exit();
                   if (isset($_REQUEST['SoldiersCount'])) {
                       $new_SoldiersCount = intval(trim($_REQUEST['SoldiersCount']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad SoldiersCount Request");
                       print("SoldiersCount is is not given.");
                       exit();
                   }
@@ -224,15 +249,16 @@ exit();
                   if (isset($_REQUEST['Points'])) {
                       $new_Points = intval(trim($_REQUEST['Points']));
                   } else {
-                      header("HTTP/1.0 400 Bad Request");
+                      header("HTTP/1.0 400 Bad Points Request");
                       print("Points is is not given.");
                       exit();
                   }
 
-                  if ($new_PlayerID && $new_Username && $new_RoadsCount && $new_SoldiersCount && $new_Points) {
+                  if (isset($_REQUEST['PlayerID']) && isset($_REQUEST['Username']) &&
+                    isset($_REQUEST['Points']) && isset($_REQUEST['SoldiersCount']) &&
+                    isset($_REQUEST['RoadsCount'])) {
                       $Player = Player::create($new_PlayerID, $new_Username,
                       $new_RoadsCount, $new_SoldiersCount, $new_Points);
-
                       if ($Player == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Player was not inserted");
@@ -256,7 +282,7 @@ exit();
           if(isset($_REQUEST['Username'])){
             $new_Username= trim($_REQUEST['Username']);
             if ($new_Username == "") {
-              header("HTTP/1.0 400 Bad Request");
+              header("HTTP/1.0 400 Bad Username Request");
               print("Bad Username");
               exit();
               }
@@ -714,6 +740,7 @@ exit();
               }
               createCard();
           }
+
           //check which values to update
           $new_PlayerID = false;
           if (isset($_REQUEST['PlayerID'])) {
@@ -834,5 +861,76 @@ exit();
     print("Did not understand URL");
     exit();
   }
+
+    function postDiceRoll(){
+      global $path_components;
+    if ((count($path_components) >= 3) &&
+        ($path_components[2] != "")) {
+          $DiceID= intval($path_components[2]);
+          $DiceRoll = DiceRoll::findByID($DiceID);
+
+          if($DiceRoll==null){
+              function createDiceRoll() {
+                  // Create new Tile
+                  $new_DiceID = false;
+                  if (isset($_REQUEST['DiceID'])) {
+                      $new_DiceID = intval(trim($_REQUEST['DiceID']));
+                  } else {
+                      header("HTTP/1.0 400 Bad Request");
+                      print("DiceID is is not given.");
+                      exit();
+                  }
+
+                  $new_RollResult = false;
+                  if (isset($_REQUEST['RollResult'])) {
+                      $new_RollResult = intval(trim($_REQUEST['RollResult']));
+                  } else {
+                      header("HTTP/1.0 400 Bad Request");
+                      print("RollResult is is not given.");
+                      exit();
+                  }
+
+                  if ($new_DiceID && $new_RollResult) {
+                      $DiceRoll = DiceRoll::create($new_DiceID, $new_RollResult);
+
+                      if ($DiceRoll == null) {
+                          header("HTTP/1.0 500 Server Error");
+                          print("DiceRoll was not inserted");
+                          exit();
+                      }
+                      header("Content-type: application/json");
+                      print($Tile->getJSON());
+                      exit();
+                  }
+              }
+              createDiceRoll();
+          }
+
+          //check which values to update
+          $new_DiceID = false;
+          if (isset($_REQUEST["DiceID"])) {
+              $new_DiceID = intval(trim($_REQUEST['DiceID']));
+          }
+
+          $new_RollResult=false;
+          if(isset($_REQUEST["RollResult"])){
+            $new_RollResult= intval(trim($_REQUEST['RollResult']));
+          }
+          //update via ORM
+          if ($new_DiceID != false) {
+              $Dice->setDiceID($new_DiceID);
+          }
+          if($new_RollResult != false){
+            $DiceRoll->setRollResult($new_RollResult);
+          }
+             //return json
+            header("Content-type: application/json");
+            print($Tile->getJSON());
+            exit();
+      }
+    header("HTTP/1.0 400 Bad Request");
+    print("Did not understand URL");
+}
+}
 
  ?>
