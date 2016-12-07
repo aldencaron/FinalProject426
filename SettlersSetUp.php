@@ -3,9 +3,9 @@
 date_default_timezone_set('America/New_York');
 
 $mysqli = new mysqli("classroom.cs.unc.edu",
-                   "mhb",
-                   "password",
-		               "mhbdb");
+                   "shellyg",
+                   "computerscience@16",
+		               "shellygdb");
 $SQL = "drop table if exists Players";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists Roads";
@@ -16,7 +16,9 @@ $SQL = "drop table if exists Tiles";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists Cards";
 mysqli_query($mysqli, $SQL);
-$SQL = "drop table if exists Dice-rolls";
+$SQL = "drop table if exists DiceRolls";
+mysqli_query($mysqli, $SQL);
+$SQL = "drop table if exists DevCardStack";
 mysqli_query($mysqli, $SQL);
 
 $SQL = "Create Table Players (
@@ -89,10 +91,13 @@ for($i = 0; $i <= 54; $i++){
   //   chat-text TEXT NOT NULL)";
   //   mysqli_query($mysqli, $SQL);
 
-  $SQL = "Create Table DiceRolls (
+$SQL = "Create Table DiceRolls (
   DiceID int primary key not null auto_increment,
   RollResult int)";
   mysqli_query($mysqli, $SQL);
-    
+
+$SQL = "Create Table DevCardStacks (
+  DevID int primary key not null auto_increment)";
+mysqli_query($mysqli, $SQL);
 
  ?>
