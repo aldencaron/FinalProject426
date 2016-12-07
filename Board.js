@@ -1,4 +1,6 @@
 function RunGame() {
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
+
   alert(username);
   alert(id);
   var size = 60;
@@ -167,8 +169,7 @@ function RunGame() {
           game.player.points++;
           game.colleges[i].player = game.player;
           // AJAX POST to update college
-          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
-          $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" +  5,//game.colleges[i].id,
+          $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
           type: "POST",
           dataType: "json",
           async: false,
@@ -180,9 +181,7 @@ function RunGame() {
         alert(jqXHR.responseText);
       }
     });
-    function collegeSerialize(College){
 
-    }
 
 
     // If second turn give the player resources
@@ -240,6 +239,18 @@ var addRoadStart = function(event) {
         game.player.roads.push(game.roads[i]);
         game.roads[i].player = game.player;
         // TODO ajax call here
+        $.ajax({url:url_base + "SettlersOfCarolina.php/Roads/" + game.roads[i].id,
+          type: "POST",
+          dataType: "json",
+          async: false,
+          data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          success: function(College_json, status, jqXHR) {
+          alert("success");
+        },
+        error: function(jqXHR, status, error) {
+        alert(jqXHR.responseText);
+        }
+      });
         game.roads[i].radius = 12;
         drawBoard(false, false, false, false, false, 0);
       }
@@ -403,6 +414,21 @@ var buyCollege = function() {
         game.player.points++;
         game.colleges[i].player = game.player;
 
+
+        // AJAX POST to update college
+          $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+            success: function(College_json, status, jqXHR) {
+            alert("success");
+          },
+          error: function(jqXHR, status, error) {
+          alert(jqXHR.responseText);
+          }
+        });
+
         // Update roads
         for (var j = 0; j < game.num_roads; j++) {
           game.roads[j].available = false;
@@ -471,6 +497,19 @@ var checkBuyUniversity = function() {
           game.player.points++;
 
           game.colleges[i].radius = 14;
+          //TODO put this ajax in a function
+          $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+            success: function(College_json, status, jqXHR) {
+            alert("success");
+          },
+          error: function(jqXHR, status, error) {
+          alert(jqXHR.responseText);
+          }
+        });
         }
       }
     }
