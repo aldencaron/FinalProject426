@@ -69,8 +69,7 @@ var cardsAJAX_otherPlayerGame = function(cards_ajax, other_players_game){
 ** $(new roadGame_roadAJAX(game.roads[i])).serialize();
 */
 var roadGame_roadAJAX = function(game_road){
-  this.RoadID = game_road.id;
-  this.PlayerID = game_road.player.id;
+  return ("RoadID=" + game_road.id + "&PlayerID=" + game_road.player.id);
 }
 /* Update roads on client that other people have bought
 **
