@@ -1,0 +1,24 @@
+THINGS TO UPDATE CLIENT TO SERVER
+  Dice roll
+  Turn number/turn end
+  Player info - points, cards number, special points (eventually)
+  Development card index
+
+THINGS TO UPDATE SERVER TO CLIENT
+  Dice roll
+  Turn number/turn end
+  Player info
+  Get robber function in PHP
+  Robber
+  Colleges, universities, roads
+
+GENERAL THINGS
+  Special points
+  Trade is eh
+  Interfacing could be better
+  When game ends!
+  Username choosing CSS
+  Write a README
+  (Alden - check on radius drawing)
+  Refactor AJAX calls into separate functions client side
+  Finish transitions
