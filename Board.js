@@ -829,17 +829,32 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
+      var myturn=0;
       var c = setInterval(function(){
-        if(!myturn){
-
+        if(myturn){
+          clearInterval(c);
         }
         else{
-          $.ajax({
+          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+          $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls",
+            type:"GET",
+            dataType"json",
+            success: function(array, status, jqXHR) {
+              if(array.length%4==id){
+                game.turn_number=array.length;
+                myturn=1;
 
+                turnChecks();
+              }
+              },
+            error: function(jqXHR, status, error) {
+              console.log("Problem waiting for turn");
+      }
+    });
 
+//to post we need to knwo the ID...
 
           })
-          clearInterval(c)
         }
       }, 100);
     }
