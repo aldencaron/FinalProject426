@@ -186,7 +186,7 @@ function RunGame() {
 
 
     // If second turn give the player resources
-    if (game.turn_number == 2) {
+    if (game.turn_number == game.player.id + 4) {
       for (var j = 0; j < game.colleges[i].tiles.length; j++) {
         game.player.cards[game.colleges[i].tiles[j].resource]++;
       }
@@ -217,7 +217,7 @@ if (partial_turn_over) {
   board_canvas.removeEventListener('mousedown', addCollegeStart);
   partial_turn_over = false;
   // Change availability
-  if (game.turn_number == 2) {
+  if (game.turn_number == game.player.id + 4) {
     for (var k = 0; k < game.colleges.length; k++) {
       game.colleges[k].available = false;
     }
@@ -247,7 +247,7 @@ var addRoadStart = function(event) {
   }
   if (partial_turn_over) {
     board_canvas.removeEventListener('mousedown', addRoadStart);
-    if (game.turn_number == 2) {
+    if (game.turn_number == game.player.id + 4) {
       // Fix availability
       for (var k = 0; k < game.roads.len; k++) {
         game.roads[k].available = false;
@@ -768,6 +768,21 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number > game.player.id + 8 && game.turn_number < game.player.id + 80) {
       game.fireEvent(new game.DiceRollEvent());
+    }
+    else{
+      var c = setInterval(function(){
+        if(!myturn){
+
+        }
+        else{
+          $.ajax({
+
+
+
+          })
+          clearInterval(c)
+        }
+      }, 100);
     }
   }
   // Initialize game
