@@ -60,7 +60,9 @@ var cardsAJAX_otherPlayerGame = function(cards_ajax, other_players_game){
 // =============================================================================
 //TODO check with Max, do I have to call each one? Can I do a select to see where
 // the robber is? lol available proably isn't necessary sorry
-
+var tileGame_tileAJAX = function(game_tile){
+  return("TileID=" + game_tile.id + "&Robber=" + game_tile.robber);
+}
 
 // =============================================================================
 // ROAD TRANSITONS
