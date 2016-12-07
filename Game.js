@@ -513,7 +513,7 @@ var SettlersGame = function(tiles_array, dev_array) {
       this.event_type = SETTLERS_CONSTANTS.DICE_ROLL_EVENT;
     }
     this.RobberEvent = function(){
-      this.event_type = SETTLERS_CONSTANTS.ROBBERT_EVENT;
+      this.event_type = SETTLERS_CONSTANTS.ROBBER_EVENT;
     }
     this.BuyEvent = function(){
       this.event_type = SETTLERS_CONSTANTS.BUY_EVENT;

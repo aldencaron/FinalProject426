@@ -31,11 +31,11 @@ $SQL = "Create Table Players (
   Points int)";
 mysqli_query($mysqli, $SQL);
 //4 players
-for($i = 0; $i <= 4; $i++){
+/*for($i = 0; $i <= 4; $i++){
   $SQL = "Insert into Players (PlayerID, Username, Roadscount, SoldiersCount, Points)
   Values ($i, 0, 0, 0, 0)";
     mysqli_query($mysqli, $SQL);
-}
+}*/
 
 $SQL = "Create Table Roads (
   RoadID int primary key not null auto_increment,
