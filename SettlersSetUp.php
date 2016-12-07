@@ -16,13 +16,12 @@ $SQL = "drop table if exists Tiles";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists Cards";
 mysqli_query($mysqli, $SQL);
-<<<<<<< HEAD
+
 $SQL = "drop table if exists DiceRolls";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists DevCardStack";
 mysqli_query($mysqli, $SQL);
-=======
->>>>>>> origin/master
+
 
 $SQL = "Create Table Players (
   PlayerID int primary key not null auto_increment,
@@ -94,13 +93,10 @@ for($i = 0; $i <= 54; $i++){
     chat-text TEXT NOT NULL)";
     mysqli_query($mysqli, $SQL);
 
-<<<<<<< HEAD
-$SQL = "Create Table DiceRolls (
-=======
-  $SQL = "Create Table dice-rolls (
->>>>>>> origin/master
+
+ $SQL = "Create Table DiceRolls (
   DiceID int primary key not null auto_increment,
-  Roll-result int)";
+  RollResult int)";
   mysqli_query($mysqli, $SQL);
 
 $SQL = "Create Table DevCardStacks (
