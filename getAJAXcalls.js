@@ -83,7 +83,7 @@ function getRoad(ID){
    var ret1= getRoadAJAX(1);
    c = setInterval(function(){
     if(typeof ret1!= 'undefined'){
-      //alert(ret1);
+      //console.log(ret1);
       clearInterval(c);
     }
     else{
@@ -97,7 +97,7 @@ function getRoad(ID){
          }
          else{
            tester=true;
-           alert(t);
+           console.log(t);
            clearInterval(c);
          }
 
@@ -114,7 +114,7 @@ function getRoad(ID){
              ret = Road_json;
               },
              error: function(jqXHR, status, error) {
-             alert(jqXHR.responseText);
+             console.log(jqXHR.responseText);
        }
      });
       return ret;
@@ -126,10 +126,10 @@ function getRoad(ID){
             type: "GET",
              dataType: "json",
                success: function(Player_json, status, jqXHR) {
-                alert("success");
+                console.log("success");
                return new Player(Player_json);},
                error: function(jqXHR, status, error) {
-               alert(jqXHR.responseText);
+               console.log(jqXHR.responseText);
          }
        });
       }
@@ -139,10 +139,10 @@ function getRoad(ID){
               type: "GET",
                dataType: "json",
                  success: function(Card_json, status, jqXHR) {
-                  alert("success");
+                  console.log("success");
                  return new Card(Card_json);},
                  error: function(jqXHR, status, error) {
-                 alert(jqXHR.responseText);
+                 console.log(jqXHR.responseText);
            }
          });
         }
@@ -152,10 +152,10 @@ function getRoad(ID){
                 type: "GET",
                  dataType: "json",
                    success: function(Tile_json, status, jqXHR) {
-                    alert("success");
+                    console.log("success");
                    return new Tile(Tile_json);},
                    error: function(jqXHR, status, error) {
-                   alert(jqXHR.responseText);
+                   console.log(jqXHR.responseText);
              }
            });
           }
@@ -165,10 +165,10 @@ function getRoad(ID){
                   type: "GET",
                    dataType: "json",
                      success: function(College_json, status, jqXHR) {
-                        alert("success");
+                        console.log("success");
                      return new College(College_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
             }
@@ -191,10 +191,10 @@ function getRoad(ID){
                      dataType: "json",
                      data: $(Road).serialize(),
                      success: function(Road_json, status, jqXHR) {
-                       alert("success");
+                       console.log("success");
                      return new Road(Road_json);},
                        error: function(jqXHR, status, error) {
-                       alert(jqXHR.responseText);
+                       console.log(jqXHR.responseText);
                  }
                });
              }
@@ -205,10 +205,10 @@ function getRoad(ID){
                    dataType: "json",
                    data: $(Road).serialize(),
                    success: function(Road_json, status, jqXHR) {
-                     alert("success");
+                     console.log("success");
                      return new Road(Road_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
             }
@@ -219,10 +219,10 @@ function getRoad(ID){
                      dataType: "json",
                      data: $(Card).serialize(),
                      success: function(Card_json, status, jqXHR) {
-                       alert("success");
+                       console.log("success");
                      return new Card(Card_json);},
                        error: function(jqXHR, status, error) {
-                       alert(jqXHR.responseText);
+                       console.log(jqXHR.responseText);
                  }
                });
               }
@@ -233,10 +233,10 @@ function getRoad(ID){
                    dataType: "json",
                    data: $(Card).serialize(),
                    success: function(Card_json, status, jqXHR) {
-                     alert("success");
+                     console.log("success");
                      return new Card(Card_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
             }
@@ -247,10 +247,10 @@ function getRoad(ID){
                      dataType: "json",
                      data: $(Player).serialize(),
                      success: function(Player_json, status, jqXHR) {
-                       alert("success");
+                       console.log("success");
                      return new Player(Player_json);},
                        error: function(jqXHR, status, error) {
-                       alert(jqXHR.responseText);
+                       console.log(jqXHR.responseText);
                  }
                });
               }
@@ -261,10 +261,10 @@ function getRoad(ID){
                    dataType: "json",
                    data: $(Player).serialize(),
                    success: function(Player_json, status, jqXHR) {
-                     alert("success");
+                     console.log("success");
                      return new Player(Player_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
             }
@@ -275,10 +275,10 @@ function getRoad(ID){
                      dataType: "json",
                      data: $(College).serialize(),
                      success: function(College_json, status, jqXHR) {
-                       alert("success");
+                       console.log("success");
                      return new College(College_json);},
                        error: function(jqXHR, status, error) {
-                       alert(jqXHR.responseText);
+                       console.log(jqXHR.responseText);
                  }
                });
               }
@@ -289,10 +289,10 @@ function getRoad(ID){
                    dataType: "json",
                    data: $(College).serialize(),
                    success: function(College_json, status, jqXHR) {
-                     alert("success");
+                     console.log("success");
                      return new College(College_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
             }
@@ -303,10 +303,10 @@ function getRoad(ID){
                      dataType: "json",
                      data: $(Tile).serialize(),
                      success: function(Tile_json, status, jqXHR) {
-                       alert("success");
+                       console.log("success");
                      return new Tile(Tile_json);},
                        error: function(jqXHR, status, error) {
-                       alert(jqXHR.responseText);
+                       console.log(jqXHR.responseText);
                  }
                });
               }
@@ -317,13 +317,10 @@ function getRoad(ID){
                    dataType: "json",
                    data: $(Tile).serialize(),
                    success: function(Tile_json, status, jqXHR) {
-                     alert("success");
+                     console.log("success");
                      return new Tile(Tile_json);},
                      error: function(jqXHR, status, error) {
-                     alert(jqXHR.responseText);
+                     console.log(jqXHR.responseText);
                }
              });
-            }
-
-
-  });
+           };
