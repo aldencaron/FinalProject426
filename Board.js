@@ -620,6 +620,17 @@ var checkBuyUniversity = function() {
       game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
         partial_turn_over = true;
         game.tiles[i].robber = true;
+        $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.Tiles[i].id,
+          type: "POST",
+          dataType: "json",
+          async: false,
+          data: tileGame_tileAJAX(game.tiles[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          success: function(tile_json, status, jqXHR) {
+        },
+        error: function(jqXHR, status, error) {
+        console.log(jqXHR.responseText);
+        }
+      });
       }
     }
     if (partial_turn_over) {
