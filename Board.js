@@ -543,7 +543,13 @@ var checkBuyUniversity = function() {
 
   };
   var updateOtherPlayerInfo = function() {
-    //TODO
+    //TODO can do in order if I know their IDs but idk
+    $('#player_two_num_cards').text(game.other_players[0].num_cards);
+    $('#player_two_points').text(game.other_players[0].points);
+    $('#player_three_num_cards').text(game.other_players[1].num_cards);
+    $('#player_three_points').text(game.other_players[1].points);
+    $('#player_four_cards').text(game.other_players[2].num_cards);
+    $('#player_four_points').text(game.other_players[2].points);
   };
 
   var moveRobber = function(event) {
@@ -745,7 +751,38 @@ var checkBuyUniversity = function() {
   };
   // Query for dice roll from other players
   var diceRollOther = function(current_roll) {
-
+    // TODO GET DICE ROLL FROM SERVER
+    $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    if (current_roll == 7) {
+      // Steal Cards
+      if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
+        alert("Blue Devil! You have too many cards. The Blue Devil will steal half!");
+        game.player.cards["ram"] = Math.floor(game.player.cards["ram"] / 2);
+        game.player.cards["ramen"] = Math.floor(game.player.cards["ramen"] / 2);
+        game.player.cards["brick"] = Math.floor(game.player.cards["brick"] / 2);
+        game.player.cards["basketball"] = Math.floor(game.player.cards["basketball"] / 2);
+        game.player.cards["book"] = Math.floor(game.player.cards["book"] / 2);
+        updatePlayerInfo();
+      }
+      // TODO GET ROBBER MOVEMENT
+    }
+    // Is not a robber
+    else {
+      drawBoard(false, false, false, false, true, current_roll);
+      // Add cards
+      for (var i = 0; i < game.player.colleges.length; i++) {
+        for (var j = 0; j < game.player.colleges[i].tiles.length; j++) {
+          if (game.player.colleges[i].tiles[j].number == current_roll && !game.player.colleges[i].tiles[j].robber) {
+            game.player.cards[game.player.colleges[i].tiles[j].resource]++;
+            if (game.player.colleges[i].university) {
+              game.player.cards[game.player.colleges[i].tiles[j].resource]++;
+            }
+          }
+        }
+      }
+      updatePlayerInfo();
+      //game.turn_number++;
+    }
   };
 
   var end_turn_button = document.getElementById("turn_over_button");
@@ -760,8 +797,30 @@ var checkBuyUniversity = function() {
   // Keep track of turns
   var turnChecks = function() {
     updatePlayerInfo();
+
+    // Remove all current board listeners
     var board_canvas = document.getElementById("board_canvas");
     board_canvas.removeEventListener('mousedown', moveRobber);
+    var buy_road = document.getElementById("buy_road");
+    buy_road.removeEventListener('click', checkBuyRoad);
+    var buy_college = document.getElementById("buy_college");
+    buy_college.removeEventListener('click', checkBuyCollege);
+    var buy_university = document.getElementById("buy_university");
+    buy_university.removeEventListener('click', checkBuyUniversity);
+    var buy_card = document.getElementById("buy_card");
+    buy_card.removeEventListener('click', checkBuyCard);
+    var use_knight_card = document.getElementById("use_knight");
+    use_knight_card.removeEventListener('click', useKnightCard);
+    var use_roads_card = document.getElementById("use_roads");
+    use_roads_card.removeEventListener('click', useRoadCard);
+    var use_volunteer_card = document.getElementById("use_volunteer");
+    use_volunteer_card.removeEventListener('click', useVolunteerCard);
+    var use_monopoly_card = document.getElementById("use_monopoly");
+    use_monopoly_card.removeEventListener('click', useMonopolyCard);
+    var trading = document.getElementById("trade_button");
+    trade_button.removeEventListener('click', tradeWithBank);
+
+    // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
