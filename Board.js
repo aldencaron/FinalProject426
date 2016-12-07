@@ -1,5 +1,6 @@
-$(document).ready(function() {
-
+function RunGame() {
+  alert(username);
+  alert(id);
   var size = 60;
   var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
   var x_initial = width / 2 - (Math.sqrt(3) * size) + 10;
@@ -166,9 +167,6 @@ $(document).ready(function() {
           game.player.points++;
           game.colleges[i].player = game.player;
           // AJAX POST to update college
-          //"CollegeID=5&PlayerID=1&Avialable=1&Unviersity=1"
-          //var temp = new collegeGame_collegeAJAX(game.colleges[i]);
-          //alert(temp.CollegeID);
           var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
           $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" +  5,//game.colleges[i].id,
           type: "POST",
@@ -764,11 +762,11 @@ var checkBuyUniversity = function() {
     updatePlayerInfo();
     var board_canvas = document.getElementById("board_canvas");
     board_canvas.removeEventListener('mousedown', moveRobber);
-    if (game.turn_number == 1) {
+    if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number == 2) {
+    } else if (game.turn_number == game.player.id + 4) {
       game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number > 2 && game.turn_number < 20) {
+    } else if (game.turn_number > game.player.id + 8 && game.turn_number < game.player.id + 80) {
       game.fireEvent(new game.DiceRollEvent());
     }
   }
@@ -786,6 +784,8 @@ var checkBuyUniversity = function() {
       }
     }
   }
+  game.player.username = username;
+  game.player.id = id;
   game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
   game.registerEventHandler(SETTLERS_CONSTANTS.TURN_CHANGE_EVENT, turnChecks);
@@ -793,4 +793,4 @@ var checkBuyUniversity = function() {
   drawBoard(false, false, false, false, false, 0);
   turnChecks();
 
-});
+};

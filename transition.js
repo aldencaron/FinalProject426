@@ -91,11 +91,6 @@ var roadAJAX_roadGame = function(AJAX_road, game_road, other_players_game){
 */
 //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(); */
 var collegeGame_collegeAJAX = function(game_college){
-   this.CollegeID = game_college.id;
-   this.PlayerID = game_college.player.id;
-   this.Available = game_college.too_close;
-   this.University = game_college.university;
-
-   return "CollegeID=" + College.CollegeID + "&PlayerID=" + College.PlayerID +
-   "&Available=" + College.Available + "&Univerisity=" + College.University;
+   return ("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id+
+   "&Available=" + game_college.too_close + "&Univerisity=" + game_college.university);
 }

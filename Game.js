@@ -55,7 +55,7 @@ var SettlersGame = function(tiles_array, dev_array) {
   this.other_players = [];
   this.registered_event_handlers = {};
 
-  this.turn_number = 0;
+  this.turn_number = 1;
   this.status;
 
   // ===========================================================================
