@@ -165,6 +165,11 @@ $(document).ready(function() {
                     game.player.colleges.push(game.colleges[i]);
                     game.player.points++;
                     game.colleges[i].player = game.player;
+                    //TODO update player
+                    //TODO update colleges
+                    //
+
+
                     // AJAX POST to update college
                     /*$.ajax({url: "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
           type: "POST",
@@ -198,6 +203,7 @@ $(document).ready(function() {
                             if (!game.roads[j].used) {
                                 game.roads[j].available = true;
                             }
+
                         }
                     }
                     game.colleges[i].radius = 10;

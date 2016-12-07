@@ -41,8 +41,52 @@ $(document).ready(function() {
     this.University = College_json.University;
   }
 })
+var ret;
+               console.log("here");
+function getRoadAJAX(ID){
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+      $.ajax({url:"/SettlersOfCarolina.php/Roads/" + ID,
+        type: "GET",
+         dataType: "json",
+         async:false,
+           success: function(Road_json, status, jqXHR) {
+               console.log(Road_json);
+            ret = Road_json;
+            },
+           error: function(jqXHR, status, error) {
+           alert(jqXHR.responseText);
+     }
+   });
+    return ret;
+  }
 
-  // var ret1= getPlayerAJAX(1);
+  function updateRoad(Road){
+      var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+        $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + Card.CardID,
+          type: "POST",
+           dataType: "json",
+           data: $(Card).serialize(),
+           success: function(Card_json, status, jqXHR) {
+             alert("success");
+           return new Card(Card_json);},
+             error: function(jqXHR, status, error) {
+             alert(jqXHR.responseText);
+       }
+     });
+    }
+
+   var ret1= getRoadAJAX(1);
+  c = setInterval(function(){
+    if(typeof ret1!= 'undefined'){
+      alert(ret1);
+      clearInterval(c);
+    }
+    else{
+
+    }
+  }, 100)
+
+   alert(ret1);
   // // var ret2= getRoadAJAX(1);
   // // console.log(ret2);
   // // var count = 0;
@@ -55,13 +99,13 @@ $(document).ready(function() {
   // var ret4= getCollegeAJAX(1);
   // var ret5= updateRoad(ret2);
   // alert(ret5.RoadID);
-    // var ret5= updateRoad(ret2);
-    // alert(ret5.Basketball);
+  // var ret5= updateRoad(ret2);
+  // alert(ret5.Basketball);
 
-    //calling getRoadAJAX
-    //(want to make stop here)
-    //continues to alert
-    //roadajax aactually finishes in background
+  //calling getRoadAJAX
+  //(want to make stop here)
+  //continues to alert
+  //roadajax aactually finishes in background
   //   var tester=false;
   //   var t;
   //   var c = setInterval(intervalstuff, 1);
@@ -91,7 +135,6 @@ $(document).ready(function() {
   //   var ret;
   // function getRoadAJAX(ID){
   //   var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
-  //
   //       $.ajax({url:"/SettlersOfCarolina.php/Roads/"+ ID,
   //         type: "GET",
   //          dataType: "json",
