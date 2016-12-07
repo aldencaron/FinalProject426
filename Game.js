@@ -151,6 +151,10 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.points;
   }
 
+  var devCard = function(type, id){
+    this.type = type;
+    this.id = id;
+  }
   // Make one board object per game
   this.gameBoard = function() {
 
