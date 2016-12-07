@@ -1,3 +1,4 @@
+// Event types
 var SETTLERS_CONSTANTS =
 {
   // Game sections
@@ -15,16 +16,15 @@ var SETTLERS_CONSTANTS =
   ROBBER_EVENT: 2,
   BUY_EVENT: 3,
   TRADE_EVENT: 4,
-  TURN_CHANGE_EVENT: 5,
-  BUY_ROAD_EVENT: 6,
-  BUY_COLLEGE_EVENT: 7,
-  BUY_UNIVERSITY_EVENT: 8,
-  BUY_CARD_EVENT: 9
+  TURN_CHANGE_EVENT: 5
 };
 
-
+// =============================================================================
+// Full Game Object
+// =============================================================================
 var SettlersGame = function() {
 
+  // Set up images
   var imageNames = ["images/field.jpg", "images/paper.jpg",  "images/balltexture.jpg",
   "images/brickwall.jpg", "images/pasta.jpg",  "images/desert.jpg"];
   var images = [];
@@ -34,7 +34,7 @@ var SettlersGame = function() {
     images.push(image);
   }
 
-  // Globals
+  // Parameters
   this.size = 60;
   this.width = Math.floor(Math.sqrt(3) * this.size * 5 + 1);
   this.x_initial = this.width / 2 - (Math.sqrt(3) * this.size) + 8;
@@ -58,7 +58,9 @@ var SettlersGame = function() {
   this.turn_number = 0;
   this.status;
 
-  // Roll dice
+  // ===========================================================================
+  // Dice rolling function, takes in number of dice to roll and returns sum
+  // ===========================================================================
   this.rollDice = function(num_dice) {
     var sum = 0;
     for (var i = 0; i < num_dice; i++) {
@@ -69,56 +71,56 @@ var SettlersGame = function() {
 
   // College objects
   var gameCollege = function(x, y, tiles, id) {
-    this.id = id;
-    this.x = x;
-    this.y = y;
-    this.tiles = tiles;
-    this.used = false;
-    this.available = true;
-    this.university = false;
-    this.radius = 8;
-    this.player = null;
-    this.roads = [];
+    this.id = id; // ID assigned client side
+    this.x = x; // x value of center
+    this.y = y; // y value of center
+    this.tiles = tiles; // list of tiles it borders
+    this.used = false; // used by a player
+    this.available = true; // whether or not can be bought by player
+    this.too_close = false; // for the one away restriction
+    this.university = false; // if upgraded to university
+    this.radius = 8; // for drawing purposes
+    this.player = null; // which player owns
+    this.roads = []; // list of connecting roads
   }
 
   // Road Objects
-  //TODO can only add road when one player has a college so check on that
   var gameRoad = function(college1, college2, id) {
-    this.id = id;
-    this.start_x = college1.x;
-    this.start_y = college1.y;
-    this.end_x = college2.x;
-    this.end_y = college2.y;
-    this.x_center = (this.start_x + this.end_x)/2;
-    this.y_center = (this.start_y + this.end_y)/2;
-    this.connections = [college1, college2];
-    this.available = false; //TODO switch to true when player gets adjacent college
-    this.used = false;
-    this.radius = 10;
-    this.player = null;
+    this.id = id; // ID assigned client side
+    this.start_x = college1.x; // starting x
+    this.start_y = college1.y; // starting y
+    this.end_x = college2.x; // ending x
+    this.end_y = college2.y; // ending y
+    this.x_center = (this.start_x + this.end_x)/2; // road center x
+    this.y_center = (this.start_y + this.end_y)/2; // road center y
+    this.connections = [college1, college2]; // connecting colleges
+    this.available = false; // whether or not player can buy
+    this.used = false; // if owned by player
+    this.radius = 10; // for drawing purposes
+    this.player = null; // which player owns
   }
 
   // Tile objects
   var gameTile = function(image, type, number, id) {
-    this.id = id;
-    this.image = image;
-    this.type = type;
-    this.resource;
-    this.number = number;
-    this.x_coords = [];
-    this.y_coords = [];
-    this.colleges = [];
-    this.robber = false;
+    this.id = id; // Assigned client side
+    this.image = image; // background image
+    this.type = type; // image type
+    this.resource; // corresponding resource name
+    this.number = number; // number on tile
+    this.x_coords = []; // x coords of tile
+    this.y_coords = []; // y coords of tile
+    this.colleges = []; // colleges on tile
+    this.robber = false; // whether or not has robber
   }
 
-  //TODO add player ids when gotten
+  // Client player
   var gamePlayer = function() {
-    this.id;
-    this.username;
-    this.points = 0;
-    this.color = "green";
-    this.num_cards = 0;
-    this.cards = [];
+    this.id; // player id
+    this.username; // player username
+    this.points = 0; // number of points
+    this.color = "green"; // player color
+    this.num_cards = 0; // number of resource cards
+    this.cards = []; // cards array
     this.cards["ramen"] = 0;
     this.cards["book"] = 0;
     this.cards["ram"] = 0;
@@ -134,21 +136,27 @@ var SettlersGame = function() {
     this.cards["monopoly"] = 0;
     this.cards["volunteer"] = 0;
     this.cards["roads"] = 0;
-    this.colleges = [];
-    this.roads = [];
+    this.colleges = []; // owned colleges
+    this.roads = []; // owned roads
   }
 
+  // Other players
   var gameOtherPlayer = function(color){
     this.num_cards = 0;
     this.colleges = [];
     this.roads = [];
     this.color = color;
-    this.knights_count = 0;
+    this.knights_count = 0; // for largest army purposes
     this.points;
   }
 
   // Make one board object per game
   this.gameBoard = function() {
+
+    //==========================================================================
+    // Set up tiles
+    // =========================================================================
+
     var pieces_placement = [];
 
     for (var i = 0; i < this.num_pieces; i++) {
@@ -249,6 +257,10 @@ var SettlersGame = function() {
       }
     }
 
+    // =========================================================================
+    // Set up colleges
+    // =========================================================================
+
     var colleges_tiles = [0, 1, 2, 0, 1, 2, 2, 0, 1, 2, 2, 3, 4, 5, 6, 6, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 11,
       7, 8, 9, 10, 11, 11, 12, 13, 14, 15, 15, 12, 13, 14, 15, 15, 16, 17, 18, 18, 16, 17, 18, 18, 16, 17, 18
     ];
@@ -320,12 +332,15 @@ var SettlersGame = function() {
       }
       colleges[i] = new gameCollege(this.tiles[colleges_tiles[i]].x_coords[colleges_coords[i]],
         this.tiles[colleges_tiles[i]].y_coords[colleges_coords[i]], adj_tiles_loop, i);
-      }
+    }
 
-      this.colleges = colleges;
+    this.colleges = colleges;
 
-      var roads = [];
-      var connections = [
+    // =========================================================================
+    // Set up roads
+    // =========================================================================
+    var roads = [];
+    var connections = [
         [3, 0],
         [0, 4],
         [4, 1],
@@ -410,16 +425,9 @@ var SettlersGame = function() {
       this.other_players.push(new gameOtherPlayer('yellow'));
     }
 
-    // Add roads to colleges
-    for(var k = 0; k < this.colleges.len; k++){
-      for(var l = 0; l < this.roads.len; l++){
-        if(this.roads[l].connections[0] == this.colleges[k] || this.roads[l].connections[1] == this.colleges[k]){
-          this.colleges[k].push(this.roads[l]);
-        }
-      }
-    }
-
+    // =========================================================================
     // Helper methods
+    // =========================================================================
     this.pointDistance = function(a1, a2, b1, b2) {
       return (Math.sqrt((Math.pow(a1 - b1, 2)) + Math.pow(a2 - b2, 2)));
     }
@@ -483,18 +491,6 @@ var SettlersGame = function() {
     }
     this.TurnChangeEvent = function(){
       this.event_type = SETTLERS_CONSTANTS.TURN_CHANGE_EVENT;
-    }
-    this.BuyRoadEvent = function(){
-      this.event_type = SETTLERS_CONSTANTS.BUY_ROAD_EVENT;
-    }
-    this.BuyCollegeEvent = function(){
-      this.event_type = SETTLERS_CONSTANTS.BUY_COLLEGE_EVENT;
-    }
-    this.BuyUniversityEvent = function(){
-      this.event_type = SETTLERS_CONSTANTS.BUY_UNIVERSITY_EVENT;
-    }
-    this.BuyCardEvent = function(){
-      this.event_type = SETTLERS_CONSTANTS.BUY_CARD_EVENT;
     }
 
     this.startGame = function() {

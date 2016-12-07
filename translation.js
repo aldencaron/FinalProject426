@@ -10,13 +10,13 @@
 var playerGame_playerAJAX = function (player_game){
   this.PlayerID = player_game.id;
   this.Username = player_game.username;
-  this.RoadsCount = player_game.roads.len;
-  this.SoldiersCount = player_game.cards["knight"].len;
+  this.RoadsCount = player_game.roads.length;
+  this.SoldiersCount = player_game.cards["knight"].length;
   this.Points = player_game.points;
 }
 /* Pass in ajax object return, and game.other_players */
 var otherPlayerAJAX_otherPlayerGame = function(other_player_ajax, other_players_game){
-  for(var i = 0; i < len(other_players_game)){
+  for(var i = 0; i < other_players_game.length; i++){
     if(other_players_game[i].id == other_player_ajax.id){
       other_players_game[i].knights_count = other_player_ajax.SoldiersCount;
       other_players_game[i].points = other_player_ajax.Points;
@@ -46,7 +46,7 @@ var playerGame_cardsAJAX = function(game_player){
 
 /* Update client side for other players from server */
 var cardsAJAX_otherPlayerGame = function(cards_ajax, other_players_game){
-  for(var i = 0; i < len(other_players_game)){
+  for(var i = 0; i < other_players_game.length; i++){
     if(other_players_game[i].id == other_player_ajax.id){
       other_players_game[i].knights_count = cards_ajax.Knight;
       other_players_game[i].num_cards = cards_ajax.Ram + cards_ajax.Ramen
@@ -82,72 +82,10 @@ var roadGame_roadAJAX = function(game_road){
 /* Update college on server when college is added or upgraded
 **
 */
+//$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(); */
 var collegeGame_collegeAJAX = function(game_college){
-  this.CollegeID = game_college.id;
-  this.PlayerID = game_college.player.id;
-  this.Available = game_college.avaiable;
-  this.University = game_college.university;
+   this.CollegeID = game_college.id;
+   this.PlayerID = game_college.player.id;
+   this.Available = game_college.too_close;
+   this.University = game_college.university;
 }
-
-var gameCollege = function(x, y, tiles, id) {
-  this.id = id;
-  this.x = x;
-  this.y = y;
-  this.tiles = tiles;
-  this.used = false;
-  this.available = true;
-  this.university = false;
-  this.radius = 8;
-  this.player = null;
-}
-
-
-var gameRoad = function(college1, college2, id) {
-  this.id = id;
-  this.start_x = college1.x;
-  this.start_y = college1.y;
-  this.end_x = college2.x;
-  this.end_y = college2.y;
-  this.x_center = (this.start_x + this.end_x)/2;
-  this.y_center = (this.start_y + this.end_y)/2;
-  this.connections = [college1, college2];
-  this.available = false; //TODO switch to true when player gets adjacent college
-  this.used = false;
-  this.radius = 10;
-  this.player = null;
-}
-
-var gamePlayer = function() {
-  this.id;
-  this.username;
-  this.points = 0;
-  this.color = "green";
-  this.num_cards = 0;
-  this.cards = [];
-  this.cards["ramen"] = 0;
-  this.cards["book"] = 0;
-  this.cards["ram"] = 0;
-  this.cards["brick"] = 0
-  this.cards["basketball"] = 0;
-  this.cards["knight"] = 0;
-  this.cards["victory_points"] = [];
-  this.cards["victory_points"]["oldwell"] = 0;
-  this.cards["victory_points"]["davis"] = 0;
-  this.cards["victory_points"]["pit"] = 0;
-  this.cards["victory_points"]["sitterson"] = 0;
-  this.cards["victory_points"]["bell"] = 0;
-  this.cards["monopoly"] = 0;
-  this.cards["volunteer"] = 0;
-  this.cards["roads"] = 0;
-  this.colleges = [];
-  this.roads = [];
-}
-
-var gameOtherPlayer = function(color){
-  this.num_cards = 0;
-  this.colleges = [];
-  this.roads = [];
-  this.color = color;
-  this.knights_count = 0;
-  this.points;
-};
