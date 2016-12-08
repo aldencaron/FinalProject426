@@ -1,15 +1,32 @@
+================================================================================
+SHELLY & NAEIM
+================================================================================
+
+1.  add to PHP: (SUPER IMPORTANT THINGS TO FOCUS ON)
+    We need a function from the Roads Database, that returns "all of it."  aka it needs to return
+      all the columns and roads in an array. (we can specify by using a special request parameter called "getAll" or something).
+        Similarly, for Players, Cards, Colleges.
+2.    Add to the setup.php: when creating the table for DiceRolls, go ahead and populate 1000 rows with pregenerated dice rolls, which
+        are randomint[1,6] + randomint[1,6] for the two rolls (and not randomint[1,12]). We'll index in by ID which corresponds to the
+          turn number.
+3.    Add to DevCards Database (Shelly): a column named "Index" that is type (int(11)) to keep track of which dev card we are actually using.
+4.    
+
+
+================================================================================
+ALDEN & MAX
+================================================================================
 THINGS TO UPDATE CLIENT TO SERVER
   Dice roll
   Turn number/turn end
-  Player info - points, cards number, special points (eventually)
   Development card index
-  Update other player IDs by going off what our ID is 
+  Update other player IDs by going off what our ID is
 
 THINGS TO UPDATE SERVER TO CLIENT
   Dice roll
   Turn number/turn end
   Player info
-  Get robber function in PHP
+
   Robber
   Colleges, universities, roads
 
@@ -23,4 +40,3 @@ GENERAL THINGS
   (Alden - check on radius drawing)
   Refactor AJAX calls into separate functions client side
   Finish transitions
-  Want to be able to query for a whole table at once

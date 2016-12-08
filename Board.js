@@ -886,6 +886,7 @@ var checkBuyUniversity = function() {
     for(var i = 0; i < tiles_array.length; i++){
       game.tiles[tiles_array[i]["TileID"] - 1].robber = tiles_array[i]["Robber"];
     }
+    drawBoard(false, false, false, false, false, 0);
   }
 
   var updateOtherPlayers_Players = function(players_array){
@@ -974,15 +975,19 @@ var checkBuyUniversity = function() {
         }
         else{
           var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
-          $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls",
+          $.ajax({url_base + "/SettlersOfCarolina.php/Turns",
             type:"GET",
             dataType"json",
-            success: function(array, status, jqXHR) {
-              if(array.length%4==id){
+            success: function(turn, status, jqXHR) {
+              if(turn%4==id){
                 game.turn_number=array.length;
                 myturn=1;
 
                 turnChecks();
+              }
+              else if(game.turn_number+1==turn){
+                game.turn_number++;
+                rollOtherDice();
               }
               },
             error: function(jqXHR, status, error) {
