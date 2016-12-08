@@ -13,22 +13,18 @@ SHELLY & NAEIM
 ALDEN & MAX
 ================================================================================
 THINGS TO UPDATE CLIENT TO SERVER
-  Dice roll
-  Turn number/turn end
+  Turn number/turn end - - NEED TURN DATABASE
   Development card index
 
 THINGS TO UPDATE SERVER TO CLIENT
-  Dice roll
-  Turn number/turn end
+  Turn number/turn end - - NEED TURN DATABASE
 
 
 GENERAL THINGS
+  Write event handler for end of game 
   Special points/monopoly
   Trade is eh
   Interfacing could be better
-  When game ends!
   Username choosing CSS
   Write a README
   Refactor AJAX calls into separate functions client side
-  Finish transitions
-  Fix turn number

@@ -11,6 +11,7 @@ function RunGame() {
   var board;
   var turn_over = false;
   var partial_turn_over = false;
+  var current_roll = 0;
 
   // =============================================================================
   // BOARD DRAWING
@@ -755,9 +756,19 @@ var checkBuyUniversity = function() {
   }
 
   var diceRoll = function() {
-    var current_roll = game.rollDice(2);
+    $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
+      type:"GET",
+      dataType"json",
+      async: false,
+      success: function(roll, status, jqXHR) {
+        current_roll = roll;
+        },
+      error: function(jqXHR, status, error) {
+        console.log("Problem waiting for turn");
+    }
+    });
+
     $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
-    //TODO post to server
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -814,7 +825,17 @@ var checkBuyUniversity = function() {
   };
   // Query for dice roll from other players
   var diceRollOther = function(current_roll) {
-    // TODO GET DICE ROLL FROM SERVER
+    $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
+      type:"GET",
+      dataType"json",
+      async: false,
+      success: function(roll, status, jqXHR) {
+        current_roll = roll;
+        },
+      error: function(jqXHR, status, error) {
+        console.log("Problem waiting for turn");
+    }
+    });
     $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
     if (current_roll == 7) {
       // Steal Cards
@@ -952,7 +973,7 @@ var checkBuyUniversity = function() {
     $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + game.player.id,
         type: "POST",
         dataType: "json",
-        data: data: playerGame_cardsAJAX(game.player)
+        data: playerGame_cardsAJAX(game.player)
         async: false,
         success: function(Card_json, status, jqXHR) {
         },
@@ -964,7 +985,7 @@ var checkBuyUniversity = function() {
     $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + game.player.id,
         type: "POST",
         dataType: "json",
-        data: data: playerGame_playerAJAX(game.player)
+        data: playerGame_playerAJAX(game.player)
         async: false,
         success: function(Player_json, status, jqXHR) {
         },
@@ -1013,7 +1034,7 @@ var checkBuyUniversity = function() {
                 rollOtherDice();
               }
               else if(turn == 0){
-                //TODO more here 
+                //TODO more here
                 alert("Game over!");
               }
               },
