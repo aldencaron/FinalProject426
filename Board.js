@@ -118,6 +118,7 @@ function RunGame() {
           game.colleges[i].radius = 12;
         }
         ctx.beginPath();
+        if(game.colleges[i].university){game.colleges[i].radius = 14}
         ctx.arc(game.colleges[i].x, game.colleges[i].y, game.colleges[i].radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = game.colleges[i].player.color;
         ctx.fill();
@@ -627,7 +628,7 @@ var checkBuyUniversity = function() {
           type: "POST",
           dataType: "json",
           async: false,
-          data: tileGame_tileAJAX(game.tiles[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
         },
         error: function(jqXHR, status, error) {
@@ -947,18 +948,39 @@ var checkBuyUniversity = function() {
     var trading = document.getElementById("trade_button");
     trade_button.removeEventListener('click', tradeWithBank);
 
-    // TODO UPDATE INFORMATION
-    // TODO UPDATE TURN END
-
-    // Call next turn
+    // Update player cards
+    $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + game.player.id,
+        type: "POST",
+        dataType: "json",
+        data: data: playerGame_cardsAJAX(game.player)
+        async: false,
+        success: function(Card_json, status, jqXHR) {
+        },
+        error: function(jqXHR, status, error) {
+         console.log(jqXHR.responseText);
+        }
+    });
+    // Update player object
+    $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + game.player.id,
+        type: "POST",
+        dataType: "json",
+        data: data: playerGame_playerAJAX(game.player)
+        async: false,
+        success: function(Player_json, status, jqXHR) {
+        },
+        error: function(jqXHR, status, error) {
+         console.log(jqXHR.responseText);
+        }
+    });
     game.turn_number++;
+    // Call next turn TODO UPDATE TURN END
+    // TODO if points is 10, change to turn 0
     turnChecks();
   }
 
   // Keep track of turns
   var turnChecks = function() {
     updatePlayerInfo();
-
     // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
@@ -968,6 +990,7 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
+      game.turn_number--; //TODO not certain that this will work but I think is ok
       var myturn=0;
       var c = setInterval(function(){
         if(myturn){
@@ -979,8 +1002,8 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType"json",
             success: function(turn, status, jqXHR) {
-              if(turn%4==id){
-                game.turn_number=array.length;
+              if(turn%4 == id){
+                game.turn_number = turn;
                 myturn=1;
 
                 turnChecks();
@@ -988,6 +1011,10 @@ var checkBuyUniversity = function() {
               else if(game.turn_number+1==turn){
                 game.turn_number++;
                 rollOtherDice();
+              }
+              else if(turn == 0){
+                //TODO more here 
+                alert("Game over!");
               }
               },
             error: function(jqXHR, status, error) {
@@ -1018,6 +1045,15 @@ var checkBuyUniversity = function() {
   }
   game.player.username = username;
   game.player.id = id;
+
+  // Assign other players ids based on own id
+  game.other_players[0].id = game.player.id + 1;
+  if(game.other_players[0].id > 4){game.other_players[0].id -= 4;}
+  game.other_players[1].id = game.player.id + 2;
+  if(game.other_players[1].id > 4){game.other_players[0].id -= 4;}
+  game.other_players[2].id = game.player.id + 3;
+  if(game.other_players[2].id > 4){game.other_players[0].id -= 4;}
+
   game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
   game.registerEventHandler(SETTLERS_CONSTANTS.TURN_CHANGE_EVENT, turnEnd);

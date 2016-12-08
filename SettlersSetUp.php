@@ -98,6 +98,13 @@ for($i = 0; $i <= 54; $i++){
   DiceID int primary key not null auto_increment,
   RollResult int)";
   mysqli_query($mysqli, $SQL);
+  // Load with dice rolls
+  for($i = 0; $i <= 1000; $i++){
+    $r = rand(1, 6) + rand(1, 6);
+    $SQL = "Insert into DiceRolls (DiceID, RollResult)
+    Values ($i, $r)";
+      mysqli_query($mysqli, $SQL);
+  }
 
 $SQL = "Create Table DevCardStacks (
   DevID int primary key not null auto_increment)";
