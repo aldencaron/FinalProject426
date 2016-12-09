@@ -146,6 +146,33 @@ class Card {
   return json_encode($json_obj);
  }
 
+ public static function getAllJSON() {
+     $mysqli = Card::connect();
+     $result = $mysqli->query("SELECT * FROM Cards");
+
+     $json = array();
+     while ($row = $result->fetch_array()) {
+         $json_sub = array();
+         $json_sub['PlayerID'] = $row['PlayerID'];
+         $json_sub['Ram'] = $row['Ram'];
+         $json_sub['Ramen'] = $row['Ramen'];
+         $json_sub['Brick'] = $row['Brick'];
+         $json_sub['Basketball'] = $row['Basketball'];
+         $json_sub['Book'] = $row['Book'];
+         $json_sub['Knight'] = $row['Knight'];
+         $json_sub['OldWell'] = $row['OldWell'];
+         $json_sub['ThePit'] = $row['ThePit'];
+         $json_sub['DavisLibrary'] = $row['DavisLibrary'];
+         $json_sub['Sitterson'] = $row['Sitterson'];
+         $json_sub['BellTower'] = $row['BellTower'];
+         $json_sub['Roads'] = $row['Roads'];
+         $json_sub['Volunteer'] = $row['Volunteer'];
+         $json_sub['Monopoly'] = $row['Monopoly'];
+         $json[] = $json_sub;
+     }
+     return json_encode($json);
+ }
+
    private function __construct( $PlayerID, $Ram, $Ramen, $Brick, $Basketball,
     $Book, $Knight, $OldWell, $ThePit, $DavisLibrary, $Sitterson,
      $BellTower, $Roads, $Volunteer, $Monopoly ){
@@ -359,6 +386,22 @@ class College {
   return json_encode($json_obj);
   }
 
+  public static function getAllJSON() {
+      $mysqli = College::connect();
+      $result = $mysqli->query("SELECT * FROM Colleges");
+
+      $json = array();
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['CollegeID'] = $row['CollegeID'];
+          $json_sub['PlayerID'] = $row['PlayerID'];
+          $json_sub['Available'] = $row['Available'];
+          $json_sub['University'] = $row['University'];
+          $json[] = $json_sub;
+      }
+      return json_encode($json);
+  }
+
    private function update($CollegeID) {
      $mysqli= College::connect();
 
@@ -486,6 +529,20 @@ class Tile {
   return json_encode($json_obj);
   }
 
+  public static function getAllJSON() {
+      $mysqli = Tile::connect();
+      $result = $mysqli->query("SELECT * FROM Tiles");
+
+      $json = array();
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['TileID'] = $row['TileID'];
+          $json_sub['Robber'] = $row['Robber'];
+          $json[] = $json_sub;
+      }
+      return json_encode($json);
+  }
+
   private function update($TileID) {
     $mysqli= Tile::connect();
 
@@ -586,6 +643,21 @@ class Road{
                      'PlayerID' => $this->PlayerID,
                      'Available' => $this->Available );
   return json_encode($json_obj);
+  }
+
+  public static function getAllJSON() {
+      $mysqli = Road::connect();
+      $result = $mysqli->query("SELECT * FROM Roads");
+
+      $json = array();
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['RoadID'] = $row['RoadID'];
+          $json_sub['PlayerID'] = $row['PlayerID'];
+          $json_sub['Available'] = $row['Available'];
+          $json[] = $json_sub;
+      }
+      return json_encode($json);
   }
 
    private function update($RoadID) {
@@ -714,6 +786,23 @@ class Player {
                     'SoldiersCount' => $this->SoldiersCount,
                     'Points' => $this->Points );
   return json_encode($json_obj);
+  }
+
+  public static function getAllJSON() {
+      $mysqli = Player::connect();
+      $result = $mysqli->query("SELECT * FROM Players");
+
+      $json = array();
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['PlayerID'] = $row['PlayerID'];
+          $json_sub['Username'] = $row['Username'];
+          $json_sub['RoadsCount'] = $row['RoadsCount'];
+          $json_sub['SoldiersCount'] = $row['SoldiersCount'];
+          $json_sub['Points'] = $row['Points'];
+          $json[] = $json_sub;
+      }
+      return json_encode($json);
   }
 
  private function update($PlayerID) {
@@ -853,6 +942,20 @@ class DiceRoll {
   $json_obj = array('DiceID' => $this->DiceID,
                      'RollResult' => $this->RollResult );
   return json_encode($json_obj);
+  }
+
+  public static function getAllJSON() {
+      $mysqli = DiceRoll::connect();
+      $result = $mysqli->query("SELECT * FROM DiceRolls");
+
+      $json = array();
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['DiceID'] = $row['DiceID'];
+          $json_sub['RollResult'] = $row['RollResult'];
+          $json[] = $json_sub;
+      }
+      return json_encode($json);
   }
 
   private function update($DiceID) {
