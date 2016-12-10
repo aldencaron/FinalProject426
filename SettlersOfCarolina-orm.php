@@ -479,12 +479,15 @@ class Turn{
     $mysqli = Turn::connect();
     $SQL = "Select max(TurnID) as TurnID from Turns";
     $result = mysqli_query($mysqli, $SQL);
+    if($result){
     if ($result->num_rows==0){
       return 1;
     }
     $row = $result->fetch_array();
     return intval($row['TurnID']);
   }
+  return null;
+}
 
   private function __construct($TurnID){
       $this->TurnID = $TurnID;

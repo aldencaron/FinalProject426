@@ -1015,7 +1015,7 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(turn, status, jqXHR) {
-        console.log(success);
+        console.log("success");
       },
       error: function(jqXHR, status, error) {
        console.log(jqXHR.responseText);
