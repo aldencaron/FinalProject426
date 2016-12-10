@@ -986,7 +986,7 @@ var checkBuyUniversity = function() {
     $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + game.player.id,
         type: "POST",
         dataType: "json",
-        data: playerGame_cardsAJAX(game.player)
+        data: playerGame_cardsAJAX(game.player),
         async: false,
         success: function(Card_json, status, jqXHR) {
         },
@@ -998,7 +998,7 @@ var checkBuyUniversity = function() {
     $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + game.player.id,
         type: "POST",
         dataType: "json",
-        data: playerGame_playerAJAX(game.player)
+        data: playerGame_playerAJAX(game.player),
         async: false,
         success: function(Player_json, status, jqXHR) {
         },
