@@ -896,7 +896,7 @@ var checkBuyUniversity = function() {
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
-    alert("Update colleges @ 899");
+    console.log("Update colleges @ 899");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
@@ -917,7 +917,7 @@ var checkBuyUniversity = function() {
     drawBoard(false, false, false, false, false, 0);
   }
   var updateTiles = function(tiles_array){
-    alert("Update tiles @ 920");
+    console.log("Update tiles @ 920");
     for(var i = 0; i < tiles_array.length; i++){
       if(tiles_array[i]["Robber"] == 0){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
