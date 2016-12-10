@@ -117,11 +117,12 @@ function RunGame() {
       if(game.colleges[i].used){
           ctx.beginPath();
           game.colleges[i].radius = 12;
-          if(game.colleges[i].university){game.colleges[i].radius = 14;}
+          if(game.colleges[i].university){game.colleges[i].radius = 16;}
           ctx.arc(game.colleges[i].x, game.colleges[i].y, game.colleges[i].radius, 0, 2 * Math.PI, false);
           ctx.fillStyle = game.colleges[i].player.color;
           ctx.fill();
           ctx.lineWidth = 2;
+          if(game.colleges[i].x){ctx.lineWidth = 3;}
           ctx.strokeStyle = 'black';
           ctx.stroke();
       }
@@ -175,8 +176,7 @@ function RunGame() {
           async: false,
           data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
-          alert("success");
-        },
+          },
         error: function(jqXHR, status, error) {
         alert(jqXHR.responseText);
       }
@@ -245,8 +245,7 @@ var addRoadStart = function(event) {
           async: false,
           data: roadGame_roadAJAX(game.roads[i]),
           success: function(College_json, status, jqXHR) {
-          alert("success");
-        },
+          },
         error: function(jqXHR, status, error) {
         alert(jqXHR.responseText);
         }
@@ -338,8 +337,7 @@ var buyRoad = function(event) {
           async: false,
           data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
-          alert("success");
-        },
+          },
         error: function(jqXHR, status, error) {
         alert(jqXHR.responseText);
         }
@@ -434,8 +432,7 @@ var buyCollege = function() {
             async: false,
             data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
             success: function(College_json, status, jqXHR) {
-            alert("success");
-          },
+            },
           error: function(jqXHR, status, error) {
           alert(jqXHR.responseText);
           }
@@ -516,8 +513,7 @@ var checkBuyUniversity = function() {
             async: false,
             data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
             success: function(College_json, status, jqXHR) {
-            alert("success");
-          },
+            },
           error: function(jqXHR, status, error) {
           alert(jqXHR.responseText);
           }
@@ -1011,7 +1007,7 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(turn, status, jqXHR) {
-        console.log("success @ line 1022");
+        console.log("success on posting");
       },
       error: function(jqXHR, status, error) {
        console.log(jqXHR.responseText);
@@ -1105,9 +1101,19 @@ var checkBuyUniversity = function() {
               if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
+                $("#turn_info").text("Currently your turn!");
                 turnChecks();
               }
               else if(game.turn_number + 1 == turn){
+                if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
+                  $("#turn_info").text("Currently " + game.other_players[0].username + "'s turn!");
+                }
+                if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
+                  $("#turn_info").text("Currently " + game.other_players[1].username + "'s turn!");
+                }
+                if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
+                  $("#turn_info").text("Currently " + game.other_players[2].username + "'s turn!");
+                }
                 game.turn_number++;
                 rollOtherDice();
               }
