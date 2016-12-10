@@ -1,8 +1,7 @@
 function RunGame() {
   var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
 
-  alert(username);
-  alert(id);
+  alert("Welcome " + username + "! You are player " + id + "!");
 
   var size = 60;
   var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
@@ -115,11 +114,8 @@ function RunGame() {
     }
     // Draw on colleges
     for (var i = 0; i < game.num_colleges; i++) {
-      if (game.colleges[i].used) {
-        if (game.colleges[i].settlement) {
-          game.colleges[i].radius = 12;
-        }
         ctx.beginPath();
+        game.colleges[i].radius = 12;
         if(game.colleges[i].university){game.colleges[i].radius = 14}
         ctx.arc(game.colleges[i].x, game.colleges[i].y, game.colleges[i].radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = game.colleges[i].player.color;
@@ -246,7 +242,7 @@ var addRoadStart = function(event) {
           type: "POST",
           dataType: "json",
           async: false,
-          data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          data: roadGame_roadAJAX(game.roads[i]),
           success: function(College_json, status, jqXHR) {
           alert("success");
         },
@@ -339,7 +335,7 @@ var buyRoad = function(event) {
           type: "POST",
           dataType: "json",
           async: false,
-          data: roadsGame_roadsAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+          data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
           alert("success");
         },
@@ -852,6 +848,7 @@ var checkBuyUniversity = function() {
     }
     // Is not a robber
     else {
+      // TODO this maybe does not work??
       drawBoard(false, false, false, false, true, current_roll);
       // Add cards
       for (var i = 0; i < game.player.colleges.length; i++) {
@@ -868,7 +865,6 @@ var checkBuyUniversity = function() {
     }
   };
 
-  // TODO ALL THESE ARRAY INDEXING MAY BE SUPER WRONG OOPS
 
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
@@ -1008,7 +1004,10 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
+<<<<<<< HEAD
     // alert("game turn number @ line 1016: " + game.turn_number);
+=======
+>>>>>>> origin/master
     $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
       dataType: "json",
@@ -1030,10 +1029,13 @@ var checkBuyUniversity = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
+      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
+      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number % 4 == game.player.id || (game.turn_number % 4 == 0 && game.player.id == 4)) {
+    } else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
+      alert("Your turn! Buy/trade/place or win!");
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
@@ -1102,12 +1104,12 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
-              if(turn % 4 == game.player.id || (turn % 4 == 0 && game.player.id == 4)){
+              if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
                 turnChecks();
               }
-              else if(game.turn_number+1==turn){
+              else if(game.turn_number + 1 == turn){
                 game.turn_number++;
                 rollOtherDice();
               }
@@ -1116,13 +1118,10 @@ var checkBuyUniversity = function() {
                 alert("Game over!");
               }
               },
-            error: function(jqXHR, status, error) {
+            error: function(jqXHR, status, error){
               console.log("Problem waiting for turn");
             }
           });
-
-          //to post we need to knwo the ID...
-
         }
       }, 100);
     }
@@ -1160,13 +1159,21 @@ var checkBuyUniversity = function() {
       });
     }
   }
+  // Set up colors
+  var colors = ["green", "yellow", "red", "blue"];
   // Assign other players ids based on own id
   for(var i = 0; i < game.other_players.length; i++){
     game.other_players[i].id = game.player.id + i + 1;
     if(game.other_players[i].id > 4){
       game.other_players[i].id -= 4;
     }
+    game.other_players[i].color = colors[game.other_players[i].id % 4]
   }
+  game.player.color = colors[game.player.id % 4];
+  $("#player_one").css("background-color", game.player.color);
+  $("#player_two").css("background-color", game.other_players[0].color);
+  $("#player_three").css("background-color", game.other_players[1].color);
+  $("#player_four").css("background-color", game.other_players[2].color);
 
   game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
