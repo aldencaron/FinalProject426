@@ -143,6 +143,7 @@ var SettlersGame = function(tiles_array, dev_array) {
 
   // Other players
   var gameOtherPlayer = function(color){
+    this.id;
     this.num_cards = 0;
     this.colleges = [];
     this.roads = [];
