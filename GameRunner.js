@@ -993,7 +993,18 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
-    // Call next turn TODO UPDATE TURN END
+    $.ajax({url: url_base + "/SettlersOfCarolina.php/Turns",
+      type: "POST",
+      dataType: "json",
+      async: false,
+      success: function(turn, status, jqXHR) {
+        console.log(success);
+      },
+      error: function(jqXHR, status, error) {
+       console.log(jqXHR.responseText);
+      }
+
+    });
     // TODO if points is 10, change to turn 0
     turnChecks();
   }
