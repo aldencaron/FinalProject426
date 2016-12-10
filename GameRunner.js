@@ -770,7 +770,7 @@ var checkBuyUniversity = function() {
   }
 
   var diceRoll = function() {
-    $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls/" + parseInt(game.turn_number),
+    $.ajax({url: url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type:"GET",
       dataType"json",
       async: false,
