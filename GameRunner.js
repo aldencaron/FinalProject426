@@ -762,7 +762,7 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(roll, status, jqXHR) {
-        current_roll = roll;
+        current_roll = roll["RollResult"];
         },
       error: function(jqXHR, status, error) {
         console.log("Problem waiting for turn");
@@ -831,7 +831,7 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(roll, status, jqXHR) {
-        current_roll = roll;
+        current_roll = roll["RollResult"];
         },
       error: function(jqXHR, status, error) {
         console.log("Problem waiting for turn");
@@ -872,7 +872,7 @@ var checkBuyUniversity = function() {
 
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
-      for(var j = 0; j < game.other_players; j++){
+      for(var j = 0; j < game.other_players.length; j++){
         if(roads_array[i]["PlayerID"] == game.others_players[j].id){
           game.roads[roads_array[i]["RoadID"] - 1].player = game.other_players[j];
           game.other_players[j].roads.push(game.colleges[roads_array[i]["RoadID"] - 1]);
@@ -885,9 +885,10 @@ var checkBuyUniversity = function() {
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
-    console.log("Update colleges @ 899");
+    console.log("Update colleges");
+    console.log(colleges_array.length);
     for(var i = 0; i < colleges_array.length; i++){
-      for(var j = 0; j < game.other_players; j++){
+      for(var j = 0; j < game.other_players.length; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
           game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
           game.other_players[j].colleges.push(game.colleges[colleges_array[i]["CollegeID"] - 1]);
@@ -906,7 +907,7 @@ var checkBuyUniversity = function() {
     drawBoard(false, false, false, false, false, 0);
   }
   var updateTiles = function(tiles_array){
-    console.log("Update tiles @ 920");
+    console.log("Update tiles");
     for(var i = 0; i < tiles_array.length; i++){
       if(tiles_array[i]["Robber"] == 0){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
