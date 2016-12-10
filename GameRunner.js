@@ -1038,7 +1038,7 @@ var checkBuyUniversity = function() {
       game.turn_number--; //TODO not certain that this will work but I think is ok
       var my_turn = false;
       var c = setInterval(function(){
-        if(myturn){
+        if(my_turn){
           clearInterval(c);
         }
         // Update things and wait for it to be your turn idk this could be really bad TODO
