@@ -873,7 +873,11 @@ var checkBuyUniversity = function() {
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
+        console.log("roads_array, " + i + ":" + roads_array[0]);
+        console.log("roads_array.length: " + roads_array.length);
+        console.log("roads_array, " + i + ":" + roads_array[0]["PlayerID"]);
         if(roads_array[i]["PlayerID"] == game.others_players[j].id){
+
           game.roads[roads_array[i]["RoadID"] - 1].player = game.other_players[j];
           game.other_players[j].roads.push(game.colleges[roads_array[i]["RoadID"] - 1]);
           game.roads[roads_array[i]["RoadID"] - 1].used = true;
