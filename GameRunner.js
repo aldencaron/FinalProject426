@@ -597,7 +597,7 @@ var checkBuyUniversity = function() {
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
     $('#player_three_points').text("Points: " + game.other_players[1].points);
     $('#player_four_username').text(game.other_players[2].username);
-    $('#player_four_cards').text("Number of Cards: " + game.other_players[2].num_cards);
+    $('#player_four_num_cards').text("Number of Cards: " + game.other_players[2].num_cards);
     $('#player_four_points').text("Points: " + game.other_players[2].points);
   };
 
