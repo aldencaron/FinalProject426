@@ -8,14 +8,7 @@ var playerGame_playerAJAX = function (player_game){
 }
 
 var tileGame_tileAJAX = function(game_tile){
-  var robber_bool;
-  if(game_tile.robber){
-    robber_bool = 1;
-  }
-  else{
-    robber_bool = 0;
-  }
-  return("TileID=" + game_tile.id + "&Robber=" + robber_bool);
+  return("TileID=" + game_tile.id + "&Robber=" + game_tile.robber);
 }
 
 var roadGame_roadAJAX = function(game_road){
@@ -23,15 +16,8 @@ var roadGame_roadAJAX = function(game_road){
 }
 
 var collegeGame_collegeAJAX = function(game_college){
-  var university_string;
-  if(game_college.university){
-    university_bool = 1;
-  }
-  else{
-    university_bool = 0;
-  }
    return ("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id +
-   "&Available=" + game_college.too_close + "&Univerisity=" + university_bool);
+   "&Available=" + game_college.too_close + "&Univerisity=" + game_college.university);
 }
 
 var playerGame_cardsAJAX = function(game_player){

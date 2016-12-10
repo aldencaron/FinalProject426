@@ -2,33 +2,24 @@
 SHELLY & NAEIM
 ================================================================================
 
-1.  add to PHP: (SUPER IMPORTANT THINGS TO FOCUS ON)
-    We need a function from the Roads Database, that returns "all of it."  aka it needs to return
-      all the columns and roads in an array. (we can specify by using a special request parameter called "getAll" or something).
-        Similarly, for Players, Cards, Colleges.
-2.    Add to DevCards Database (Shelly): a column named "Index" that is type (int(11)) to keep track of which dev card we are actually using.
+Make it pretty!
+Load tile and dev card arrays in the setup PHP file
 
 
 ================================================================================
 ALDEN & MAX
 ================================================================================
-THINGS TO UPDATE CLIENT TO SERVER
-  Turn number/turn end - - NEED TURN DATABASE
-  Development card index
 
-THINGS TO UPDATE SERVER TO CLIENT
-  Turn number/turn end - - NEED TURN DATABASE
+Write event handler for end of game
+Special points/monopoly
+Trade is eh
+Interfacing could be better
+Username choosing CSS
 
-
-GENERAL THINGS
-  Write event handler for end of game
-  Special points/monopoly
-  fix trading interface
-  Interfacing could be better
-  Username choosing CSS
-  Refactor AJAX calls into separate functions client side
-
-
-  add color picker to username page to assign to player Information
-  force usernames to be unique
-  force ID's to be from 1-4 (so call setup.php at the 4th id.)
+Robber disappears
+Check universities
+Dice roll other does not draw board
+Sometimes turn fire early
+End turn button will end other people's turns
+Max did something dumb with the setup file
+Alerts go twice sometimes
