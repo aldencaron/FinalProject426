@@ -34,20 +34,20 @@ class Card {
     $mysqli= Card::connect();
 
     $SQL = "Update Cards set
-    Ram = $mysqli->real_escape_string($this->Ram),
-    Ramen = $mysqli->real_escape_string($this->Ramen),
-    Brick = $mysqli->real_escape_string($this->Brick),
-    Basketball = $mysqli->real_escape_string($this->Basketball),
-    Book = $mysqli->real_escape_string($this->Book),
-    Knight = $mysqli->real_escape_string($this->Knight),
-    OldWell = $mysqli->real_escape_string($this->OldWell),
-    ThePit = $mysqli->real_escape_string($this->ThePit),
-    DavisLibrary = $mysqli->real_escape_string($this->DavisLibrary),
-    Sitterson = $mysqli->real_escape_string($this->Sitterson),
-    BellTower = $mysqli->real_escape_string($this->BellTower),
-    Roads = $mysqli->real_escape_string($this->Roads),
-    Volunteer = $mysqli->real_escape_string($this->Volunteer),
-    Monopoly = $mysqli->real_escape_string($this->Monopoly)
+    Ram = $this->Ram,
+    Ramen = $this->Ramen,
+    Brick = $this->Brick,
+    Basketball = $this->Basketball,
+    Book = $this->Book,
+    Knight = $this->Knight,
+    OldWell = $this->OldWell,
+    ThePit = $this->ThePit,
+    DavisLibrary = $this->DavisLibrary,
+    Sitterson = $this->Sitterson,
+    BellTower = $this->BellTower,
+    Roads = $this->Roads,
+    Volunteer = $this->Volunteer,
+    Monopoly = $this->Monopoly
     WHERE PlayerID = '$PlayerID'";
 
    $result= mysqli_query($mysqli, $SQL);
@@ -409,9 +409,9 @@ class College {
      $mysqli= College::connect();
 
      $SQL = "Update Colleges set
-     PlayerID = $mysqli->real_escape_string($this->PlayerID),
-     Available = $mysqli->real_escape_string($this->Available),
-     University = $mysqli->real_escape_string($this->University)
+     PlayerID = $this->PlayerID,
+     Available = $this->Available,
+     University = $this->University
      WHERE CollegeID = '$CollegeID'";
     $result= mysqli_query($mysqli, $SQL);
 
@@ -508,7 +508,7 @@ class Turn{
         exit();
     }
 
-    return new Turn(intval($row['TurnID']));
+    return new Turn($id);
   }
 
   public function getJSON(){
@@ -600,8 +600,8 @@ class Tile {
     $mysqli= Tile::connect();
 
     $SQL = "Update Tiles set
-    Robber= $mysqli->real_escape_string($this->Robber)
-    WHERE TileID = '$TileID'";
+    Robber= $this->Robber
+    WHERE TileID = $TileID";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -720,9 +720,9 @@ class Road{
 
      $SQL =
      "Update Roads set
-     PlayerID = $mysqli->real_escape_string($this->PlayerID),
-     Available = $mysqli->real_escape_string($this->Available)
-     WHERE RoadID = '$RoadID'";
+     PlayerID = $this->PlayerID,
+     Available = $this->Available
+     WHERE RoadID = $RoadID";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -1017,8 +1017,8 @@ class DiceRoll {
     $mysqli= DiceRoll::connect();
 
     $SQL = "Update DiceRolls set
-    RollResult= $mysqli->real_escape_string($this->RollResult)
-    WHERE DiceID = '$DiceID'";
+    RollResult= $this->RollResult
+    WHERE DiceID = $DiceID";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
