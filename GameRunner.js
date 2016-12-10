@@ -888,7 +888,6 @@ var checkBuyUniversity = function() {
     console.log("Update colleges");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
-        console.log(colleges_array[i]["PlayerID"] + "<-PlayerID" + " j:" + j + " other id: " + game.other_player[j].id);
         if(colleges_array[i]["PlayerID"] == game.other_players[j].id){
           game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
           game.other_players[j].colleges.push(game.colleges[colleges_array[i]["CollegeID"] - 1]);
@@ -1164,12 +1163,12 @@ var checkBuyUniversity = function() {
     }
   }
   // Assign other players ids based on own id
-  game.other_players[0].id = game.player.id + 1;
-  if(game.other_players[0].id > 4){game.other_players[0].id -= 4;}
-  game.other_players[1].id = game.player.id + 2;
-  if(game.other_players[1].id > 4){game.other_players[0].id -= 4;}
-  game.other_players[2].id = game.player.id + 3;
-  if(game.other_players[2].id > 4){game.other_players[0].id -= 4;}
+  for(var i = 0; i < game.other_players.length; i++){
+    game.other_players[i].id = game.player.id + i + 1;
+    if(game.other_players[i].id > 4){
+      game.other_players[i].id -= 4;
+    }
+  }
 
   game.registerEventHandler(SETTLERS_CONSTANTS.SETUP_TURN_EVENT, setupTurn);
   game.registerEventHandler(SETTLERS_CONSTANTS.ROBBER_EVENT, moveRobber);
