@@ -1108,12 +1108,11 @@ var checkBuyUniversity = function() {
               },
             error: function(jqXHR, status, error) {
               console.log("Problem waiting for turn");
-      }
-    });
+            }
+          });
 
-//to post we need to knwo the ID...
+          //to post we need to knwo the ID...
 
-          })
         }
       }, 100);
     }
