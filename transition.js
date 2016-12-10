@@ -32,11 +32,12 @@ var collegeGame_collegeAJAX = function(game_college){
    else{
      university_bool = 0;
    }
+   available_bool = 0;
    console.log("University bool:" + university_bool);
    console.log("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id +
-   "&Available=" + game_college.too_close + "&Univerisity=" + university_bool);
+   "&Available=" + available_bool + "&University=" + university_bool);
    return ("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id +
-   "&Available=" + game_college.too_close + "&Univerisity=" + university_bool);
+   "&Available=" + available_bool + "&University=" + university_bool);
 }
 
 var playerGame_cardsAJAX = function(game_player){
