@@ -610,7 +610,21 @@ var checkBuyUniversity = function() {
 
     // Check hexagons
     for (var i = 0; i < game.num_tiles; i++) {
-      game.tiles[i].robber = false;
+      if(game.tiles[i].robber){
+        game.tiles[i].robber = false;
+        $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
+          type: "POST",
+          dataType: "json",
+          async: false,
+          data: tileGame_tileAJAX(game.tiles[i]),
+          success: function(tile_json, status, jqXHR) {
+            console.log("Success in posting robber.");
+          },
+          error: function(jqXHR, status, error) {
+            console.log(jqXHR.responseText);
+          }
+        });
+      }
       if (game.checkLeft(game.tiles[i].x_coords[4], x) &&
       game.checkRight(game.tiles[i].x_coords[1], x) &&
       game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y) &&
@@ -832,6 +846,7 @@ var checkBuyUniversity = function() {
     }
     });
     $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    console.log("current_roll before checks: " + current_roll);
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -880,7 +895,6 @@ var checkBuyUniversity = function() {
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
-    console.log("Update colleges");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
         if(colleges_array[i]["PlayerID"] == game.other_players[j].id){
@@ -906,7 +920,6 @@ var checkBuyUniversity = function() {
     drawBoard(false, false, false, false, false, 0);
   }
   var updateTiles = function(tiles_array){
-    console.log("Update tiles");
     for(var i = 0; i < tiles_array.length; i++){
       if(tiles_array[i]["Robber"] == 0){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
@@ -1106,7 +1119,8 @@ var checkBuyUniversity = function() {
                 $("#current_turn").text("Currently your turn!");
                 turnChecks();
               }
-              else if(game.turn_number + 1 == turn){
+              //else if(game.turn_number + 1 == turn){
+              else{
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
                 }
@@ -1116,7 +1130,7 @@ var checkBuyUniversity = function() {
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
                 }
-                game.turn_number++;
+                game.turn_number = turn;
                 rollOtherDice();
               }
               else if(turn == 0){
