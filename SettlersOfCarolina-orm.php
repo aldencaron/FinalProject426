@@ -61,7 +61,6 @@ class Card {
    return $result;
   }
 
-
   public static function findByID($PlayerID){
     $mysqli = Card::connect();
     $SQL = "Select * from Cards where PlayerID = $PlayerID";
@@ -464,6 +463,25 @@ class College {
     $this->University = $University;
     return $this->update($this->CollegeID);
   }
+}
+
+class Turn{
+  public static function connect() {
+    return new mysqli("classroom.cs.unc.edu",
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function GetHighestID(){
+    $mysqli = Turn::connect();
+    $SQL = "Select max(TurnID) from Turns";
+    $result = mysqli_query($mysqli, $SQL);
+  if ($result){
+    return intval($result[0]);
+  }
+  return 0;
+}
 }
 
 class Tile {

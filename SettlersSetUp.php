@@ -22,6 +22,8 @@ mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists DevCardStack";
 mysqli_query($mysqli, $SQL);
 
+$SQL = "drop table if exists Turns";
+mysqli_query($mysqli, $SQL);
 
 $SQL = "Create Table Players (
   PlayerID int primary key not null auto_increment,
@@ -108,6 +110,10 @@ for($i = 0; $i <= 54; $i++){
 
 $SQL = "Create Table DevCardStacks (
   DevID int primary key not null auto_increment)";
+mysqli_query($mysqli, $SQL);
+
+$SQL = "Create Table Turns (
+  TurnID int primary key not null auto_increment)";
 mysqli_query($mysqli, $SQL);
 
  ?>

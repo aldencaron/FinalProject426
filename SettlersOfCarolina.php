@@ -16,6 +16,12 @@ global $path_components;
     if($path_components[1]=="Cards"){
       if($path_components[2]!="" &&
     count($path_components) >= 3){
+      if($path_components[2]=='getAll'){
+        header("Content-type: application/json");
+        print(Card::getALLJSON());
+        exit();
+      }
+      //if there is an id
         $PlayerID= intval($path_components[2]);
         $requested_hand = Card::findByID($PlayerID);
         if ($requested_hand == null) {
@@ -39,6 +45,11 @@ global $path_components;
   else if($path_components[1]=="Players"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(Player::getALLJSON());
+      exit();
+    }
       $PlayerID= intval($path_components[2]);
       $Player_Info = Player::findByID($PlayerID);
       if ($Player_Info == null) {
@@ -62,6 +73,11 @@ global $path_components;
   else if($path_components[1]=="Roads"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(Road::getALLJSON());
+      exit();
+    }
       $RoadID= intval($path_components[2]);
       $Road_Info = Road::findByID($RoadID);
       if ($Road_Info == null) {
@@ -86,6 +102,11 @@ global $path_components;
   else if($path_components[1]=="Tiles"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(Tile::getALLJSON());
+      exit();
+    }
       $TileID= intval($path_components[2]);
       $Tile_Info = Tile::findByID($TileID);
       if ($Tile_Info == null) {
@@ -109,6 +130,11 @@ global $path_components;
   else if($path_components[1]=="Colleges"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(College::getALLJSON());
+      exit();
+    }
       $CollegeID= intval($path_components[2]);
       $College_Info = College::findByID($CollegeID);
       if ($College_Info == null) {
@@ -122,8 +148,6 @@ global $path_components;
       exit();
     }
     else{
-      // no ID, try returning all IDs.
-      //TODO implement .getAllIDs
       header("Content-type: application/json");
       print(json_encode(College::getALLIDs()));
       exit();
