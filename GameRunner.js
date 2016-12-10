@@ -467,10 +467,10 @@ var buyCollege = function() {
 };
 var checkBuyUniversity = function() {
   // Resource problem
-  if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
-    alert("Insufficient amounts of resources!");
-    return;
-  }
+  //if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
+  //  alert("Insufficient amounts of resources!");
+  //  return;
+  //}
   var available = false;
   for (var i = 0; i < game.player.colleges.length; i++) {
     if (!game.colleges[i].university) {
