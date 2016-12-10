@@ -1033,17 +1033,15 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
       game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number % 4 == game.player.id) {
+    } else if (game.turn_number % 4 == game.player.id || (game.turn_number % 4 == 0 && game.player.id == 4)) {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
-      //game.turn_number--; //TODO not certain that this will work but I think is ok
       var my_turn = false;
       var c = setInterval(function(){
         if(my_turn){
           clearInterval(c);
         }
-        // Update things and wait for it to be your turn idk this could be really bad TODO
         else{
           $.ajax({url: url_base + "SettlersOfCarolina.php/Tiles/getAll",
             type:"GET",
@@ -1104,7 +1102,7 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
-              if(turn % 4 == id){
+              if(turn % 4 == game.player.id || (turn % 4 == 0 && game.player.id == 4)){
                 game.turn_number = turn;
                 my_turn = true;
                 turnChecks();
