@@ -1,5 +1,6 @@
 function WaitingRoom() {
   var waitcheck = 0;
+  $('#playercount').text(id);
   var waitingroom= setInterval(function(){
     if(waitcheck){
       clearInterval(waitingroom);
@@ -11,14 +12,14 @@ function WaitingRoom() {
             dataType: "JSON",
             success: function(response) {
               if(response.length>=4){
-
+              document.body.style.backgroundColor = "white";
               $("#top_container").show();
               $('#waitingRoom').hide();
               RunGame();
               waitcheck=1;
               }
               else{
-                $('#playercount').innerHTML = id;
+                $('#playercount').text(id);
               }
           }
         });
