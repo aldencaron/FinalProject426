@@ -839,9 +839,9 @@ var checkBuyUniversity = function() {
   };
   // Query for dice roll from other players
   var diceRollOther = function(current_roll) {
-    $.ajax({url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
+    $.ajax({url: url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type:"GET",
-      dataType"json",
+      dataType: "json",
       async: false,
       success: function(roll, status, jqXHR) {
         current_roll = roll;
