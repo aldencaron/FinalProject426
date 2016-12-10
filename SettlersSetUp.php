@@ -30,7 +30,8 @@ $SQL = "Create Table Players (
   Username varchar(50),
   RoadsCount int,
   SoldiersCount int,
-  Points int)";
+  Points int,
+  HexColor int)";
 mysqli_query($mysqli, $SQL);
 //4 players
 /*for($i = 0; $i <= 4; $i++){

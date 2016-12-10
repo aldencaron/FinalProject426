@@ -271,11 +271,21 @@ exit();
                       print("Points is is not given.");
                       exit();
                   }
+
+                  $new_HexColor = false;
+                  if (isset($_REQUEST['HexColor'])) {
+                      $new_HexColor = intval(trim($_REQUEST['HexColor']));
+                  } else {
+                      header("HTTP/1.0 400 Bad HexColor Request");
+                      print("HexColor is not given");
+                      exit();
+                  }
+
                   if (isset($_REQUEST['PlayerID']) && isset($_REQUEST['Username']) &&
                     isset($_REQUEST['Points']) && isset($_REQUEST['SoldiersCount']) &&
-                    isset($_REQUEST['RoadsCount'])) {
+                    isset($_REQUEST['RoadsCount']) && isset($_REQUEST['HexColor'])) {
                       $Player = Player::create($new_PlayerID, $new_Username,
-                      $new_RoadsCount, $new_SoldiersCount, $new_Points);
+                      $new_RoadsCount, $new_SoldiersCount, $new_Points, $newHexColor);
                       if ($Player == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Player was not inserted");
@@ -314,6 +324,10 @@ exit();
           if(isset($_REQUEST['Points'])){
             $new_Points=intval(trim($_REQUEST['Points']));
           }
+          $new_HexColor = false;
+          if (isset($_REQUEST['HexColor'])) {
+              $new_HexColor = intval(trim($_REQUEST['HexColor']));
+          }
           //update via ORM
           if ($new_PlayerID != false) {
               $Player->setPlayerID($new_PlayerID);
@@ -329,7 +343,10 @@ exit();
           }
           if($new_Points!= false){
               $Player->setPoints($new_Points);
-            }
+          }
+          if ($new_HexColor != false) {
+              $Player->setHexColor($new_HexColor);
+          }
              //return json
             header("Content-type: application/json");
             print($Player->getJSON());
