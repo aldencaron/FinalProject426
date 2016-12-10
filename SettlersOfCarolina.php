@@ -275,15 +275,18 @@ exit();
                   $new_HexColor = false;
                   if (isset($_REQUEST['HexColor'])) {
                       $new_HexColor = intval(trim($_REQUEST['HexColor']));
-                  } else {
-                      header("HTTP/1.0 400 Bad HexColor Request");
-                      print("HexColor is not given");
-                      exit();
                   }
+                  // else {
+                  //     header("HTTP/1.0 400 Bad HexColor Request");
+                  //     print("HexColor is not given");
+                  //     exit();
+                  // }
 
                   if (isset($_REQUEST['PlayerID']) && isset($_REQUEST['Username']) &&
                     isset($_REQUEST['Points']) && isset($_REQUEST['SoldiersCount']) &&
-                    isset($_REQUEST['RoadsCount']) && isset($_REQUEST['HexColor'])) {
+                    isset($_REQUEST['RoadsCount'])
+                     //&& isset($_REQUEST['HexColor'])
+                   ) {
                       $Player = Player::create($new_PlayerID, $new_Username,
                       $new_RoadsCount, $new_SoldiersCount, $new_Points, $newHexColor);
                       if ($Player == null) {

@@ -722,7 +722,7 @@ class Road{
      "Update Roads set
      PlayerID = $this->PlayerID,
      Available = $this->Available
-     WHERE RoadID = $RoadID";
+     WHERE RoadID = '$RoadID'";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -815,8 +815,8 @@ class Player {
                            $Player_info['Username'],
                            $Player_info['RoadsCount'],
                            $Player_info['SoldiersCount'],
-                           $Player_info['Points']),
-                           $Player_info['HexColor'];
+                           $Player_info['Points'],
+                           $Player_info['HexColor']);
       }
     }
   return null;
@@ -842,7 +842,7 @@ class Player {
                     'RoadsCount' => $this->RoadsCount,
                     'SoldiersCount' => $this->SoldiersCount,
                     'Points' => $this->Points,
-                    'HexColor' => $this->HexColor;
+                    'HexColor' => $this->HexColor
                     );
   return json_encode($json_obj);
   }
@@ -874,7 +874,7 @@ class Player {
    SoldiersCount = $this->SoldiersCount,
    Points = $this->Points,
    HexColor = $this->HexColor
-   WHERE PlayerID = $PlayerID";
+   WHERE PlayerID = '$PlayerID'";
   $result= mysqli_query($mysqli, $SQL);
 
 
@@ -1034,7 +1034,7 @@ class DiceRoll {
 
     $SQL = "Update DiceRolls set
     RollResult= $this->RollResult
-    WHERE DiceID = $DiceID";
+    WHERE DiceID = '$DiceID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
