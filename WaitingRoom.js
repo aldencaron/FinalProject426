@@ -18,7 +18,7 @@ function WaitingRoom() {
               waitcheck=1;
               }
               else{
-                $('#playercount').innerHTML = "" + id;
+                $('#playercount').innerHTML = id;
               }
           }
         });
