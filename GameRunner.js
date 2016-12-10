@@ -430,7 +430,7 @@ var buyCollege = function() {
             type: "POST",
             dataType: "json",
             async: false,
-            data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+            data: collegeGame_collegeAJAX(game.colleges[i]),
             success: function(College_json, status, jqXHR) {
             },
           error: function(jqXHR, status, error) {
@@ -505,14 +505,14 @@ var checkBuyUniversity = function() {
           game.colleges[i].university = true;
           game.player.points++;
 
-          game.colleges[i].radius = 14;
-          //TODO put this ajax in a function
+          game.colleges[i].radius = 16;
           $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
             type: "POST",
             dataType: "json",
             async: false,
-            data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
+            data: collegeGame_collegeAJAX(game.colleges[i]),
             success: function(College_json, status, jqXHR) {
+              console.log("Posted university");
             },
           error: function(jqXHR, status, error) {
           alert(jqXHR.responseText);
@@ -597,7 +597,7 @@ var checkBuyUniversity = function() {
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
     $('#player_three_points').text("Points: " + game.other_players[1].points);
     $('#player_four_username').text(game.other_players[2].username);
-    $('#player_four_cards').text("Number of Cards: " + game.other_players[2].num_cards);
+    $('#player_four_num_cards').text("Number of Cards: " + game.other_players[2].num_cards);
     $('#player_four_points').text("Points: " + game.other_players[2].points);
   };
 
@@ -625,10 +625,11 @@ var checkBuyUniversity = function() {
           async: false,
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
-        },
-        error: function(jqXHR, status, error) {
-        console.log(jqXHR.responseText);
-        }
+            console.log("Success in posting robber.");
+          },
+          error: function(jqXHR, status, error) {
+            console.log(jqXHR.responseText);
+          }
         });
       }
     }
@@ -825,7 +826,7 @@ var checkBuyUniversity = function() {
       async: false,
       success: function(roll, status, jqXHR) {
         current_roll = roll["RollResult"];
-        },
+      },
       error: function(jqXHR, status, error) {
         console.log("Problem waiting for turn");
     }
@@ -846,6 +847,7 @@ var checkBuyUniversity = function() {
     // Is not a robber
     else {
       // TODO this maybe does not work??
+      console.log("current_roll: " + current_roll);
       drawBoard(false, false, false, false, true, current_roll);
       // Add cards
       for (var i = 0; i < game.player.colleges.length; i++) {
