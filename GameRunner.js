@@ -626,7 +626,7 @@ var checkBuyUniversity = function() {
       game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
         partial_turn_over = true;
         game.tiles[i].robber = true;
-        $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.Tiles[i].id,
+        $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
           type: "POST",
           dataType: "json",
           async: false,
@@ -636,7 +636,7 @@ var checkBuyUniversity = function() {
         error: function(jqXHR, status, error) {
         console.log(jqXHR.responseText);
         }
-      });
+        });
       }
     }
     if (partial_turn_over) {
@@ -1142,6 +1142,22 @@ var checkBuyUniversity = function() {
   game.player.username = username;
   game.player.id = id;
 
+  // Post beginning robber position
+  for(var i = 0; i < game.tiles[i].length; i++){
+    if(game.tiles[i].robber){
+      $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
+        type: "POST",
+        dataType: "json",
+        async: false,
+        data: tileGame_tileAJAX(game.tiles[i]),
+        success: function(tile_json, status, jqXHR) {
+      },
+      error: function(jqXHR, status, error) {
+      console.log(jqXHR.responseText);
+      }
+      });
+    }
+  }
   // Assign other players ids based on own id
   game.other_players[0].id = game.player.id + 1;
   if(game.other_players[0].id > 4){game.other_players[0].id -= 4;}
