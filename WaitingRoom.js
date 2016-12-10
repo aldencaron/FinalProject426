@@ -21,6 +21,7 @@ function WaitingRoom() {
               }
               else{
                 $('#playercount').text(response.length);
+                $('#playerinfo_waiting').text("Username: "+ username + ", player: " + id);
               }
           }
         });
@@ -29,6 +30,6 @@ function WaitingRoom() {
       }, 1000);
     }
     else{
-      $('#playerinfo_waiting').text("Username: "+ username + "");
+      $('#playerinfo_waiting').text("Please wait, you are Player " + id + " and there are currently four people playing a game");
     }
 }

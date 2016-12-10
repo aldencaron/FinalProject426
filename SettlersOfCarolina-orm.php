@@ -601,7 +601,7 @@ class Tile {
 
     $SQL = "Update Tiles set
     Robber= $this->Robber
-    WHERE TileID = $TileID";
+    WHERE TileID = '$TileID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
