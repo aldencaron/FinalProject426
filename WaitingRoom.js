@@ -1,7 +1,7 @@
 function WaitingRoom() {
   var waitcheck = 0;
-  if(id<=4){
   $('#playercount').text(id);
+  if(id<=4){
   var waitingroom= setInterval(function(){
     if(waitcheck){
       clearInterval(waitingroom);
@@ -29,6 +29,6 @@ function WaitingRoom() {
       }, 1000);
     }
     else{
-
+      $('#playerinfo_waiting').text("Username: "+ username + "");
     }
 }
