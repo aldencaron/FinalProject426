@@ -1008,7 +1008,7 @@ class DiceRoll {
     $mysqli= DiceRoll::connect();
 
     $SQL = "Update DiceRolls set
-    RollResult= $mysqli->real_escape_string($this->RollResult
+    RollResult= $mysqli->real_escape_string($this->RollResult)
     WHERE DiceID = '$DiceID'";
    $result= mysqli_query($mysqli, $SQL);
 
