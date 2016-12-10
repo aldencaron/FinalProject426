@@ -150,6 +150,7 @@ class Card {
      $result = $mysqli->query("SELECT * FROM Cards");
 
      $json = array();
+     if($result){
      while ($row = $result->fetch_array()) {
          $json_sub = array();
          $json_sub['PlayerID'] = $row['PlayerID'];
@@ -169,6 +170,7 @@ class Card {
          $json_sub['Monopoly'] = $row['Monopoly'];
          $json[] = $json_sub;
      }
+   }
      return json_encode($json);
  }
 
@@ -390,6 +392,7 @@ class College {
       $result = $mysqli->query("SELECT * FROM Colleges");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['CollegeID'] = $row['CollegeID'];
@@ -398,6 +401,7 @@ class College {
           $json_sub['University'] = $row['University'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 
@@ -503,7 +507,8 @@ class Turn{
         print($mysqli->error);
         exit();
     }
-    return new Turn($TurnID);
+
+    return new Turn(intval($row['TurnID']));
   }
 
   public function getJSON(){
@@ -580,12 +585,14 @@ class Tile {
       $result = $mysqli->query("SELECT * FROM Tiles");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['TileID'] = $row['TileID'];
           $json_sub['Robber'] = $row['Robber'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 
@@ -696,6 +703,7 @@ class Road{
       $result = $mysqli->query("SELECT * FROM Roads");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['RoadID'] = $row['RoadID'];
@@ -703,6 +711,7 @@ class Road{
           $json_sub['Available'] = $row['Available'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 
@@ -855,11 +864,11 @@ class Player {
    $mysqli= Player::connect();
 
    $SQL = "Update Players set
-   Username = '$mysqli->real_escape_string($this->Username)',
-   RoadsCount = $mysqli->real_escape_string($this->RoadsCount),
-   SoldiersCount = $mysqli->real_escape_string($this->SoldiersCount),
-   Points= $mysqli->real_escape_string($this->Points)
-   WHERE PlayerID = '$PlayerID'";
+   Username = '$this->Username',
+   RoadsCount = $this->RoadsCount,
+   SoldiersCount = $this->SoldiersCount,
+   Points = $this->Points
+   WHERE PlayerID = $PlayerID";
   $result= mysqli_query($mysqli, $SQL);
 
 
