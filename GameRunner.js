@@ -4,17 +4,6 @@ function RunGame() {
   alert(username);
   alert(id);
 
-    $.ajax({url: url_base + "SettlersOfCarolina.php/Turns/",
-      type: "POST",
-       dataType: "json",
-       async: false,
-       success: function(Road_json, status, jqXHR) {
-         console.log("success");},
-         error: function(jqXHR, status, error) {
-         console.log(jqXHR.responseText);
-   }
-  });
-
   var size = 60;
   var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
   var x_initial = width / 2 - (Math.sqrt(3) * size) + 10;
