@@ -638,7 +638,7 @@ class Tile {
   }
   public function setTileID($TileID){
     $this->TileID = $TileID;
-    return $this->update($this->$TileID);
+    return $this->update($this->TileID);
   }
   public function setRobber($Robber){
     $this->Robber = $Robber;

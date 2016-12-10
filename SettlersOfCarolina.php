@@ -296,7 +296,8 @@ exit();
                      //&& isset($_REQUEST['HexColor'])
                    ) {
                       $Player = Player::create($new_PlayerID, $new_Username,
-                      $new_RoadsCount, $new_SoldiersCount, $new_Points, $newHexColor);
+                      $new_RoadsCount, $new_SoldiersCount, $new_Points//, $newHexColor
+                    );
                       if ($Player == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Player was not inserted");
@@ -926,8 +927,8 @@ exit();
             print($DiceRoll->getJSON());
             exit();
       }
+
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
     exit();
-  }
  ?>
