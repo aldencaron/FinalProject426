@@ -848,7 +848,6 @@ var checkBuyUniversity = function() {
         game.player.cards["book"] = Math.floor(game.player.cards["book"] / 2);
         updatePlayerInfo();
       }
-      // TODO GET ROBBER MOVEMENT
     }
     // Is not a robber
     else {
@@ -1012,21 +1011,65 @@ var checkBuyUniversity = function() {
     }
     else{
       game.turn_number--; //TODO not certain that this will work but I think is ok
-      var myturn=0;
+      var my_turn = false;
       var c = setInterval(function(){
         if(myturn){
           clearInterval(c);
         }
+        // Update things and wait for it to be your turn idk this could be really bad TODO
         else{
+          $.ajax({url_base + "/SettlersOfCarolina.php/Tiles/getAll",
+            type:"GET",
+            dataType"json",
+            async: false,
+            success: function(tiles_array, status, jqXHR) {
+              updateTiles(tiles_array);
+            },
+            error: function(jqXHR, status, error) {
+              console.log("Problem updating TILES");
+            }
+          });
+          $.ajax({url_base + "/SettlersOfCarolina.php/Colleges/getAll",
+            type:"GET",
+            dataType"json",
+            async: false,
+            success: function(colleges_array, status, jqXHR) {
+              updateColleges(colleges_array);
+            },
+            error: function(jqXHR, status, error) {
+              console.log("Problem updating COLLEGES");
+            }
+          });
+          $.ajax({url_base + "/SettlersOfCarolina.php/Roads/getAll",
+            type:"GET",
+            dataType"json",
+            async: false,
+            success: function(roads_array, status, jqXHR) {
+              updateRoads(roads_array);
+            },
+            error: function(jqXHR, status, error) {
+              console.log("Problem updating ROADS");
+            }
+          });
+          $.ajax({url_base + "/SettlersOfCarolina.php/Players/getAll",
+            type:"GET",
+            dataType"json",
+            async: false,
+            success: function(players_array, status, jqXHR) {
+              updatePlayers(players_array);
+            },
+            error: function(jqXHR, status, error) {
+              console.log("Problem updating PLAYERS");
+            }
+          });
           var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
           $.ajax({url_base + "/SettlersOfCarolina.php/Turns",
             type:"GET",
             dataType"json",
             success: function(turn, status, jqXHR) {
-              if(turn%4 == id){
+              if(turn % 4 == id){
                 game.turn_number = turn;
-                myturn=1;
-
+                my_turn = true;
                 turnChecks();
               }
               else if(game.turn_number+1==turn){
