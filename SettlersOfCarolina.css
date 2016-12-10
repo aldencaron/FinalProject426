@@ -30,7 +30,7 @@ body {
     float: left;
     height: 75%;
     border: 1pt solid black;
-    background-color: #07889B;
+    background-color: white;
     overflow: auto;
 }
 
@@ -38,21 +38,21 @@ body {
     float: right;
     height: 20%;
     border: 1pt solid black;
-    background-color: #E37222;
+    background-color: white;
 }
 
 #player_three {
     float: left;
     height: 20%;
     border: 1pt solid black;
-    background-color: #EEAA7B;
+    background-color: white;
 }
 
 #player_four {
     float: right;
     height: 20%;
     border: 1pt solid black;
-    background-color: #66B9BF;
+    background-color: white;
 }
 
 #chat-box {
