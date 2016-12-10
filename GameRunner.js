@@ -896,7 +896,7 @@ var checkBuyUniversity = function() {
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
-    alert("Update colleges");
+    alert("Update colleges @ 899");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
@@ -917,6 +917,7 @@ var checkBuyUniversity = function() {
     drawBoard(false, false, false, false, false, 0);
   }
   var updateTiles = function(tiles_array){
+    alert("Update tiles @ 920");
     for(var i = 0; i < tiles_array.length; i++){
       if(tiles_array[i]["Robber"] == 0){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
@@ -952,6 +953,7 @@ var checkBuyUniversity = function() {
     updateOtherPlayerInfo();
   }
 
+  //TODO you can change other people's turns
   var end_turn_button = document.getElementById("turn_over_button");
   end_turn_button.addEventListener('click', function() {
     game.fireEvent(new game.TurnChangeEvent())
@@ -963,6 +965,7 @@ var checkBuyUniversity = function() {
 
   var turnEnd = function(){
     updatePlayerInfo();
+    alert("Turn end");
 
     // Remove all current board listeners
     var board_canvas = document.getElementById("board_canvas");
@@ -1011,12 +1014,13 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
+    alert("game turn number @ line 1016: " + game.turn_number);
     $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
       dataType: "json",
       async: false,
       success: function(turn, status, jqXHR) {
-        console.log("success");
+        console.log("success @ line 1022");
       },
       error: function(jqXHR, status, error) {
        console.log(jqXHR.responseText);
@@ -1039,7 +1043,7 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
-      game.turn_number--; //TODO not certain that this will work but I think is ok
+      //game.turn_number--; //TODO not certain that this will work but I think is ok
       var my_turn = false;
       var c = setInterval(function(){
         if(my_turn){
