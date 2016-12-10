@@ -93,6 +93,8 @@ form button {
   height: 25%;
   border: 1pt solid black;
   background-color: #AABBAA;
+  overflow: auto;
+
 }
 
 #buying_table th, #buying_table td{
@@ -101,9 +103,8 @@ form button {
 #buying_table{
   width: 100%;
   height: 100%;
+
 }
-
-
 #board {
     height: 552px;
     border: 1pt solid black;

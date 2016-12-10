@@ -7,7 +7,7 @@
     <script src="WaitingRoom.js"></script>
 </head>
 
-<body style="margins: 0px 0px 0px 0px !important;background-color:#99cccc;">    <!-- Obtain username, make player query in database -->    <div id = "startup" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">      <span style="vertical-align:middle;">        <h1> GAME SETTINGS</h1>        <div>You will need four people to play! Go ahead and register with a username to get started with a game!</div>        <br><br>        <form id = "settings">          <strong>  Username: </strong> <input style="border-radius:50px;" type = "text" name = "username"/>        </form>      </span>    </div>    <script>            username = "";            var id=0;            $("#settings").on("submit", function(e) {                e.preventDefault();                username = $("#settings input").val();                function getData() {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/",                        type: "GET",                        dataType: "JSON",                        success: function(response) {                            if (response == false) {                                id = 1;                            } else {                                id = response.length+1;                            }                            var roads_count = 0;                            var soldiers_count = 0;                            var points = 0;                            var form_data = "Username=" + username +                            "&RoadsCount=" + roads_count + "&SoldiersCount=" +                            soldiers_count + "&Points=" + points + "&PlayerID=" + id;                            postPlayer(id, form_data);                        },                        error: function(response) {                            console.log(response);                        }                    });                }                getData();                function postPlayer(id, form_data) {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/" + id,                        type: "POST",                        data: form_data,                        async: false,                        success: function(response) {                            console.log(response);                            document.body.style.backgroundColor = "white";                            $("#waitingRoom").show();                            $("#startup").hide();                            WaitingRoom();                        },                        error: function(response) {                            console.log(response);                        }                    });                }            });        </script>  <div id="waitingRoom" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">    <h1> Waiting Room </h1>    Players in room: <span id="playercount"></span>  </div>	<div id="top_container">
+<body style="margins: 0px 0px 0px 0px !important;background-color:#99cccc;">    <!-- Obtain username, make player query in database -->    <!-- <div id = "startup" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">      <span style="vertical-align:middle;">        <h1> GAME SETTINGS</h1>        <div>You will need four people to play! Go ahead and register with a username to get started with a game!</div>        <br><br>        <form id = "settings">          <strong>  Username: </strong> <input style="border-radius:50px;" type = "text" name = "username"/>        </form>      </span>    </div>    <script>            username = "";            var id=0;            $("#settings").on("submit", function(e) {                e.preventDefault();                username = $("#settings input").val();                function getData() {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/",                        type: "GET",                        dataType: "JSON",                        success: function(response) {                            if (response == false) {                                id = 1;                            } else {                                id = response.length + 1;                                if(id>4){                                  $.ajax({                                    url: "SettlersSetUp.php",                                    type: "GET",                                    dataType: "JSON",                                    async: false,                                    success: function(response) {                                        console.log(response);                                        console.log("tables reset");                                    },                                    error: function(response) {                                        console.log(response);                                    }                                  });                                      id=1;                                }                            }                            var roads_count = 0;                            var soldiers_count = 0;                            var points = 0;                            var form_data = "Username=" + username +                            "&RoadsCount=" + roads_count + "&SoldiersCount=" +                            soldiers_count + "&Points=" + points + "&PlayerID=" + id;                            postPlayer(id, form_data);                        },                        error: function(response) {                            console.log(response);                        }                    });                }                getData();                function postPlayer(id, form_data) {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/" + id,                        type: "POST",                        data: form_data,                        success: function(response) {                            console.log(response);                            $("#top_container").show();                            document.body.style.backgroundColor = "white";                            $("#startup").hide();                        },                        error: function(response) {                            console.log(response);                        }                    });                }            });        </script> -->	<div id="top_container">
 		<div id="col_one">
 			<div id="player_one" class="players">
         <table id="player_one_cards">
@@ -99,14 +99,16 @@
 			<div id="board">
 				<canvas id="board_canvas">
 			</div>
-			<div id="turn_info"></div>
-      <div id="current_dice_roll_text">Dice Roll: </div>
-      <div id="turn_panel">
-          Turn Panel<br>
-          Do you want to trade? <button id="trade_button" type="button">Trade</button><br>
-          Turn over? <button id="turn_over_button" type="button">Yes</button><br>
+			<div id="turn_info"><br>
+        <div id="current_dice_roll_text">Dice Roll: </div>
       </div>
+        <div id="turn_panel">
+    Turn Panel<br>
+    Do you want to trade? <button id="trade_button" type="button">Trade</button><br>
+    Turn over? <button id="turn_over_button" type="button">Yes</button><br>
+
   </div>
+		</div>
 	<div id="col_three">
 			<div id="player_two" class="players">
 				<b><div id="player_two_username">Player Two</div></b><br>
@@ -138,11 +140,11 @@
 	</div>
 
     <!-- Hide container during game startup -->
-    <script>
+    <!-- <script>
         $("#top_container").hide();
     </script>
 
-    <!-- <script>
+    <script>
         username = "";
         $("#settings").on("submit", function(e) {
             e.preventDefault();
