@@ -1033,7 +1033,7 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
       game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number > game.player.id + 8 && game.turn_number < game.player.id + 80) {
+    } else if (game.turn_number % 4 == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
