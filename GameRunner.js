@@ -1004,10 +1004,7 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
-<<<<<<< HEAD
-    // alert("game turn number @ line 1016: " + game.turn_number);
-=======
->>>>>>> origin/master
+
     $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
       dataType: "json",
