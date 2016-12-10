@@ -613,7 +613,7 @@ class Tile {
 
     $SQL = "Update Tiles set
     Robber= $this->Robber
-    WHERE TileID = '$TileID'";
+    WHERE TileID = $TileID";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -734,7 +734,7 @@ class Road{
      "Update Roads set
      PlayerID = $this->PlayerID,
      Available = $this->Available
-     WHERE RoadID = '$RoadID'";
+     WHERE RoadID = $RoadID";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -786,7 +786,6 @@ class Player {
   private $RoadsCount;
   private $SoldiersCount;
   private $Points;
-  private $HexColor;
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -796,11 +795,11 @@ class Player {
   }
 
   public function create($PlayerID, $Username, $RoadsCount,
-  $SoldiersCount, $Points, $HexColor) {
+  $SoldiersCount, $Points) {
       $mysqli = Player::connect();
       $res = $mysqli->query(
           "INSERT INTO Players VAlUES('$PlayerID', '$Username',
-          '$RoadsCount', '$SoldiersCount', '$Points', '$HexColor')"
+          '$RoadsCount', '$SoldiersCount', '$Points')"
       );
 
       if ($res) {} else {
@@ -809,7 +808,7 @@ class Player {
           exit();
       }
 
-      return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points, $HexColor);
+      return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points);
   }
 
   public static function findByID($PlayerID){
@@ -827,8 +826,7 @@ class Player {
                            $Player_info['Username'],
                            $Player_info['RoadsCount'],
                            $Player_info['SoldiersCount'],
-                           $Player_info['Points'],
-                           $Player_info['HexColor']);
+                           $Player_info['Points']);
       }
     }
   return null;
@@ -853,9 +851,7 @@ class Player {
                     'Username' => $this->Username,
                     'RoadsCount' => $this->RoadsCount,
                     'SoldiersCount' => $this->SoldiersCount,
-                    'Points' => $this->Points,
-                    'HexColor' => $this->HexColor
-                    );
+                    'Points' => $this->Points );
   return json_encode($json_obj);
   }
 
@@ -871,7 +867,6 @@ class Player {
           $json_sub['RoadsCount'] = $row['RoadsCount'];
           $json_sub['SoldiersCount'] = $row['SoldiersCount'];
           $json_sub['Points'] = $row['Points'];
-          $json_sub['HexColor'] = $row['HexColor'];
           $json[] = $json_sub;
       }
       return json_encode($json);
@@ -884,9 +879,8 @@ class Player {
    Username = '$this->Username',
    RoadsCount = $this->RoadsCount,
    SoldiersCount = $this->SoldiersCount,
-   Points = $this->Points,
-   HexColor = $this->HexColor
-   WHERE PlayerID = '$PlayerID'";
+   Points = $this->Points
+   WHERE PlayerID = $PlayerID";
   $result= mysqli_query($mysqli, $SQL);
 
 
@@ -899,13 +893,12 @@ class Player {
     return $result;
   }
 
-private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points, $HexColor){
+private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points){
     $this->PlayerID= $PlayerID;
     $this->Username= $Username;
     $this->RoadsCount= $RoadsCount;
     $this->SoldiersCount= $SoldiersCount;
     $this->Points= $Points;
-    $this->HexColor = $HexColor;
 }
 
   public function getPlayerID(){
@@ -926,10 +919,6 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 
   public function getPoints(){
     return $this->Points;
-  }
-
-  public function getHexColor() {
-      return $this->HexColor;
   }
 
   public function setPlayerID($PlayerID){
@@ -955,11 +944,6 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
   public function setPoints($Points){
     $this->Points = $Points;
     return $this->update($this->PlayerID);
-  }
-
-  public function setHexColor($HexColor) {
-      $this->HexColor = $HexColor;
-      return $this->update($this->PlayerID);
   }
 
 }
@@ -1046,7 +1030,7 @@ class DiceRoll {
 
     $SQL = "Update DiceRolls set
     RollResult= $this->RollResult
-    WHERE DiceID = '$DiceID'";
+    WHERE DiceID = $DiceID";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
