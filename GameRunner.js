@@ -896,6 +896,7 @@ var checkBuyUniversity = function() {
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
+    alert("Update colleges");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
