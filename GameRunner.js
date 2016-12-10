@@ -1043,9 +1043,9 @@ var checkBuyUniversity = function() {
         }
         // Update things and wait for it to be your turn idk this could be really bad TODO
         else{
-          $.ajax({url_base + "/SettlersOfCarolina.php/Tiles/getAll",
+          $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles/getAll",
             type:"GET",
-            dataType"json",
+            dataType: "json",
             async: false,
             success: function(tiles_array, status, jqXHR) {
               updateTiles(tiles_array);
@@ -1054,9 +1054,9 @@ var checkBuyUniversity = function() {
               console.log("Problem updating TILES");
             }
           });
-          $.ajax({url_base + "/SettlersOfCarolina.php/Colleges/getAll",
+          $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges/getAll",
             type:"GET",
-            dataType"json",
+            dataType:"json",
             async: false,
             success: function(colleges_array, status, jqXHR) {
               updateColleges(colleges_array);
@@ -1065,9 +1065,9 @@ var checkBuyUniversity = function() {
               console.log("Problem updating COLLEGES");
             }
           });
-          $.ajax({url_base + "/SettlersOfCarolina.php/Roads/getAll",
+          $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/getAll",
             type:"GET",
-            dataType"json",
+            dataType: "json",
             async: false,
             success: function(roads_array, status, jqXHR) {
               updateRoads(roads_array);
@@ -1076,9 +1076,9 @@ var checkBuyUniversity = function() {
               console.log("Problem updating ROADS");
             }
           });
-          $.ajax({url_base + "/SettlersOfCarolina.php/Players/getAll",
+          $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/getAll",
             type:"GET",
-            dataType"json",
+            dataType: "json",
             async: false,
             success: function(players_array, status, jqXHR) {
               updatePlayers(players_array);
@@ -1088,9 +1088,9 @@ var checkBuyUniversity = function() {
             }
           });
           var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
-          $.ajax({url_base + "/SettlersOfCarolina.php/Turns",
+          $.ajax({url: url_base + "/SettlersOfCarolina.php/Turns",
             type:"GET",
-            dataType"json",
+            dataType: "json",
             success: function(turn, status, jqXHR) {
               if(turn % 4 == id){
                 game.turn_number = turn;
