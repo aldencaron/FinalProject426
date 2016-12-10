@@ -169,6 +169,14 @@ global $path_components;
     }
   }
     else if($path_components[1]=="Turns"){
+      if ($path_components[2] == "gameover") {
+        $Turn = Turn::gameOver();
+        if($Turn == null){
+          header("HTTP/1.0 404 Not Found");
+          print("gameover failed.");
+          exit();
+        }
+      }
       $Turn = Turn::GetHighestID();
       if($Turn == null){
         header("HTTP/1.0 404 Not Found");
@@ -207,11 +215,21 @@ exit();
           postDiceRoll();
         }
         else if($DBname== 'Turns'){
-          $Turn = Turn::create();
-          header("Content-type: application/json");
-          print($Turn->getJSON());
-          exit();
-        }
+          global $path_components;
+          // if ($path_components[2] == "gameover") {
+
+            $Turn = Turn::gameOver();
+            if($Turn == null){
+              header("HTTP/1.0 404 Not Found");
+              print("gameover failed.");
+              exit();
+            }
+          // }
+        //   $Turn = Turn::create();
+        //   header("Content-type: application/json");
+        //   print($Turn->getJSON());
+        //   exit();
+        // }
     }
 //  }
   header("HTTP/1.0 404 Not Found");

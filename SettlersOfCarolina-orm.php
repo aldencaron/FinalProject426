@@ -492,6 +492,18 @@ class Turn{
   }
   return null;
 }
+  public function gameOver(){
+    $mysqli = Turn::connect();
+    $SQL = "SET IDENTITY_INSERT Turns ON";
+    $result = mysqli_query($mysqli, $SQL);
+    $SQL = "INSERT INTO Turns (TurnID) VALUES (10000)";
+    $result = mysqli_query($mysqli, $SQL);
+    $SQL = "SET IDENTITY_INSERT Turns OFF";
+    $result = mysqli_query($mysqli, $SQL);
+    $a = Turn::GetHighestID();
+    return $a;
+
+  }
 
   private function __construct($TurnID){
       $this->TurnID = $TurnID;
