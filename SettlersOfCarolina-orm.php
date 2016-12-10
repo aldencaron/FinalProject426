@@ -466,6 +466,8 @@ class College {
 }
 
 class Turn{
+  private $TurnID;
+
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
           "naeimz",
@@ -478,10 +480,37 @@ class Turn{
     $SQL = "Select max(TurnID) from Turns";
     $result = mysqli_query($mysqli, $SQL);
   if ($result){
-    return intval($result[0]);
+    $row[]= $result->fetch_array();
+    echo $result->fetch_array();
+    if($result->fetch_array()==null){
+      return 1;
+    }
+    return $row[0];
   }
   return 0;
 }
+
+  private function __construct($TurnID){
+      $this->TurnID = $TurnID;
+    }
+
+  private function create(){
+    $mysqli = Turn::connect();
+    $id = Turn::getHighestID();
+    $SQL = "Insert into Turns Values($id)";
+    $result = mysqli_query($mysqli, $SQL);
+    if ($result) {} else {
+        header("HTTP/1.0 500 Server Error");
+        print($mysqli->error);
+        exit();
+    }
+    return new Turn($TurnID);
+  }
+
+  public function getJSON(){
+  $json_obj = array('TurnID' => $this->TurnID );
+  return json_encode($json_obj);
+  }
 }
 
 class Tile {

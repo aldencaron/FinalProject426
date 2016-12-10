@@ -167,14 +167,25 @@ global $path_components;
       print($DiceRoll_Info->getJSON());
       exit();
     }
- }
+  }
+    else if($path_components[1]=="Turns"){
+      $Turn = Turn::GetHighestID();
+      if($Turn == null){
+        header("HTTP/1.0 404 Not Found");
+        print("Turn not found.");
+        exit();
+      }
+      header("Content-type: application/json");
+      print(json_encode($Turn));
+      exit();
+    }
 header("HTTP/1.0 404 Not Found");
 print("Get Doesn't match any DB.");
 exit();
 }
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if ((count($path_components) >= 2) &&
-        ($path_components[1] != "")) {
+  //  if ((count($path_components) >= 2) &&
+  //      ($path_components[1] != "")) {
         global $DBname;
         $DBname = $path_components[1];
         if($DBname=="Players"){
@@ -191,11 +202,18 @@ exit();
         }
         else if($DBname=="Cards"){
           postCard();
-        } else if($DBname=="DiceRolls"){
+        }
+        else if($DBname=="DiceRolls"){
           postDiceRoll();
         }
+        else if($DBname== 'Turns'){
+          $Turn = Turn::create();
+          header("Content-type: application/json");
+          print($Turn->getJSON());
+          exit();
+        }
     }
-  }
+//  }
   header("HTTP/1.0 404 Not Found");
   print("Post Doesn't match any DB.");
   exit();

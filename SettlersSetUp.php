@@ -116,4 +116,6 @@ $SQL = "Create Table Turns (
   TurnID int primary key not null auto_increment)";
 mysqli_query($mysqli, $SQL);
 
+$SQL = "Insert into Turns (TurnID) Values(1)";
+
  ?>
