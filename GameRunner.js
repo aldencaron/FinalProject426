@@ -12,7 +12,7 @@ function RunGame() {
   var turn_over = false;
   var partial_turn_over = false;
   var current_roll = 0;
-
+  var just_had_turn = false;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -281,6 +281,7 @@ var addRoadStart = function(event) {
 };
 
 var setupTurn = function() {
+  alert("Your turn! Place a college and a road!");
   partial_turn_over = false;
   drawBoard(false, true, false, false, false, 0);
   var board_canvas = document.getElementById("board_canvas");
@@ -765,6 +766,7 @@ var checkBuyUniversity = function() {
   }
 
   var diceRoll = function() {
+    alert("Your turn! Buy/trade!");
     $.ajax({url: url_base + "SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type: "GET",
       dataType: "json",
@@ -839,7 +841,7 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(roll, status, jqXHR) {
-        current_roll = roll["RollResult"];
+        current_roll = parseInt(roll["RollResult"]);
       },
       error: function(jqXHR, status, error) {
         console.log("Problem waiting for turn");
@@ -1016,6 +1018,7 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
+    just_had_turn = true;
 
     $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
@@ -1038,13 +1041,10 @@ var checkBuyUniversity = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
-      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
-      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
-      alert("Your turn! Buy/trade/place or win!");
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
@@ -1113,18 +1113,17 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
-              if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
+              if(turn == 10000){
+                //TODO more here
+                alert("Game over!");
+              }
+              else if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
                 $("#current_turn").text("Currently your turn!");
                 turnChecks();
               }
-              else if(turn == 0){
-                //TODO more here
-                alert("Game over!");
-              }
-              //else if(game.turn_number + 1 == turn){
-              else{
+              else if(game.turn_number + 1 == turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
                 }
@@ -1136,6 +1135,20 @@ var checkBuyUniversity = function() {
                 }
                 game.turn_number = turn;
                 rollOtherDice();
+              }
+              else if(just_had_turn){
+                if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
+                  $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
+                }
+                if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
+                  $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
+                }
+                if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
+                  $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
+                }
+                game.turn_number = turn;
+                rollOtherDice();
+                just_had_turn = false;
               }
 
               },
@@ -1166,6 +1179,7 @@ var checkBuyUniversity = function() {
 
   // Post beginning robber position
   for(var i = 0; i < game.tiles[i].length; i++){
+    if(game.tiles[i].type == "DESERT"){game.tiles[i].robber = true;}
     if(game.tiles[i].robber){
       $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
         type: "POST",
