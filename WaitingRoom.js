@@ -1,6 +1,6 @@
-function WaitingRoom(){
+function WaitingRoom() {
   var waitcheck = 0;
-  var waitingroom= setInterval(funciton(){
+  var waitingroom= setInterval(function(){
     if(waitcheck){
       clearInterval(waitingroom);
     }
@@ -13,16 +13,16 @@ function WaitingRoom(){
               if(response.length>=4){
 
               $("#top_container").show();
-              $('waitingRoom').hide();
+              $('#waitingRoom').hide();
               RunGame();
               waitcheck=1;
               }
               else{
-                $('#playercount').innerHTML = id;
+                $('#playercount').innerHTML = "" + id;
               }
-          });
+          }
+        });
 
-        }, 1000);
-      }
-  }
-};
+        }
+      }, 1000);
+}
