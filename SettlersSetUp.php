@@ -117,5 +117,7 @@ $SQL = "Create Table Turns (
 mysqli_query($mysqli, $SQL);
 
 $SQL = "Insert into Turns (TurnID) Values(1)";
+mysqli_query($mysqli, $SQL);
+
 
  ?>
