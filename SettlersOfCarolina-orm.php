@@ -494,9 +494,9 @@ class Turn{
       $this->TurnID = $TurnID;
     }
 
-  private function create(){
+  public function create(){
     $mysqli = Turn::connect();
-    $id = Turn::getHighestID();
+    $id = Turn::getHighestID() + 1;
     $SQL = "Insert into Turns Values($id)";
     $result = mysqli_query($mysqli, $SQL);
     if ($result) {} else {

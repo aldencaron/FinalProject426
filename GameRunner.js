@@ -4,18 +4,16 @@ function RunGame() {
   alert(username);
   alert(id);
 
-  // var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
-  //   $.ajax({url: url_base + "/SettlersOfCarolina.php/Turns/",
-  //     type: "POST",
-  //      dataType: "json",
-  //      async: false,
-  //      success: function(Road_json, status, jqXHR) {
-  //        console.log("success");
-  //      return new Road(Road_json);},
-  //        error: function(jqXHR, status, error) {
-  //        console.log(jqXHR.responseText);
-  //  }
-  // });
+    $.ajax({url: url_base + "SettlersOfCarolina.php/Turns/",
+      type: "POST",
+       dataType: "json",
+       async: false,
+       success: function(Road_json, status, jqXHR) {
+         console.log("success");},
+         error: function(jqXHR, status, error) {
+         console.log(jqXHR.responseText);
+   }
+  });
 
   var size = 60;
   var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
@@ -770,7 +768,7 @@ var checkBuyUniversity = function() {
   }
 
   var diceRoll = function() {
-    $.ajax({url: url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
+    $.ajax({url: url_base + "SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type: "GET",
       dataType: "json",
       async: false,
@@ -838,8 +836,8 @@ var checkBuyUniversity = function() {
     trade_button.addEventListener('click', tradeWithBank);
   };
   // Query for dice roll from other players
-  var diceRollOther = function(current_roll) {
-    $.ajax({url: url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
+  var rollOtherDice = function(current_roll) {
+    $.ajax({url: url_base + "SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type:"GET",
       dataType: "json",
       async: false,
@@ -983,7 +981,7 @@ var checkBuyUniversity = function() {
     trade_button.removeEventListener('click', tradeWithBank);
 
     // Update player cards
-    $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + game.player.id,
+    $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
         type: "POST",
         dataType: "json",
         data: playerGame_cardsAJAX(game.player),
@@ -995,7 +993,7 @@ var checkBuyUniversity = function() {
         }
     });
     // Update player object
-    $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + game.player.id,
+    $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
         type: "POST",
         dataType: "json",
         data: playerGame_playerAJAX(game.player),
@@ -1007,7 +1005,7 @@ var checkBuyUniversity = function() {
         }
     });
     game.turn_number++;
-    $.ajax({url: url_base + "/SettlersOfCarolina.php/Turns",
+    $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
       dataType: "json",
       async: false,
@@ -1043,7 +1041,7 @@ var checkBuyUniversity = function() {
         }
         // Update things and wait for it to be your turn idk this could be really bad TODO
         else{
-          $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles/getAll",
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Tiles/getAll",
             type:"GET",
             dataType: "json",
             async: false,
@@ -1054,7 +1052,7 @@ var checkBuyUniversity = function() {
               console.log("Problem updating TILES");
             }
           });
-          $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges/getAll",
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Colleges/getAll",
             type:"GET",
             dataType:"json",
             async: false,
@@ -1065,7 +1063,7 @@ var checkBuyUniversity = function() {
               console.log("Problem updating COLLEGES");
             }
           });
-          $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/getAll",
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Roads/getAll",
             type:"GET",
             dataType: "json",
             async: false,
@@ -1076,19 +1074,18 @@ var checkBuyUniversity = function() {
               console.log("Problem updating ROADS");
             }
           });
-          $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/getAll",
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Players/getAll",
             type:"GET",
             dataType: "json",
             async: false,
             success: function(players_array, status, jqXHR) {
-              updatePlayers(players_array);
+              //updatePlayers(players_array);
             },
             error: function(jqXHR, status, error) {
               console.log("Problem updating PLAYERS");
             }
           });
-          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
-          $.ajax({url: url_base + "/SettlersOfCarolina.php/Turns",
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
