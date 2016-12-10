@@ -1,5 +1,6 @@
 function WaitingRoom() {
   var waitcheck = 0;
+  if(id<=4){
   $('#playercount').text(id);
   var waitingroom= setInterval(function(){
     if(waitcheck){
@@ -19,11 +20,15 @@ function WaitingRoom() {
               waitcheck=1;
               }
               else{
-                $('#playercount').text(id);
+                $('#playercount').text(response.length);
               }
           }
         });
 
         }
       }, 1000);
+    }
+    else{
+
+    }
 }
