@@ -1101,18 +1101,18 @@ var checkBuyUniversity = function() {
               if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
-                $("#turn_info").text("Currently your turn!");
+                $("#current_turn").text("Currently your turn!");
                 turnChecks();
               }
               else if(game.turn_number + 1 == turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
-                  $("#turn_info").text("Currently " + game.other_players[0].username + "'s turn!");
+                  $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
-                  $("#turn_info").text("Currently " + game.other_players[1].username + "'s turn!");
+                  $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
-                  $("#turn_info").text("Currently " + game.other_players[2].username + "'s turn!");
+                  $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
                 }
                 game.turn_number++;
                 rollOtherDice();
