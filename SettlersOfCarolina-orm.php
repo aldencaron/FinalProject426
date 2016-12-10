@@ -483,6 +483,7 @@ class Turn{
     $row[]= $result->fetch_array();
     echo $result->fetch_array();
     if($result->fetch_array()==null){
+      echo $row;
       return 1;
     }
     return $row[0];

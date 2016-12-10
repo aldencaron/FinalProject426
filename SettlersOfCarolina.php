@@ -122,8 +122,8 @@ global $path_components;
     else{
       // no ID, try returning all IDs.
       //TODO implement .getAllIDs
-      //header("Content-type: application/json");
-      //print(json_encode(Tile::getAllIDs()));
+      header("Content-type: application/json");
+      print(json_encode(Tile::getAllIDs()));
       exit();
     }
   }
