@@ -182,8 +182,6 @@ function RunGame() {
       }
     });
 
-
-
     // If second turn give the player resources
     if (game.turn_number == game.player.id + 4) {
       for (var j = 0; j < game.colleges[i].tiles.length; j++) {
@@ -340,9 +338,9 @@ var buyRoad = function(event) {
           success: function(College_json, status, jqXHR) {
           },
         error: function(jqXHR, status, error) {
-        alert(jqXHR.responseText);
+          alert(jqXHR.responseText);
         }
-      });
+        });
 
         drawBoard(false, false, false, false, false, 0);
       }
@@ -835,7 +833,7 @@ var checkBuyUniversity = function() {
     trade_button.addEventListener('click', tradeWithBank);
   };
   // Query for dice roll from other players
-  var rollOtherDice = function(current_roll) {
+  var rollOtherDice = function() {
     $.ajax({url: url_base + "SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type:"GET",
       dataType: "json",
@@ -1032,7 +1030,20 @@ var checkBuyUniversity = function() {
       }
 
     });
-    // TODO if points is 10, change to turn 0
+    if(game.player.points == 10){
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Turns/gameover",
+        type: "POST",
+        dataType: "json",
+        async: false,
+        success: function(turn, status, jqXHR) {
+          console.log("success on posting game over");
+        },
+        error: function(jqXHR, status, error) {
+         console.log(jqXHR.responseText);
+        }
+
+      });
+    }
     turnChecks();
   }
 
@@ -1149,6 +1160,9 @@ var checkBuyUniversity = function() {
                 game.turn_number = turn;
                 rollOtherDice();
                 just_had_turn = false;
+              }
+              else if(turn > 8){
+                drawBoard(false, false, false, false, true, current_roll);
               }
 
               },
