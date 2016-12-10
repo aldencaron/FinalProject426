@@ -477,19 +477,14 @@ class Turn{
 
   public function GetHighestID(){
     $mysqli = Turn::connect();
-    $SQL = "Select max(TurnID) from Turns";
+    $SQL = "Select max(TurnID) as TurnID from Turns";
     $result = mysqli_query($mysqli, $SQL);
-  if ($result){
-    $row[]= $result->fetch_array();
-    echo $result->fetch_array();
-    if($result->fetch_array()==null){
-      echo $row;
+    if ($result->num_rows==0){
       return 1;
     }
-    return $row[0];
+    $row = $result->fetch_array();
+    return intval($row['TurnID']);
   }
-  return 0;
-}
 
   private function __construct($TurnID){
       $this->TurnID = $TurnID;
