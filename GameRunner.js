@@ -4,8 +4,8 @@ function RunGame() {
   alert("Welcome " + username + "! You are player " + id + "!");
 
   var size = 60;
-  var width = Math.floor(Math.sqrt(3) * size * 5 + 1);
-  var x_initial = width / 2 - (Math.sqrt(3) * size) + 10;
+  var width = Math.floor(Math.sqrt(3) * size * 5 + 1) + 60;
+  var x_initial = (width/ 2) - (Math.sqrt(3) * size) ;
   var y_initial = 98;
   var num_sides = 6;
   var board;
@@ -23,7 +23,7 @@ function RunGame() {
 
     var radius = 20;
 
-    canvas.width = width + 20;
+    canvas.width = width;
     canvas.height = 515 + 20;
 
     var ctx = canvas.getContext('2d');
