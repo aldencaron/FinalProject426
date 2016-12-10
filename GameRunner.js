@@ -931,7 +931,7 @@ var checkBuyUniversity = function() {
   var updateOtherPlayers_Cards = function(cards_array){
     for(var i = 0; i < game.other_players.length; i++){
       for(var j = 0; j < cards_array.length; j++){
-        if(game.other_players.length == cards_array[j]["PlayerID"]){
+        if(game.other_players[i].id == cards_array[j]["PlayerID"]){
           game.other_players[i].num_cards = parseInt(cards_array[j]["Ram"]) + parseInt(cards_array[j]["Ramen"])
            + parseInt(cards_array[j]["Brick"]) + parseInt(cards_array[j]["Book"]) + parseInt(cards_array[j]["Basketball"]);
         }
