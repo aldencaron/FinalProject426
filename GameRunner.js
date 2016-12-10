@@ -1158,7 +1158,7 @@ var checkBuyUniversity = function() {
     }
   }
   // Set up colors
-  var colors = ["green", "yellow", "red", "blue"];
+  var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
   // Assign other players ids based on own id
   for(var i = 0; i < game.other_players.length; i++){
     game.other_players[i].id = game.player.id + i + 1;
