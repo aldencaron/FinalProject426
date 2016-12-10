@@ -305,10 +305,10 @@ var setupTurn = function() {
 
 var checkBuyRoad = function() {
   // Resource error
-  /*if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
+if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
   alert("Insufficient amounts of resources!");
   return;
-}*/
+}
 var available = false;
 for (var i = 0; i < game.roads.length; i++) {
   if (game.roads[i].available) {
@@ -917,7 +917,12 @@ var checkBuyUniversity = function() {
   }
   var updateTiles = function(tiles_array){
     for(var i = 0; i < tiles_array.length; i++){
-      game.tiles[tiles_array[i]["TileID"] - 1].robber = tiles_array[i]["Robber"];
+      if(tiles_array[i]["Robber"] == 0){
+        game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
+      }
+      else{
+        game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
+      }
     }
     drawBoard(false, false, false, false, false, 0);
   }
@@ -1079,7 +1084,18 @@ var checkBuyUniversity = function() {
             dataType: "json",
             async: false,
             success: function(players_array, status, jqXHR) {
-              //updatePlayers(players_array);
+              updateOtherPlayers_Players(players_array);
+            },
+            error: function(jqXHR, status, error) {
+              console.log("Problem updating PLAYERS");
+            }
+          });
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/getAll",
+            type:"GET",
+            dataType: "json",
+            async: false,
+            success: function(cards_array, status, jqXHR) {
+              updateOtherPlayers_Cards(cards_array);
             },
             error: function(jqXHR, status, error) {
               console.log("Problem updating PLAYERS");
