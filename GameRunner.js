@@ -281,6 +281,7 @@ var addRoadStart = function(event) {
 };
 
 var setupTurn = function() {
+  alert("Your turn! Place a college and a road!");
   partial_turn_over = false;
   drawBoard(false, true, false, false, false, 0);
   var board_canvas = document.getElementById("board_canvas");
@@ -467,10 +468,17 @@ var buyCollege = function() {
 };
 var checkBuyUniversity = function() {
   // Resource problem
+<<<<<<< HEAD
   // if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
   //   alert("Insufficient amounts of resources!");
   //   return;
   // }
+=======
+  //if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
+  //  alert("Insufficient amounts of resources!");
+  //  return;
+  //}
+>>>>>>> origin/master
   var available = false;
   for (var i = 0; i < game.player.colleges.length; i++) {
     if (!game.colleges[i].university) {
@@ -597,7 +605,7 @@ var checkBuyUniversity = function() {
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
     $('#player_three_points').text("Points: " + game.other_players[1].points);
     $('#player_four_username').text(game.other_players[2].username);
-    $('#player_four_cards').text("Number of Cards: " + game.other_players[2].num_cards);
+    $('#player_four_num_cards').text("Number of Cards: " + game.other_players[2].num_cards);
     $('#player_four_points').text("Points: " + game.other_players[2].points);
   };
 
@@ -761,7 +769,7 @@ var checkBuyUniversity = function() {
         console.log("Problem waiting for turn");
     }
     });
-
+    alert("Your turn! Buy/trade/place or win!");
     $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
     if (current_roll == 7) {
       // Steal Cards
@@ -818,7 +826,8 @@ var checkBuyUniversity = function() {
     trade_button.addEventListener('click', tradeWithBank);
   };
   // Query for dice roll from other players
-  var rollOtherDice = function(current_roll) {
+  var rollOtherDice = function() {
+    var current_roll;
     $.ajax({url: url_base + "SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
       type:"GET",
       dataType: "json",
@@ -931,7 +940,7 @@ var checkBuyUniversity = function() {
   var updateOtherPlayers_Cards = function(cards_array){
     for(var i = 0; i < game.other_players.length; i++){
       for(var j = 0; j < cards_array.length; j++){
-        if(game.other_players.length == cards_array[j]["PlayerID"]){
+        if(game.other_players[i].id == cards_array[j]["PlayerID"]){
           game.other_players[i].num_cards = parseInt(cards_array[j]["Ram"]) + parseInt(cards_array[j]["Ramen"])
            + parseInt(cards_array[j]["Brick"]) + parseInt(cards_array[j]["Book"]) + parseInt(cards_array[j]["Basketball"]);
         }
@@ -952,7 +961,7 @@ var checkBuyUniversity = function() {
 
   var turnEnd = function(){
     updatePlayerInfo();
-    alert("Turn end");
+    alert("Your turn is over!");
 
     // Remove all current board listeners
     var board_canvas = document.getElementById("board_canvas");
@@ -1023,13 +1032,10 @@ var checkBuyUniversity = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
     if (game.turn_number == game.player.id) {
-      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number == game.player.id + 4) {
-      alert("Your turn! Place a college and a road!");
       game.fireEvent(new game.SetupTurnEvent());
     } else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
-      alert("Your turn! Buy/trade/place or win!");
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
