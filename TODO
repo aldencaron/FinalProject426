@@ -5,7 +5,7 @@ SHELLY & NAEIM
 Make it pretty!
 Load tile and dev card arrays in the setup PHP file
 Need a second column in DevCardStacks
-Need to be able to add large number to Turns database to signal over 
+Need to be able to add large number to Turns database to signal over
 
 
 ================================================================================
@@ -24,4 +24,5 @@ Dice roll other does not draw board
 Sometimes turn fire early
 End turn button will end other people's turns
 Max did something dumb with the setup file
-Alerts go twice sometimes
+
+Left side broken off
