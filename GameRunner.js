@@ -771,8 +771,8 @@ var checkBuyUniversity = function() {
 
   var diceRoll = function() {
     $.ajax({url: url_base + "/SettlersOfCarolina.php/DiceRolls/" + game.turn_number,
-      type:"GET",
-      dataType"json",
+      type: "GET",
+      dataType: "json",
       async: false,
       success: function(roll, status, jqXHR) {
         current_roll = roll;
