@@ -1119,6 +1119,10 @@ var checkBuyUniversity = function() {
                 $("#current_turn").text("Currently your turn!");
                 turnChecks();
               }
+              else if(turn == 0){
+                //TODO more here
+                alert("Game over!");
+              }
               //else if(game.turn_number + 1 == turn){
               else{
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
@@ -1133,10 +1137,7 @@ var checkBuyUniversity = function() {
                 game.turn_number = turn;
                 rollOtherDice();
               }
-              else if(turn == 0){
-                //TODO more here
-                alert("Game over!");
-              }
+
               },
             error: function(jqXHR, status, error){
               console.log("Problem waiting for turn");
