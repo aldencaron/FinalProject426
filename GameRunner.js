@@ -116,7 +116,7 @@ function RunGame() {
     for (var i = 0; i < game.num_colleges; i++) {
         ctx.beginPath();
         game.colleges[i].radius = 12;
-        if(game.colleges[i].university){game.colleges[i].radius = 14}
+        if(game.colleges[i].university){game.colleges[i].radius = 14;}
         ctx.arc(game.colleges[i].x, game.colleges[i].y, game.colleges[i].radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = game.colleges[i].player.color;
         ctx.fill();
@@ -140,11 +140,10 @@ function RunGame() {
         ctx.fill();
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'black';
-        ctx.stroke;
+        ctx.stroke();
       }
+      document.getElementById("board").append(canvas);
     }
-    document.getElementById("board").append(canvas);
-  };
 
   // =============================================================================
   // EVENT HANDLERS

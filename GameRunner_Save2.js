@@ -140,11 +140,10 @@ function RunGame() {
         ctx.fill();
         ctx.lineWidth = 2;
         ctx.strokeStyle = 'black';
-        ctx.stroke;
+        ctx.stroke();
       }
+      document.getElementById("board").append(canvas);
     }
-    document.getElementById("board").append(canvas);
-  };
 
   // =============================================================================
   // EVENT HANDLERS
