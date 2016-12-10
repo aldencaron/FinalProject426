@@ -894,16 +894,17 @@ var checkBuyUniversity = function() {
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
         if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
+          console.log(colleges_array[i]["PlayerID"] + "<-PlayerID" + "wtf j:" + j + " other id: " + game.other_player[j].id);
           game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
           game.other_players[j].colleges.push(game.colleges[colleges_array[i]["CollegeID"] - 1]);
           game.colleges[colleges_array[i]["CollegeID"] - 1].university = colleges_array[i]["University"];
           game.colleges[colleges_array[i]["CollegeID"] - 1].used = true;
           game.colleges[colleges_array[i]["CollegeID"] - 1].available = false;
           for(var k = 0; k < game.colleges[colleges_array[i]["CollegeID"] - 1].roads.length; k++){
-            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[0].available = false;
-            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[1].available = false;
-            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[0].too_close = true;
-            game.colleges[colleges_array[i]["CollegeID"] - 1].roads.connections[1].too_close = true;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads[k].connections[0].available = false;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads[k].connections[1].available = false;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads[k].connections[0].too_close = true;
+            game.colleges[colleges_array[i]["CollegeID"] - 1].roads[k].connections[1].too_close = true;
           }
         }
       }
