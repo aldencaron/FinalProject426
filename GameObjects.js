@@ -36,8 +36,8 @@ var SettlersGame = function(tiles_array, dev_array) {
 
   // Parameters
   this.size = 60;
-  this.width = Math.floor(Math.sqrt(3) * this.size * 5 + 1);
-  this.x_initial = this.width / 2 - (Math.sqrt(3) * this.size) + 8;
+  this.width = Math.floor(Math.sqrt(3) * this.size * 5 + 1) + 60;
+  this.x_initial = this.width / 2 - (Math.sqrt(3) * this.size);
   this.y_initial = 98;
   this.num_sides = 6;
 
