@@ -598,14 +598,14 @@ var checkBuyUniversity = function() {
   var updateOtherPlayerInfo = function() {
     //TODO can do in order if I know their IDs but idk
     $('#player_two_username').text(game.other_players[0].username);
-    $('#player_two_num_cards').text(game.other_players[0].num_cards);
-    $('#player_two_points').text(game.other_players[0].points);
+    $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
+    $('#player_two_points').text("Points: " + game.other_players[0].points);
     $('#player_three_username').text(game.other_players[1].username);
-    $('#player_three_num_cards').text(game.other_players[1].num_cards);
-    $('#player_three_points').text(game.other_players[1].points);
+    $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
+    $('#player_three_points').text("Points: "game.other_players[1].points);
     $('#player_four_username').text(game.other_players[2].username);
-    $('#player_four_cards').text(game.other_players[2].num_cards);
-    $('#player_four_points').text(game.other_players[2].points);
+    $('#player_four_cards').text("Number of Cards: " + game.other_players[2].num_cards);
+    $('#player_four_points').text("Points: " + game.other_players[2].points);
   };
 
   var moveRobber = function(event) {
@@ -873,12 +873,7 @@ var checkBuyUniversity = function() {
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
-        // console.log("roads_array, " + i + ":" + roads_array[0]);
-        // console.log("roads_array.length: " + roads_array.length);
-        // console.log("roads_array, " + i + ":" + roads_array[0]["PlayerID"]);
-        // console.log(game.other_players.length);
         if(roads_array[i]["PlayerID"] == game.other_players[j].id){
-
           game.roads[roads_array[i]["RoadID"] - 1].player = game.other_players[j];
           game.other_players[j].roads.push(game.colleges[roads_array[i]["RoadID"] - 1]);
           game.roads[roads_array[i]["RoadID"] - 1].used = true;
@@ -893,11 +888,16 @@ var checkBuyUniversity = function() {
     console.log("Update colleges");
     for(var i = 0; i < colleges_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
-        if(colleges_array[i]["PlayerID"] = game.other_players[j].id){
-          console.log(colleges_array[i]["PlayerID"] + "<-PlayerID" + "wtf j:" + j + " other id: " + game.other_player[j].id);
+        console.log(colleges_array[i]["PlayerID"] + "<-PlayerID" + " j:" + j + " other id: " + game.other_player[j].id);
+        if(colleges_array[i]["PlayerID"] == game.other_players[j].id){
           game.colleges[colleges_array[i]["CollegeID"] - 1].player = game.other_players[j];
           game.other_players[j].colleges.push(game.colleges[colleges_array[i]["CollegeID"] - 1]);
-          game.colleges[colleges_array[i]["CollegeID"] - 1].university = colleges_array[i]["University"];
+          if(colleges_array[i]["University"] == 0){
+            game.colleges[colleges_array[i]["CollegeID"] - 1].university = false;
+          }
+          else{
+            game.colleges[colleges_array[i]["CollegeID"] - 1].university = true;
+          }
           game.colleges[colleges_array[i]["CollegeID"] - 1].used = true;
           game.colleges[colleges_array[i]["CollegeID"] - 1].available = false;
           for(var k = 0; k < game.colleges[colleges_array[i]["CollegeID"] - 1].roads.length; k++){
@@ -940,8 +940,8 @@ var checkBuyUniversity = function() {
     for(var i = 0; i < game.other_players.length; i++){
       for(var j = 0; j < cards_array.length; j++){
         if(game.other_players.length == cards_array[j]["PlayerID"]){
-          game.other_players[i].num_cards = cards_array[j]["Ram"] + cards_array[j]["Ramen"]
-           + cards_array[j]["Brick"] + cards_array[j]["Book"] + cards_array[j]["Basketball"];
+          game.other_players[i].num_cards = parseInt(cards_array[j]["Ram"]) + parseInt(cards_array[j]["Ramen"])
+           + parseInt(cards_array[j]["Brick"]) + parseInt(cards_array[j]["Book"]) + parseInt(cards_array[j]["Basketball"]);
         }
       }
     }
