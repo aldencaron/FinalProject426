@@ -13,6 +13,8 @@ function RunGame() {
   var partial_turn_over = false;
   var current_roll = 0;
   var just_had_turn = false;
+  var current_max_roads = 0;
+  var current_max_army = 0;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -617,7 +619,7 @@ var checkBuyUniversity = function() {
           async: false,
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
-            console.log("Success in posting robber.");
+            console.log("Success in getting rid of robber.");
           },
           error: function(jqXHR, status, error) {
             console.log(jqXHR.responseText);
@@ -846,7 +848,6 @@ var checkBuyUniversity = function() {
     }
     });
     $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
-    console.log("current_roll before checks: " + current_roll);
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -862,7 +863,6 @@ var checkBuyUniversity = function() {
     // Is not a robber
     else {
       // TODO this maybe does not work??
-      console.log("current_roll: " + current_roll);
       drawBoard(false, false, false, false, true, current_roll);
       // Add cards
       for (var i = 0; i < game.player.colleges.length; i++) {
@@ -879,6 +879,11 @@ var checkBuyUniversity = function() {
     }
   };
 
+
+  var checkRoadsSpecial(){
+    var max_roads = 2;
+
+  }
 
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
@@ -1162,6 +1167,7 @@ var checkBuyUniversity = function() {
                 just_had_turn = false;
               }
               else if(turn > 8){
+                console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
               }
 
