@@ -751,7 +751,7 @@ class Tile {
    return $result;
   }
 
- private function __construct($TileID, $Robber){
+ private function __construct($TileID, $Robber, $Placement){
  $this->TileID= $TileID;
  $this->Robber = $Robber;
  $this->Placement = $Placement;
@@ -769,7 +769,7 @@ class Tile {
     $this->TileID = $TileID;
     return $this->update($this->TileID);
   }
-  public function setPlacement($TileID){
+  public function setPlacement($Placement){
     $this->Placement = $Placement;
     return $this->update($this->Placement);
   }
