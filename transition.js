@@ -4,7 +4,8 @@
 
 var playerGame_playerAJAX = function (player_game){
   return ("PlayerID=" + player_game.id + "&Username=" + player_game.username + "&RoadsCount=" +
-  player_game.roads.length + "&SolidersCount=" + player_game.used_knights + "&Points=" + player_game.points);
+  player_game.roads.length + "&SolidersCount=" + player_game.used_knights + "&Points=" + player_game.points
+  + "&HexColor=" + player_game.color.slice(1));
 }
 
 var tileGame_tileAJAX = function(game_tile){
