@@ -1145,6 +1145,7 @@ var checkBuyUniversity = function() {
       else{
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
+      game.tiles[tile_array[i]["TileID"] - 1].placement = tiles_array[i]["Placement"];
     }
     if(game.turn_number < 9){
       drawBoard(false, false, false, false, false, 0);
@@ -1435,7 +1436,7 @@ var checkBuyUniversity = function() {
   game.player.id = id;
 
   // Post beginning robber position
-  for(var i = 0; i < game.tiles[i].length; i++){
+  /*for(var i = 0; i < game.tiles[i].length; i++){
     if(game.tiles[i].type == "DESERT"){game.tiles[i].robber = true;}
     if(game.tiles[i].robber){
       $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
@@ -1450,7 +1451,7 @@ var checkBuyUniversity = function() {
       }
       });
     }
-  }
+  }*/
 
   // Set up colors
   //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];

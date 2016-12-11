@@ -111,6 +111,7 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.y_coords = []; // y coords of tile
     this.colleges = []; // colleges on tile
     this.robber = false; // whether or not has robber
+    this.placement;
   }
 
   // Client player
