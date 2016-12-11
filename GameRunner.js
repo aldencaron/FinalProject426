@@ -960,7 +960,9 @@ var checkBuyUniversity = function() {
 
   var checkKnightSpecial = function(){
     var current_max_army = 2;
+    console.log("current max player at top:" + current_max_army_player);
     if(current_max_army_player == 0){
+      console.log("player 0 has knights count: " + game.other_players[0].knight_count);
       if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.other_players[0].id;
@@ -1008,6 +1010,8 @@ var checkBuyUniversity = function() {
         current_max_army = game.other_players[2].knights_count;
         current_max_army_player = game.other_players[2].id;
       }
+      console.log(game.player.used_knights);
+      console.log(current_max_army);
       if(game.player.used_knights > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
