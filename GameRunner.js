@@ -1100,7 +1100,7 @@ var checkBuyUniversity = function() {
   // =============================================================================
 
   var gameOver = function(){
-    $('$startup').show();
+    $('#startup').show();
     $('#top_container').hide();
   }
 
