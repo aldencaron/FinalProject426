@@ -987,7 +987,7 @@ class Player {
           $json_sub['RoadsCount'] = $row['RoadsCount'];
           $json_sub['SoldiersCount'] = $row['SoldiersCount'];
           $json_sub['Points'] = $row['Points'];
-          $json_sub['HexColor'] = $row['HexColor']
+          $json_sub['HexColor'] = $row['HexColor'];
           $json[] = $json_sub;
       }
       return json_encode($json);
