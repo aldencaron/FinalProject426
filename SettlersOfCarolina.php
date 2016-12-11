@@ -92,6 +92,34 @@ global $path_components;
         exit();
     }
   }
+  else if($path_components[1]=="DevCardStacks"){
+    if($path_components[2]!="" &&
+  count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(DevCardStack::getALLJSON());
+      exit();
+    }
+      $DevID= intval($path_components[2]);
+      $DevCardStack_Info = DevCardStack::findByID($DevID);
+      if ($DevCardStack_Info == null) {
+        // not found.
+        header("HTTP/1.0 404 Not Found");
+        print("Dev id: " . $DevCardStack_info . " not found.");
+        exit();
+      }
+      header("Content-type: application/json");
+      print($DevCardStack_Info->getJSON());
+      exit();
+    }
+    else{
+      // no ID, try returning all IDs.
+      //TODO implement .getAllIDs
+      header("Content-type: application/json");
+      print(json_encode(DevCardStack::getAllIDs()));
+      exit();
+    }
+  }
   else if($path_components[1]=="Tiles"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
@@ -192,6 +220,9 @@ exit();
         }
         else if($DBname=="Tiles"){
           postTile();
+        }
+        else if($DBname=="DevCardStacks"){
+          postDevCardStack();
         }
         else if($DBname=="Cards"){
           postCard();
