@@ -944,7 +944,7 @@ class Player {
                            $Player_info['Username'],
                            $Player_info['RoadsCount'],
                            $Player_info['SoldiersCount'],
-                           $Player_info['Points']
+                           $Player_info['Points'],
                            $Player_info['HexColor']);
       }
     }
