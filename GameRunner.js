@@ -542,7 +542,7 @@ var checkBuyUniversity = function() {
     game.player.cards["basketball"] < 1) {
       alert("Insufficient amounts of resources!");
     }
-    else if(game.next_dev_card > 24){
+    else if(game.next_dev_card > 25){
       alert("No more development cards");
     }
     else{
@@ -550,8 +550,12 @@ var checkBuyUniversity = function() {
     }
   };
   var buyCard = function() {
+    //GET CURRENT INDEX
+
     var card = game.dev_cards[game.next_dev_card];
     game.next_dev_card++;
+
+    // POST CURRENT INDEX 
 
     if(card.type == "oldwell" || card.type == "sitterson" || card.type == "pit" || card.type == "bell" || card.type == "davis"){
       alert("You got a victory point card!")
@@ -969,7 +973,30 @@ var checkBuyUniversity = function() {
   }
 
   var getLongestContinuousRoads = function(player){
-  }
+    //http://stackoverflow.com/questions/3191460/finding-the-longest-road-in-a-settlers-of-catan-game-algorithmically
+    var roads_not_checked = [];
+    var roads_together = [];
+    var roads_checked = [];
+    for(var i = 0; i < player.roads.length; i++){
+      roads_not_checked[i] = player.roads[i];
+    }
+    var current_to_check = roads_not_checked[roads_not_checked.length - 1];
+    roads_together[0].push(current_to_check);
+    roads_not_checked.pop();
+    for(var i = 0; i < current_to_check.connections[0].roads.length; i++){
+      if(current_to_check.connections[0].roads[i].id != current_to_check.id
+        && current_to_check.connections[0].roads[i].player.id == player.id){
+          roads_together[0].push(current_to_check.connections[0].roads[i]);
+        }
+      }
+      for(var i = 0; i < current_to_check.connections[1].roads.length; i++){
+        if(current_to_check.connections[1].roads[i].id != current_to_check.id
+          && current_to_check.connections[1].roads[i].player.id == player.id){
+            roads_together[0].push(current_to_check.connections[1].roads[i]);
+          }
+        }
+
+    }
 
   var checkRoadsSpecial = function(){
     var current_max_roads = 2;
