@@ -598,9 +598,9 @@ var checkBuyUniversity = function() {
 
   };
   var updateOtherPlayerInfo = function() {
-    //TODO can do in order if I know their IDs but idk
     $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
+    console.log("Player something points: " + game.other_players[0].points);
     $('#player_two_points').text("Points: " + game.other_players[0].points);
     $('#player_three_username').text(game.other_players[1].username);
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
@@ -858,7 +858,9 @@ var checkBuyUniversity = function() {
         console.log("Problem waiting for turn");
     }
     });
-    $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    if(game.turn_number > 8){
+      $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    }
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -871,6 +873,7 @@ var checkBuyUniversity = function() {
         updatePlayerInfo();
       }
     }
+
     // Is not a robber
     else {
       if(game.turn_number > 8){
@@ -1262,6 +1265,7 @@ var checkBuyUniversity = function() {
               if(turn == 10000){
                 //TODO more here
                 alert("Game over!");
+                document.body.innerHTML = "";
               }
               else if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
