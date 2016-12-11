@@ -1008,8 +1008,12 @@ var checkBuyUniversity = function() {
         }
       }
     }
-    drawBoard(false, false, false, false, false, 0);
-  }
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }  }
   // Also updates universities
   var updateColleges = function(colleges_array){
     for(var i = 0; i < colleges_array.length; i++){
@@ -1034,7 +1038,12 @@ var checkBuyUniversity = function() {
         }
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }
   }
   var updateTiles = function(tiles_array){
     for(var i = 0; i < tiles_array.length; i++){
@@ -1045,7 +1054,12 @@ var checkBuyUniversity = function() {
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    drawBoard(false, false, false, false, true, current_roll);
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }
   }
 
   var updateOtherPlayers_Players = function(players_array){
