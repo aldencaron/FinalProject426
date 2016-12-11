@@ -13,8 +13,8 @@ function RunGame() {
   var partial_turn_over = false;
   var current_roll = 0;
   var just_had_turn = false;
-  var current_max_roads_player = 1;
-  var current_max_army_player = 1;
+  var current_max_roads_player = 0;
+  var current_max_army_player = 0;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -888,6 +888,27 @@ var checkBuyUniversity = function() {
   };
 
 
+  var checkKnightsSpecial = function(){
+    var current_max_army = 2;
+    if(current_max_army_player == 0){
+      if(game_other_players[0].knights_count > current_max_army){
+        current_max_army = game_other_players[0].knights_count;
+        current_max_army_player = game_other_players[0].id;
+      }
+      if(game_other_players[1].knights_count > current_max_army){
+        current_max_army = game_other_players[1].knights_count;
+        current_max_army_player = game_other_players[1].id;
+      }
+      if(game_other_players[2].knights_count > current_max_army){
+        current_max_army = game_other_players[2].knights_count;
+        current_max_army_player = game_other_players[2].id;
+      }
+      if(game.player.used_knights > current_max_army){
+        current_max_army = game_other_players[0].knights_count;
+        current_max_army_player = game_other_players[0].id;
+      }
+    }
+  }
   var checkRoadsSpecial = function(){
     var current_max_roads = 2;
 
