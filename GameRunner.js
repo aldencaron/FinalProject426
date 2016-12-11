@@ -13,8 +13,8 @@ function RunGame() {
   var partial_turn_over = false;
   var current_roll = 0;
   var just_had_turn = false;
-  var current_max_roads = 0;
-  var current_max_army = 0;
+  var current_max_roads_player = 0;
+  var current_max_army_player = 0;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -265,12 +265,16 @@ var addRoadStart = function(event) {
       for (var k = 0; k < game.player.roads.length; k++) {
         for (var l = 0; l < game.player.roads[k].connections[0].roads.length; l++) {
           if (!game.player.roads[k].connections[0].roads[l].used) {
-            game.player.roads[k].connections[0].roads[l].available = true;
+            if(!game.player.roads[k].connections[0].used || (game.player.roads[k].connections[0].player.id == game.player.id)){
+              game.player.roads[k].connections[0].roads[l].available = true;
+            }
           }
         }
         for (var l = 0; l < game.player.roads[k].connections[1].roads.length; l++) {
           if (!game.player.roads[k].connections[1].roads[l].used) {
-            game.player.roads[k].connections[1].roads[l].available = true;
+            if(!game.player.roads[k].connections[1].used || (game.player.roads[k].connections[1].player.id == game.player.id)){
+              game.player.roads[k].connections[1].roads[l].available = true;
+            }
           }
         }
       }
@@ -366,12 +370,16 @@ var buyRoad = function(event) {
     for (var k = 0; k < game.player.roads.length; k++) {
       for (var l = 0; l < game.player.roads[k].connections[0].roads.length; l++) {
         if (!game.player.roads[k].connections[0].roads[l].used) {
-          game.player.roads[k].connections[0].roads[l].available = true;
+          if(!game.player.roads[k].connections[0].used || (game.player.roads[k].connections[0].player.id == game.player.id)){
+            game.player.roads[k].connections[0].roads[l].available = true;
+          }
         }
       }
       for (var l = 0; l < game.player.roads[k].connections[1].roads.length; l++) {
         if (!game.player.roads[k].connections[1].roads[l].used) {
-          game.player.roads[k].connections[1].roads[l].available = true;
+          if(!game.player.roads[k].connections[1].used || (game.player.roads[k].connections[1].player.id == game.player.id)){
+            game.player.roads[k].connections[1].roads[l].available = true;
+          }
         }
       }
     }
@@ -880,8 +888,56 @@ var checkBuyUniversity = function() {
   };
 
 
+  var checkKnightsSpecial = function(){
+    var current_max_army = 2;
+    if(current_max_army_player == 0){
+      if(game_other_players[0].knights_count > current_max_army){
+        current_max_army = game_other_players[0].knights_count;
+        current_max_army_player = game_other_players[0].id;
+      }
+      if(game_other_players[1].knights_count > current_max_army){
+        current_max_army = game_other_players[1].knights_count;
+        current_max_army_player = game_other_players[1].id;
+      }
+      if(game_other_players[2].knights_count > current_max_army){
+        current_max_army = game_other_players[2].knights_count;
+        current_max_army_player = game_other_players[2].id;
+      }
+      if(game.player.used_knights > current_max_army){
+        current_max_army = game_other_players[0].knights_count;
+        current_max_army_player = game_other_players[0].id;
+      }
+    }
+  }
   var checkRoadsSpecial = function(){
-    var max_roads = 2;
+    var current_max_roads = 2;
+
+    // Figure out which player
+    if(current_max_roads_player == game.player.id){
+      current_max_roads = game.player.roads.length;
+    }
+    else{
+      for(var i = 0; i < game.other_players.length; i++){
+        if(current_max_roads_player == game.other_players[i].id){
+          curent_max_roads = game.other_players[i].roads.length;
+        }
+      }
+    }
+    // Figure out new current roads
+    for(var i = 0; i < game.other_players.length; i++){
+      if(game.other_players[i].roadss.length > current_max_roads){
+        current_max_roads_player = game.other_players[i].id;
+        current_max_roads = game.other_players[i].roads.length;
+      }
+    }
+    if(game.player.roads.length > current_max_roads){
+      current_max_roads_player = game.player.id;
+      current_max_roads = game.player.roads.length;
+    }
+    if(current_max_roads > 3){
+
+    }
+
 
   }
 
@@ -933,7 +989,7 @@ var checkBuyUniversity = function() {
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    //drawBoard(false, false, false, false, false, 0);
   }
 
   var updateOtherPlayers_Players = function(players_array){
@@ -943,6 +999,7 @@ var checkBuyUniversity = function() {
           game.other_players[i].username = players_array[j]["Username"];
           game.other_players[i].knights_count = players_array[j]["SolidersCount"];
           game.other_players[i].points = players_array[j]["Points"];
+          game.other_players[i].color = "#" + players_array[j]["HexColor"];
         }
       }
     }
@@ -1171,6 +1228,9 @@ var checkBuyUniversity = function() {
                 console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
               }
+              else{
+                drawBoard(false, false, false, false, false, 0);
+              }
 
               },
             error: function(jqXHR, status, error){
@@ -1215,17 +1275,31 @@ var checkBuyUniversity = function() {
       });
     }
   }
+  $.ajax({url: url_base + "SettlersOfCarolina.php/Players/getAll",
+    type:"GET",
+    dataType: "json",
+    async: false,
+    success: function(players_array, status, jqXHR) {
+      updateOtherPlayers_Players(players_array);
+    },
+    error: function(jqXHR, status, error) {
+      console.log("Problem updating PLAYERS");
+    }
+  });
+  updateOtherPlayers_Players();
   // Set up colors
-  var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
+  //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
   // Assign other players ids based on own id
   for(var i = 0; i < game.other_players.length; i++){
     game.other_players[i].id = game.player.id + i + 1;
     if(game.other_players[i].id > 4){
       game.other_players[i].id -= 4;
     }
-    game.other_players[i].color = colors[game.other_players[i].id % 4]
+    //game.other_players[i].color = colors[game.other_players[i].id % 4]
   }
-  game.player.color = colors[game.player.id % 4];
+  //game.player.color = colors[game.player.id % 4];
+  game.player.color = color;
+
   $("#player_one").css("background-color", game.player.color);
   $("#player_two").css("background-color", game.other_players[0].color);
   $("#player_three").css("background-color", game.other_players[1].color);

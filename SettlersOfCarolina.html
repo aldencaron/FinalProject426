@@ -5,9 +5,10 @@
 	  <script src="GameObjects.js"></script>
 	  <script src="GameRunner.js"></script>
     <script src="WaitingRoom.js"></script>
+    <script src="jscolor.js"></script>
 </head>
 
-<body style="margins: 0px 0px 0px 0px !important;background-color:#99cccc;">    <!-- Obtain username, make player query in database -->    <div id = "startup" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">      <span style="vertical-align:middle;">        <h1> GAME SETTINGS</h1>        <div>You will need four people to play! Go ahead and register with a username to get started with a game!</div>        <br><br>        <form id = "settings">          <strong>  Username: </strong> <input style="border-radius:50px;" type = "text" name = "username"/>        </form>      </span>    </div>    <script>            username = "";            var id=0;            $("#settings").on("submit", function(e) {                e.preventDefault();                username = $("#settings input").val();                function getData() {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/",                        type: "GET",                        dataType: "JSON",                        success: function(response) {                            if (response == false) {                                id = 1;                            } else {                                id = response.length+1;                            }                            var roads_count = 0;                            var soldiers_count = 0;                            var points = 0;                            var form_data = "Username=" + username +                            "&RoadsCount=" + roads_count + "&SoldiersCount=" +                            soldiers_count + "&Points=" + points + "&PlayerID=" + id;                            postPlayer(id, form_data);                        },                        error: function(response) {                            console.log(response);                        }                    });                }                getData();                function postPlayer(id, form_data) {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/" + id,                        type: "POST",                        data: form_data,                        async: false,                        success: function(response) {                            console.log(response);                            // document.body.style.backgroundColor = "white";                            $("#waitingRoom").show();                            $("#startup").hide();                            WaitingRoom();                        },                        error: function(response) {                            console.log(response);                        }                    });                }            });        </script>  <div id="waitingRoom" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">    <h1> Waiting Room </h1>    Players in room: <div id="playercount">      stuff is here    </div>    <div id="playerinfo_waiting">    </div>  </div>	<div id="top_container">
+<body style="margins: 0px 0px 0px 0px !important;background-color:#99cccc;">    <!-- Obtain username, make player query in database -->    <div id = "startup" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">      <span style="vertical-align:middle;">        <h1> GAME SETTINGS</h1>        <div>You will need four people to play! Go ahead and register with a username to get started with a game!</div>        <br><br>        <form id = "settings">          <strong>  Username: </strong> <input style="border-radius:50px;" type = "text" name = "username"/>        </form>        <form id = "settings2" style = "position: relative; right: 17px;">            <strong> Color: </strong> <input class="jscolor" value="364AB2" style = "position: relative; border-radius: 50px; left: 35px;"/>        </form>      </span>    </div>    <script>            username = "";            color = "";            var id=0;            $("#settings").on("submit", function(e) {                e.preventDefault();                username = $("#settings input").val();                function getData() {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/",                        type: "GET",                        dataType: "JSON",                        success: function(response) {                            if (response == false) {                                id = 1;                            } else {                                id = response.length+1;                            }                            var roads_count = 0;                            var soldiers_count = 0;                            var points = 0;                            var color = $("#settings2 input").val();                            var form_data = "Username=" + username +                            "&RoadsCount=" + roads_count + "&SoldiersCount=" +                            soldiers_count + "&Points=" + points + "&PlayerID="                            + id + "&HexColor=" + color;                            postPlayer(id, form_data);                        },                        error: function(response) {                            console.log(response);                        }                    });                }                getData();                function postPlayer(id, form_data) {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/" + id,                        type: "POST",                        data: form_data,                        async: false,                        success: function(response) {                            console.log(response);                            // document.body.style.backgroundColor = "white";                            $("#waitingRoom").show();                            $("#startup").hide();                            WaitingRoom();                        },                        error: function(response) {                            console.log(response);                        }                    });                }            });            $("#settings2").on("submit", function(e) {                e.preventDefault();            });        </script>  <div id="waitingRoom" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">    <h1> Waiting Room </h1>    Players in room: <div id="playercount">      stuff is here    </div>    <div id="playerinfo_waiting">    </div>  </div>	<div id="top_container">
 		<div id="col_one">
 			<div id="player_one" class="players">
         <table id="player_one_cards">
@@ -97,7 +98,18 @@
 		</div>
 		<div id="col_two">
 			<div id="board">
-				<canvas id="board_canvas">
+                <div id = "trade_interface" style = "width: 603px; height: 552px;">
+                    <p>You can trade with the bank at a 3:1 ratio. Pick the card you want to trade.</p>
+
+                    <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
+                    <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
+                    <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
+                    <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
+                    <div class="cards books"> <img src="images/book.gif" /> </div>
+
+                    <h1 id = "trade_message"></h1>
+                </div>
+                <canvas id="board_canvas">
 			</div>
 			<div id="turn_info">
         <div id="current_turn"></div>
@@ -142,6 +154,20 @@
     <!-- Hide container during game startup -->
     <script>
         $("#top_container").hide();
+        $("#trade_interface").hide();
+
+        $("#trade_button").click(function(e) {
+            //tradeWithBank();
+            if ($("#trade_interface").is(":visible")) {
+                $("#trade_interface").hide();
+            } else {
+                $("#trade_interface").show();
+            }
+        });
+
+        $("#trade_form").on("submit", function(e) {
+            e.preventDefault();
+        });
     </script>
 
     <!-- <script>

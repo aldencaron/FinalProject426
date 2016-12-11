@@ -529,6 +529,124 @@ class Turn{
   }
 }
 
+class DevCardStack {
+  private $DevID;
+  private $Order;
+
+  public static function connect() {
+    return new mysqli("classroom.cs.unc.edu",
+          "naeimz",
+          "naeim410",
+          "naeimzdb");
+  }
+
+  public function create($DevID, $Order) {
+      $mysqli = DevCardStack::connect();
+      $res = $mysqli->query(
+          "INSERT INTO DevCardStacks VAlUES ('$DevID', '$Order')"
+      );
+
+      if ($res) {} else {
+          header("HTTP/1.0 500 Server Error");
+          print($mysqli->error);
+          exit();
+      }
+      return new DevCardStack($DevID, $Order);
+  }
+
+  public static function findByID($DevID){
+    $mysqli= DevCardStack::connect();
+    $SQL= "Select * from DevCardStacks where DevID = $DevID ";
+    $result= mysqli_query($mysqli, $SQL);
+
+    if($result){
+      if($result->num_rows==0){
+        return null;
+      }
+      else{
+        $DevCardStack_info = $result->fetch_array();
+        return new DevCardStack($DevCardStack_info['DevID'],
+                           $DevCardStack_info['Order']);
+      }
+    }
+  return null;
+  }
+
+  public static function getAllIDs() {
+    $mysqli = DevCardStack::connect();
+    $SQL = "Select DevID from Tiles where 1";
+    $result= mysqli_query($mysqli, $SQL);
+    $id_array = array();
+
+    if ($result) {
+      while ($next_row = $result->fetch_array()) {
+    $id_array[] = intval($next_row['DevID']);
+      }
+    }
+    return $id_array;
+    }
+
+  public function getJSON(){
+  $json_obj = array('DevID' => $this->DevID,
+                     'Order' => $this->Order );
+  return json_encode($json_obj);
+  }
+
+  public static function getAllJSON() {
+      $mysqli = DevCardStack::connect();
+      $result = $mysqli->query("SELECT * FROM DevCardStacks");
+
+      $json = array();
+      if($result){
+      while ($row = $result->fetch_array()) {
+          $json_sub = array();
+          $json_sub['DevID'] = $row['DevID'];
+          $json_sub['Order'] = $row['Order'];
+          $json[] = $json_sub;
+      }
+    }
+      return json_encode($json);
+  }
+
+  private function update($DevID) {
+    $mysqli= DevCardStack::connect();
+
+    $SQL = "Update DevCardStacks set
+    Order= $this->Order
+    WHERE DevID = $DevID";
+   $result= mysqli_query($mysqli, $SQL);
+
+   if ($result == false) {
+       header("HTTP/1.0 503 Service Unavailable");
+       print("An error in the database occurred: " . $mysqli->error);
+       exit();
+
+   }
+
+   return $result;
+  }
+
+ private function __construct($DevID, $Order){
+ $this->DevID= $DevID;
+ $this->Robber = $Robber;
+ }
+ public function getDevID() {
+     return $this->DevID;
+ }
+ public function getOrder() {
+     return $this->Order;
+  }
+  public function setDevID($DevID){
+    $this->DevID = $DevID;
+    return $this->update($this->DevID);
+  }
+  public function setOrder($Order){
+    $this->Order = $Order;
+    return $this->update($this->DevID);
+  }
+
+}
+
 class Tile {
   private $TileID;
   private $Robber;
