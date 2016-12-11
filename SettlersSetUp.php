@@ -61,21 +61,20 @@ $SQL = "Create Table Tiles (
 mysqli_query($mysqli, $SQL);
 //19 Tiles
 
-$array = range(0,19);
+$array = range(1,19);
 shuffle($array);
-for($i = 0; $i <= 19; $i++){
-    if($i != 19){
+for($i = 0; $i < 19; $i++){
+    if($i != 18){
   $SQL = "Insert into Tiles (TileID, Robber, Placement)
-  Values ($i, 2, " . $array[$i] . ")";
+  Values (" . ($i+1) . ", 2, " . $array[$i] . ")";
     mysqli_query($mysqli, $SQL);
   }
   else{
     $SQL = "Insert into Tiles (TileID, Robber, Placement)
-      Values ($i, 1, $i)";
+      Values (" . ($i+1) . ", 1, " . $array[$i] . ")";
         mysqli_query($mysqli, $SQL);
       }
   }
-}
 
 $SQL = "Create Table Colleges (
   CollegeID int primary key not null auto_increment,
