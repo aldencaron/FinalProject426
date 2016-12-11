@@ -1074,7 +1074,7 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 
   public function setHexColor($HexColor){
     $this->HexColor = $HexColor;
-    return $this->update($this->HexColor);
+    return $this->update($this->PlayerID);
   }
 
 }
