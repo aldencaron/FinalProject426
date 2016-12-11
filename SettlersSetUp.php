@@ -55,12 +55,13 @@ for($i = 0; $i <= 73; $i++){
 
 $SQL = "Create Table Tiles (
   TileID int primary key not null auto_increment,
-  Robber int)";
+  Robber int,
+  Order int)";
 mysqli_query($mysqli, $SQL);
 //19 Tiles
 for($i = 0; $i <= 19; $i++){
-  $SQL = "Insert into Tiles (TileID, Robber)
-  Values ($i, 2)";
+  $SQL = "Insert into Tiles (TileID, Robber, Order)
+  Values ($i, 2, $i)";
     mysqli_query($mysqli, $SQL);
 }
 
