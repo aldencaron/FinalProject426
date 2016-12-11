@@ -1045,7 +1045,7 @@ var checkBuyUniversity = function() {
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    drawBoard(false, false, false, false, true, current_roll);
   }
 
   var updateOtherPlayers_Players = function(players_array){
