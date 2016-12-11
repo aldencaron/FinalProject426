@@ -402,6 +402,7 @@ var buyRoad = function(event) {
       }
       else{
         alert("Pick a second road!");
+        drawBoard(true, false, false, false, false, 0);
         var board_canvas = document.getElementById("board_canvas");
         board_canvas.addEventListener('mousedown', buyRoad);
       }
@@ -739,6 +740,17 @@ var checkBuyUniversity = function() {
     else{
       game.player.cards["knight"]--;
       game.player.used_knights++;
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
+          type: "POST",
+          dataType: "json",
+          data: playerGame_playerAJAX(game.player),
+          async: false,
+          success: function(Card_json, status, jqXHR) {
+          },
+          error: function(jqXHR, status, error) {
+           console.log(jqXHR.responseText);
+          }
+      });
       updatePlayerInfo();
       checkKnightSpecial();
       alert("Move the Blue Devil!");
