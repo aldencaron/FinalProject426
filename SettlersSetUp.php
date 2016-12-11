@@ -60,7 +60,7 @@ mysqli_query($mysqli, $SQL);
 //19 Tiles
 for($i = 0; $i <= 19; $i++){
   $SQL = "Insert into Tiles (TileID, Robber)
-  Values ($i, 2)"; //TODO 
+  Values ($i, 2)";
     mysqli_query($mysqli, $SQL);
 }
 
@@ -104,8 +104,7 @@ for($i = 0; $i <= 54; $i++){
   mysqli_query($mysqli, $SQL);
   // Load with dice rolls
   for($i = 0; $i <= 1000; $i++){
-    //$r = rand(1, 6) + rand(1, 6);
-    $r = 7;
+    $r = rand(1, 6) + rand(1, 6);
     $SQL = "Insert into DiceRolls (DiceID, RollResult)
     Values ($i, $r)";
       mysqli_query($mysqli, $SQL);

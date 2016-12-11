@@ -295,10 +295,10 @@ var setupTurn = function() {
 
 var checkBuyRoad = function() {
   // Resource error
-if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
+/*if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
   alert("Insufficient amounts of resources!");
   return;
-}
+}*/
 var available = false;
 for (var i = 0; i < game.roads.length; i++) {
   if (game.roads[i].available) {
@@ -388,11 +388,11 @@ var buyRoad = function(event) {
 };
 var checkBuyCollege = function() {
   // Resource problem
-  if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
+  /*if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
   game.player.cards["ramen"] < 1 || game.player.cards["book"] < 1) {
     alert("Insufficient amounts of resources!");
     return;
-  }
+  }*/
   var available = false;
   for (var i = 0; i < game.colleges.length; i++) {
     if (game.colleges[i].available) {
@@ -892,15 +892,15 @@ var checkBuyUniversity = function() {
   var checkKnightSpecial = function(){
     var current_max_army = 2;
     if(current_max_army_player == 0){
-      if(game_other_players[0].knights_count > current_max_army){
+      if(game_other.players[0].knights_count > current_max_army){
         current_max_army = game_other_players[0].knights_count;
         current_max_army_player = game_other_players[0].id;
       }
-      if(game_other_players[1].knights_count > current_max_army){
+      if(game_other.players[1].knights_count > current_max_army){
         current_max_army = game_other_players[1].knights_count;
         current_max_army_player = game_other_players[1].id;
       }
-      if(game_other_players[2].knights_count > current_max_army){
+      if(game_other.players[2].knights_count > current_max_army){
         current_max_army = game_other_players[2].knights_count;
         current_max_army_player = game_other_players[2].id;
       }
@@ -1170,9 +1170,10 @@ var checkBuyUniversity = function() {
   var turnChecks = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
-    // if (game.turn_number == game.player.id) {
-    //   game.fireEvent(new game.SetupTurnEvent());
-    // } else if (game.turn_number == game.player.id + 4) {
+    if (game.turn_number == game.player.id) {
+      game.fireEvent(new game.SetupTurnEvent());
+    }
+    //  else if (game.turn_number == game.player.id + 4) {
     //   game.fireEvent(new game.SetupTurnEvent());
     // } else
      if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
