@@ -550,6 +550,9 @@ var checkBuyUniversity = function() {
     }
   };
   var buyCard = function() {
+    game.player.cards["ram"]--;
+    game.player.cards["ramen"]--;
+    game.player.cards["basketball"]--;
     $.ajax({url:url_base + "SettlersOfCarolina.php/DevStacks/26",
       type: "GET",
       dataType: "json",
@@ -746,14 +749,14 @@ var checkBuyUniversity = function() {
     else{
       game.player.cards["volunteer"]--;
       alert("You volunteered for medical research to make extra cash. You may pick two cards to receive for your troubles.");
-      var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+      var first_card = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.").toUpperCase();
       while(!giveResourceCard(first_card)){
-        first_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        first_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.").toUpperCase();
       }
       updatePlayerInfo();
-      var second_card = prompt("Pick a second card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+      var second_card = prompt("Pick a second card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.").toUpperCase();
       while(!giveResourceCard(second_card)){
-        second_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        second_card = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.").toUpperCase();
       }
       updatePlayerInfo();
     }
@@ -885,7 +888,7 @@ var checkBuyUniversity = function() {
     });
     if(game.turn_number > 8){
       $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
-    }
+
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -916,6 +919,7 @@ var checkBuyUniversity = function() {
         }
       }
       updatePlayerInfo();
+    }
     }
   };
 
