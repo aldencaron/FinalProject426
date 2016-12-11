@@ -871,8 +871,9 @@ var checkBuyUniversity = function() {
     }
     // Is not a robber
     else {
-      // TODO this maybe does not work??
-      drawBoard(false, false, false, false, true, current_roll);
+      if(game.turn_number > 8){
+        drawBoard(false, false, false, false, true, current_roll);
+      }
       // Add cards
       for (var i = 0; i < game.player.colleges.length; i++) {
         for (var j = 0; j < game.player.colleges[i].tiles.length; j++) {
