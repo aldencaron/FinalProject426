@@ -585,8 +585,17 @@ exit();
                       print("Robber is is not given.");
                       exit();
                   }
-                  if (isset($_REQUEST['TileID']) && isset($_REQUEST['Robber']) ) {
-                      $Tile = Tile::create($new_TileID, $new_Robber);
+                  $new_Order = false;
+                  if (isset($_REQUEST['Order'])) {
+                      $new_Order = intval(trim($_REQUEST['Order']));
+                  } else {
+                      header("HTTP/1.0 400 Bad Request");
+                      print("Order is is not given.");
+                      exit();
+                  }
+                  if (isset($_REQUEST['TileID']) && isset($_REQUEST['Robber'])
+                && isset($_REQUEST['Order'])) {
+                      $Tile = Tile::create($new_TileID, $new_Robber, $new_Order);
                       if ($Tile == null) {
                           header("HTTP/1.0 500 Server Error");
                           print("Tile was not inserted");
@@ -608,12 +617,19 @@ exit();
           if(isset($_REQUEST['Robber'])){
             $new_Robber= intval(trim($_REQUEST['Robber']));
           }
+          $new_Order= false;
+          if(isset($_REQUEST['Order'])){
+            $new_Order= intval(trim($_REQUEST['Order']));
+          }
           //update via ORM
           if ($new_TileID != false) {
               $Tile->setTileID($new_TileID);
           }
           if($new_Robber != false){
             $Tile->setRobber($new_Robber);
+          }
+          if($new_Order != false){
+            $Tile->setOrder($new_Order);
           }
              //return json
             header("Content-type: application/json");

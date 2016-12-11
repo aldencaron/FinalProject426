@@ -651,6 +651,7 @@ class DevStack {
 class Tile {
   private $TileID;
   private $Robber;
+  private $Order;
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -659,10 +660,10 @@ class Tile {
           "naeimzdb");
   }
 
-  public function create($TileID, $Robber) {
+  public function create($TileID, $Robber, $Order) {
       $mysqli = Tile::connect();
       $res = $mysqli->query(
-          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber')"
+          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber', '$Order')"
       );
 
       if ($res) {} else {
@@ -670,7 +671,7 @@ class Tile {
           print($mysqli->error);
           exit();
       }
-      return new Tile($TileID, $Robber);
+      return new Tile($TileID, $Robber, $Order);
   }
 
   public static function findByID($TileID){
@@ -685,7 +686,8 @@ class Tile {
       else{
         $Tile_info = $result->fetch_array();
         return new Tile($Tile_info['TileID'],
-                           $Tile_info['Robber']);
+                           $Tile_info['Robber'],
+                            $Tile_info['Order']);
       }
     }
   return null;
@@ -707,7 +709,9 @@ class Tile {
 
   public function getJSON(){
   $json_obj = array('TileID' => $this->TileID,
-                     'Robber' => $this->Robber );
+                     'Robber' => $this->Robber,
+                      'Order' => $this ->Order);
+
   return json_encode($json_obj);
   }
 
@@ -721,6 +725,7 @@ class Tile {
           $json_sub = array();
           $json_sub['TileID'] = $row['TileID'];
           $json_sub['Robber'] = $row['Robber'];
+          $json_sub['Order'] = $row['Order'];
           $json[] = $json_sub;
       }
     }
@@ -731,7 +736,8 @@ class Tile {
     $mysqli= Tile::connect();
 
     $SQL = "Update Tiles set
-    Robber= $this->Robber
+    Robber= $this->Robber,
+    Order = $this->Order
     WHERE TileID = $TileID";
    $result= mysqli_query($mysqli, $SQL);
 
@@ -748,9 +754,13 @@ class Tile {
  private function __construct($TileID, $Robber){
  $this->TileID= $TileID;
  $this->Robber = $Robber;
+ $this->Order = $Order;
  }
  public function getTileID() {
      return $this->TileID;
+ }
+ public function getOrder(){
+      return $this->Order;
  }
  public function getRobber() {
      return $this->Robber;
@@ -758,6 +768,10 @@ class Tile {
   public function setTileID($TileID){
     $this->TileID = $TileID;
     return $this->update($this->TileID);
+  }
+  public function setOrder($TileID){
+    $this->Order = $Order;
+    return $this->update($this->Order);
   }
   public function setRobber($Robber){
     $this->Robber = $Robber;
