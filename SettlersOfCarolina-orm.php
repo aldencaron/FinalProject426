@@ -413,7 +413,7 @@ class College {
      PlayerID = $this->PlayerID,
      Available = $this->Available,
      University = $this->University
-     WHERE CollegeID = $CollegeID";
+     WHERE CollegeID = " . $CollegeID;
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -613,7 +613,7 @@ class DevStack {
 
     $SQL = "Update DevStacks set
     Card= $this->Card
-    WHERE DevID = $DevID";
+    WHERE DevID = " . $DevID;
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -1018,7 +1018,7 @@ class Player {
    SoldiersCount = $this->SoldiersCount,
    Points = $this->Points,
    HexColor = '$this->HexColor'
-   WHERE PlayerID = $PlayerID";
+   WHERE PlayerID = " . $PlayerID;
   $result= mysqli_query($mysqli, $SQL);
 
 
