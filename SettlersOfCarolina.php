@@ -223,7 +223,7 @@ exit();
           postTile();
         }
         else if($DBname=="DevStacks"){
-          postDevCardStack();
+          postDevStack();
         }
         else if($DBname=="Cards"){
           postCard();
@@ -624,14 +624,14 @@ exit();
     print("Did not understand URL");
 }
 
-function postDevCardStack(){
+function postDevStack(){
     global $path_components;
     if ((count($path_components) >= 3) &&
       ($path_components[2] != "")) {
         $DevID= intval($path_components[2]);
-        $DevCardStack = DevCardStack::findByID($DevID);
-        if($DevCardStack==null){
-            function createDevCardStack() {
+        $DevStack = DevStack::findByID($DevID);
+        if($DevStack==null){
+            function createDevStack() {
 
                 $new_DevID = false;
                 if (isset($_REQUEST['DevID'])) {
@@ -650,18 +650,18 @@ function postDevCardStack(){
                     exit();
                 }
                 if (isset($_REQUEST['DevID']) && isset($_REQUEST['Card']) ) {
-                    $DevCardStack= DevCardStack::create($new_DevID, $new_Card);
-                    if ($DevCardStack == null) {
+                    $DevStack= DevStack::create($new_DevID, $new_Card);
+                    if ($DevStack == null) {
                         header("HTTP/1.0 500 Server Error");
-                        print("DevCardStacks was not inserted");
+                        print("DevStacks was not inserted");
                         exit();
                     }
                     header("Content-type: application/json");
-                    print($DevCardStack->getJSON());
+                    print($DevStack->getJSON());
                     exit();
                 }
             }
-            createDevCardStack();
+            createDevStack();
         }
         //check which values to update
         $new_DevID = false;
@@ -674,14 +674,14 @@ function postDevCardStack(){
         }
         //update via ORM
         if ($new_DevID != false) {
-            $DevCardStack->setDevID($new_DevID);
+            $DevStack->setDevID($new_DevID);
         }
         if($new_Card != false){
-          $DevCardStack->setCard($new_Card);
+          $DevStack->setCard($new_Card);
         }
            //return json
           header("Content-type: application/json");
-          print($DevCardStack->getJSON());
+          print($DevStack->getJSON());
           exit();
     }
   header("HTTP/1.0 400 Bad Request");
