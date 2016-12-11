@@ -15,6 +15,7 @@ function RunGame() {
   var just_had_turn = false;
   var current_max_roads_player = 0;
   var current_max_army_player = 0;
+  var roads_cards = false;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -384,6 +385,24 @@ var buyRoad = function(event) {
       }
     }
     drawBoard(false, false, false, false, false, 0);
+    if(roads_card){
+      roads_card = false;
+      var available = false;
+      for (var i = 0; i < game.roads.length; i++) {
+        if (game.roads[i].available) {
+          available = true;
+        }
+      }
+      // Availability error
+      if (!available) {
+        alert("No more roads available!");
+      }
+      else{
+        alert("Pick a second road!");
+        var board_canvas = document.getElementById("board_canvas");
+        board_canvas.addEventListener('mousedown', buyRoad);
+      }
+    }
   }
 };
 var checkBuyCollege = function() {
@@ -538,16 +557,16 @@ var checkBuyUniversity = function() {
     }
   };
   var checkBuyCard = function() {
-    if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
+    /*if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
     game.player.cards["basketball"] < 1) {
       alert("Insufficient amounts of resources!");
     }
     else if(game.next_dev_card > 25){
       alert("No more development cards");
     }
-    else{
+    else{*/
       buyCard();
-    }
+    //}
   };
   var buyCard = function() {
     game.player.cards["ram"]--;
@@ -734,11 +753,25 @@ var checkBuyUniversity = function() {
       alert("You do not have a roads card!");
     }
     else{
-      game.player.cards["roads"]--;
-      alert("You receive 2 book cards and 2 brick cards with which to build 2 roads!");
-      game.player.cards["book"]+=2;
-      game.player.cards["brick"]+=2;
-      updatePlayerInfo();
+      var available = false;
+      for (var i = 0; i < game.roads.length; i++) {
+        if (game.roads[i].available) {
+          available = true;
+        }
+      }
+      // Availability error
+      if (!available) {
+        alert("No roads available at this time!");
+      }
+      else{
+        roads_card = true;
+        game.player.cards["roads"]--;
+        updatePlayerInfo();
+        alert("Place your first road!");
+        drawBoard(true, false, false, false, false, 0);
+        var board_canvas = document.getElementById("board_canvas");
+        board_canvas.addEventListener('mousedown', buyRoad);
+      }
     }
   }
 
