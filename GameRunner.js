@@ -323,6 +323,7 @@ else {
 }
 var buyRoad = function(event) {
   partial_turn_over = false;
+  var board_canvas = document.getElementById("board_canvas"); //TODO
   var rect = board_canvas.getBoundingClientRect();
   var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
   var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
@@ -344,10 +345,10 @@ var buyRoad = function(event) {
           data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
           },
-        error: function(jqXHR, status, error) {
+          error: function(jqXHR, status, error) {
           alert(jqXHR.responseText);
-        }
-        });
+          }
+          });
 
         drawBoard(false, false, false, false, false, 0);
       }
@@ -961,19 +962,19 @@ var checkBuyUniversity = function() {
     var current_max_army = 2;
     if(current_max_army_player == 0){
       if(game.other_players[0].knights_count > current_max_army){
-        current_max_army = game_other_players[0].knights_count;
-        current_max_army_player = game_other_players[0].id;
+        current_max_army = game.other_players[0].knights_count;
+        current_max_army_player = game.other_players[0].id;
       }
       if(game.other_players[1].knights_count > current_max_army){
-        current_max_army = game_other_players[1].knights_count;
-        current_max_army_player = game_other_players[1].id;
+        current_max_army = game.other_players[1].knights_count;
+        current_max_army_player = game.other_players[1].id;
       }
       if(game.other_players[2].knights_count > current_max_army){
-        current_max_army = game_other_players[2].knights_count;
-        current_max_army_player = game_other_players[2].id;
+        current_max_army = game.other_players[2].knights_count;
+        current_max_army_player = game.other_players[2].id;
       }
       if(game.player.used_knights > current_max_army){
-        current_max_army = game_other_players[0].knights_count;
+        current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
         game.player.point += 2;
         $("player_one_special_knights").text("LARGEST ARMY");
@@ -1145,7 +1146,7 @@ var checkBuyUniversity = function() {
       else{
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
-      game.tiles[tile_array[i]["TileID"] - 1].placement = tiles_array[i]["Placement"];
+      game.tiles[tiles_array[i]["TileID"] - 1].placement = tiles_array[i]["Placement"];
     }
     if(game.turn_number < 9){
       drawBoard(false, false, false, false, false, 0);
