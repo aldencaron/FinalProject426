@@ -973,7 +973,7 @@ var checkBuyUniversity = function() {
     var current_max_army = 2;
     console.log("current max player at top:" + current_max_army_player);
     if(current_max_army_player == 0){
-      console.log("player 0 has knights count: " + game.other_players[0].knight_count);
+      console.log("player 0 has knights count: " + game.other_players[0].knights_count);
       console.log("own player has knights: " + game.player.used_knights);
       if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
@@ -990,16 +990,16 @@ var checkBuyUniversity = function() {
       if(game.player.used_knights > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
-        game.player.point += 2;
+        game.player.points += 2;
         $("#player_one_special_knights").text("LARGEST ARMY");
       }
-      if(current_max_army_player == game.other_players[0]){
+      if(current_max_army_player == game.other_players[0].id){
         $("#player_two_special_knights").text("LARGEST ARMY");
       }
-      if(current_max_army_player == game.other_players[1]){
+      if(current_max_army_player == game.other_players[1].id){
         $("#player_three_special_knights").text("LARGEST ARMY");
       }
-      if(current_max_army_player == game.other_players[2]){
+      if(current_max_army_player == game.other_players[2].id){
         $("#player_four_special_knights").text("LARGEST ARMY");
       }
     }
@@ -1175,7 +1175,7 @@ var checkBuyUniversity = function() {
       for(var j = 0; j < players_array.length; j++){
         if(game.other_players[i].id == players_array[j]["PlayerID"]){
           game.other_players[i].username = players_array[j]["Username"];
-          game.other_players[i].knights_count = parseInt(players_array[j]["SoildersCount"]);
+          game.other_players[i].knights_count = players_array[j]["SoldiersCount"];
           game.other_players[i].points = players_array[j]["Points"];
           game.other_players[i].color = "#" + players_array[j]["HexColor"];
         }
