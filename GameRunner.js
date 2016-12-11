@@ -999,6 +999,7 @@ var checkBuyUniversity = function() {
           game.other_players[i].username = players_array[j]["Username"];
           game.other_players[i].knights_count = players_array[j]["SolidersCount"];
           game.other_players[i].points = players_array[j]["Points"];
+          game.other_players[i].color = "#" + players_array[j]["HexColor"];
         }
       }
     }
@@ -1273,17 +1274,31 @@ var checkBuyUniversity = function() {
       });
     }
   }
+  $.ajax({url: url_base + "SettlersOfCarolina.php/Players/getAll",
+    type:"GET",
+    dataType: "json",
+    async: false,
+    success: function(players_array, status, jqXHR) {
+      updateOtherPlayers_Players(players_array);
+    },
+    error: function(jqXHR, status, error) {
+      console.log("Problem updating PLAYERS");
+    }
+  });
+  updateOtherPlayers_Players();
   // Set up colors
-  var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
+  //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
   // Assign other players ids based on own id
   for(var i = 0; i < game.other_players.length; i++){
     game.other_players[i].id = game.player.id + i + 1;
     if(game.other_players[i].id > 4){
       game.other_players[i].id -= 4;
     }
-    game.other_players[i].color = colors[game.other_players[i].id % 4]
+    //game.other_players[i].color = colors[game.other_players[i].id % 4]
   }
-  game.player.color = colors[game.player.id % 4];
+  //game.player.color = colors[game.player.id % 4];
+  game.player.color = color;
+
   $("#player_one").css("background-color", game.player.color);
   $("#player_two").css("background-color", game.other_players[0].color);
   $("#player_three").css("background-color", game.other_players[1].color);
