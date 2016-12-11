@@ -1253,21 +1253,21 @@ var checkBuyUniversity = function() {
                 game.turn_number = turn;
                 my_turn = true;
                 $("#current_turn").text("Currently your turn!");
-                $("#turn_panel").css("background-color", game.player.color);
+                $("#turn_info").css("background-color", game.player.color);
                 turnChecks();
               }
               else if(game.turn_number + 1 == turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[0].color);
+                  $("#turn_info").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[1].color);
+                  $("#turn_info").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[2].color);
+                  $("#turn_info").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();
@@ -1275,15 +1275,15 @@ var checkBuyUniversity = function() {
               else if(just_had_turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[0].color);
+                  $("#turn_info").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[1].color);
+                  $("#turn_info").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
-                  $("#turn_panel").css("background-color", game.other_players[2].color);
+                  $("#turn_info").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();
