@@ -1056,11 +1056,12 @@ var checkBuyUniversity = function() {
   var turnChecks = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
-    if (game.turn_number == game.player.id) {
-      game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number == game.player.id + 4) {
-      game.fireEvent(new game.SetupTurnEvent());
-    } else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
+    // if (game.turn_number == game.player.id) {
+    //   game.fireEvent(new game.SetupTurnEvent());
+    // } else if (game.turn_number == game.player.id + 4) {
+    //   game.fireEvent(new game.SetupTurnEvent());
+    // } else
+     if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
@@ -1177,7 +1178,7 @@ var checkBuyUniversity = function() {
             }
           });
         }
-      }, 100);
+      }, 1000);
     }
   }
   // Initialize game

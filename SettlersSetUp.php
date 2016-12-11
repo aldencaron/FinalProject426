@@ -103,7 +103,8 @@ for($i = 0; $i <= 54; $i++){
   mysqli_query($mysqli, $SQL);
   // Load with dice rolls
   for($i = 0; $i <= 1000; $i++){
-    $r = rand(1, 6) + rand(1, 6);
+    //$r = rand(1, 6) + rand(1, 6);
+    $r = 7;
     $SQL = "Insert into DiceRolls (DiceID, RollResult)
     Values ($i, $r)";
       mysqli_query($mysqli, $SQL);

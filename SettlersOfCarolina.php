@@ -1,13 +1,6 @@
 <?php
 require_once('SettlersOfCarolina-orm.php');
-//NUMBER ONE: Get Multiple People in One Game
-//we need function to update/get cards
-//to get/update roads
-//To get/update colleges
-//To find/set robber
-//Get and update Player Information.
-//Classes: Player, Road, Tile, Card, College
-//Get/SettlersofCarolina/Cards/PlayerID and POST/SettlersofCarolina/Cards/PlayerID
+
 global $path_components;
 
  $path_components= explode('/', $_SERVER['PATH_INFO']);
@@ -207,12 +200,15 @@ exit();
           postDiceRoll();
         }
         else if($DBname== 'Turns'){
-          if ($path_components[2] == "gameover") {
-            $Turn = Turn::gameOver();
-            if($Turn == null){
-              header("HTTP/1.0 404 Not Found");
-              print("gameover failed.");
-              exit();
+          if(count($path_components)>=3 &&
+            $path_components!=""){
+            if ($path_components[2] == "gameover") {
+              $Turn = Turn::gameOver();
+              if($Turn == null){
+                header("HTTP/1.0 404 Not Found");
+                print("gameover failed.");
+                exit();
+              }
             }
           }
         $Turn = Turn::create();
@@ -578,7 +574,7 @@ exit();
               $new_TileID = intval(trim($_REQUEST['TileID']));
           }
           $new_Robber=false;
-          if(isset($_REQUEST["Robber"])){
+          if(isset($_REQUEST['Robber'])){
             $new_Robber= intval(trim($_REQUEST['Robber']));
           }
           //update via ORM
