@@ -1280,6 +1280,17 @@ var checkBuyUniversity = function() {
       });
     }
   }
+
+  // Set up colors
+  //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
+  // Assign other players ids based on own id
+  for(var i = 0; i < game.other_players.length; i++){
+    game.other_players[i].id = game.player.id + i + 1;
+    if(game.other_players[i].id > 4){
+      game.other_players[i].id -= 4;
+    }
+    //game.other_players[i].color = colors[game.other_players[i].id % 4]
+  }
   $.ajax({url: url_base + "SettlersOfCarolina.php/Players/getAll",
     type:"GET",
     dataType: "json",
@@ -1291,18 +1302,8 @@ var checkBuyUniversity = function() {
       console.log("Problem updating PLAYERS");
     }
   });
-  // Set up colors
-  //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
-  // Assign other players ids based on own id
-  for(var i = 0; i < game.other_players.length; i++){
-    game.other_players[i].id = game.player.id + i + 1;
-    if(game.other_players[i].id > 4){
-      game.other_players[i].id -= 4;
-    }
-    //game.other_players[i].color = colors[game.other_players[i].id % 4]
-  }
   //game.player.color = colors[game.player.id % 4];
-  game.player.color = color;
+  game.player.color = "#" + color;
 
   $("#player_one").css("background-color", game.player.color);
   $("#player_two").css("background-color", game.other_players[0].color);
