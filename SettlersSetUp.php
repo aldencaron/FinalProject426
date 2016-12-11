@@ -134,10 +134,14 @@ for( $i = 1; $i <27 ; $i++){
   if($i==26){
     $SQL= "Insert into DevStacks (DevID, Card)
      Values ($i, 1)";
+     mysqli_query($mysqli, $SQL);
+
   }
+  else{
   $SQL= "Insert into DevStacks (DevID, Card)
-   Values ($i," . $array[$i] . ")";
+   Values ($i," . $array[$i-1] . ")";
   mysqli_query($mysqli, $SQL);
+}
 }
 
 
