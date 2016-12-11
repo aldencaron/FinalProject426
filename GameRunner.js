@@ -963,7 +963,6 @@ var checkBuyUniversity = function() {
   }
 
   var getLongestContinuousRoads = function(player){
-    for()
   }
 
   var checkRoadsSpecial = function(){
