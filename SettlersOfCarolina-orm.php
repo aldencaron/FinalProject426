@@ -904,6 +904,7 @@ class Player {
   private $RoadsCount;
   private $SoldiersCount;
   private $Points;
+  private $HexColor;
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -913,11 +914,11 @@ class Player {
   }
 
   public function create($PlayerID, $Username, $RoadsCount,
-  $SoldiersCount, $Points) {
+  $SoldiersCount, $Points, $HexColor) {
       $mysqli = Player::connect();
       $res = $mysqli->query(
           "INSERT INTO Players VAlUES('$PlayerID', '$Username',
-          '$RoadsCount', '$SoldiersCount', '$Points')"
+          '$RoadsCount', '$SoldiersCount', '$Points', '$HexColor')"
       );
 
       if ($res) {} else {
@@ -926,7 +927,7 @@ class Player {
           exit();
       }
 
-      return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points);
+      return new Player($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points, $HexColor);
   }
 
   public static function findByID($PlayerID){
@@ -944,7 +945,8 @@ class Player {
                            $Player_info['Username'],
                            $Player_info['RoadsCount'],
                            $Player_info['SoldiersCount'],
-                           $Player_info['Points']);
+                           $Player_info['Points']
+                           $Player_info['HexColor']);
       }
     }
   return null;
@@ -969,7 +971,8 @@ class Player {
                     'Username' => $this->Username,
                     'RoadsCount' => $this->RoadsCount,
                     'SoldiersCount' => $this->SoldiersCount,
-                    'Points' => $this->Points );
+                    'Points' => $this->Points,
+                    'HexColor' => $this->HexColor);
   return json_encode($json_obj);
   }
 
@@ -985,6 +988,7 @@ class Player {
           $json_sub['RoadsCount'] = $row['RoadsCount'];
           $json_sub['SoldiersCount'] = $row['SoldiersCount'];
           $json_sub['Points'] = $row['Points'];
+          $json_sub['HexColor'] = $row['HexColor']
           $json[] = $json_sub;
       }
       return json_encode($json);
@@ -997,7 +1001,8 @@ class Player {
    Username = '$this->Username',
    RoadsCount = $this->RoadsCount,
    SoldiersCount = $this->SoldiersCount,
-   Points = $this->Points
+   Points = $this->Points,
+   HexColor = $this->HexColor
    WHERE PlayerID = $PlayerID";
   $result= mysqli_query($mysqli, $SQL);
 
@@ -1011,12 +1016,13 @@ class Player {
     return $result;
   }
 
-private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points){
+private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, $Points, $HexColor){
     $this->PlayerID= $PlayerID;
     $this->Username= $Username;
     $this->RoadsCount= $RoadsCount;
     $this->SoldiersCount= $SoldiersCount;
     $this->Points= $Points;
+    $this->HexColor = $HexColor;
 }
 
   public function getPlayerID(){
@@ -1037,6 +1043,9 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
 
   public function getPoints(){
     return $this->Points;
+  }
+  public function getHexColor(){
+    return $this->HexColor;
   }
 
   public function setPlayerID($PlayerID){
@@ -1062,6 +1071,11 @@ private function __construct($PlayerID, $Username, $RoadsCount, $SoldiersCount, 
   public function setPoints($Points){
     $this->Points = $Points;
     return $this->update($this->PlayerID);
+  }
+
+  public function setHexColor($HexColor){
+    $this->HexColor = $HexColor;
+    return $this->update($this->HexColor);
   }
 
 }
