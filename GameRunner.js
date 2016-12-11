@@ -1291,7 +1291,6 @@ var checkBuyUniversity = function() {
       console.log("Problem updating PLAYERS");
     }
   });
-  updateOtherPlayers_Players();
   // Set up colors
   //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
   // Assign other players ids based on own id
