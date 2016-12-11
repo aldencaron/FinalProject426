@@ -309,7 +309,7 @@ exit();
 
                   $new_HexColor = false;
                   if (isset($_REQUEST['HexColor'])) {
-                      $new_HexColor = intval(trim($_REQUEST['HexColor']));
+                      $new_HexColor = trim($_REQUEST['HexColor']);
                   }
                   // else {
                   //     header("HTTP/1.0 400 Bad HexColor Request");
@@ -364,7 +364,7 @@ exit();
           }
           $new_HexColor = false;
           if (isset($_REQUEST['HexColor'])) {
-              $new_HexColor = intval(trim($_REQUEST['HexColor']));
+              $new_HexColor = trim($_REQUEST['HexColor']);
           }
           //update via ORM
           if ($new_PlayerID != false) {
