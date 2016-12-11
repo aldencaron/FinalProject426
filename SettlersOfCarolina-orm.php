@@ -613,7 +613,7 @@ class DevStack {
 
     $SQL = "Update DevStacks set
     Card= $this->Card
-    WHERE DevID = $DevID";
+    WHERE DevID = '$DevID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -738,7 +738,7 @@ class Tile {
     $SQL = "Update Tiles set
     Robber= $this->Robber,
     Placement = $this->Placement
-    WHERE TileID = $TileID";
+    WHERE TileID = '$TileID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
@@ -867,7 +867,7 @@ class Road{
      "Update Roads set
      PlayerID = $this->PlayerID,
      Available = $this->Available
-     WHERE RoadID = $RoadID";
+     WHERE RoadID = '$RoadID'";
     $result= mysqli_query($mysqli, $SQL);
 
     if ($result == false) {
@@ -1177,7 +1177,7 @@ class DiceRoll {
 
     $SQL = "Update DiceRolls set
     RollResult= $this->RollResult
-    WHERE DiceID = $DiceID";
+    WHERE DiceID = '$DiceID'";
    $result= mysqli_query($mysqli, $SQL);
 
    if ($result == false) {
