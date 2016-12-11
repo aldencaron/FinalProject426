@@ -1175,7 +1175,7 @@ var checkBuyUniversity = function() {
       for(var j = 0; j < players_array.length; j++){
         if(game.other_players[i].id == players_array[j]["PlayerID"]){
           game.other_players[i].username = players_array[j]["Username"];
-          game.other_players[i].knights_count = parseInt(players_array[j]["SolidersCount"]);
+          game.other_players[i].knights_count = parseInt(players_array[j]["SoildersCount"]);
           game.other_players[i].points = players_array[j]["Points"];
           game.other_players[i].color = "#" + players_array[j]["HexColor"];
         }

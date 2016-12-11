@@ -1,22 +1,10 @@
-================================================================================
-SHELLY & NAEIM
-================================================================================
-
-Load tile and development card arrays in the setup PHP file
-Need a second column in DevCardStacks and Tiles
-
-
-================================================================================
-ALDEN & MAX
-================================================================================
-
 Aesthetics - general, trading, monopoly
-Robber disappears on first turn
-Cannot use more than 2 knights?
-Could have better road development card
+Trading - Naeim
 Monopoly needs server integration
-Add in special points
 Randomize development card and tile array
+Knights does not update properly - Alden
+Write roads algorithm - Shelly
+Robber is not updating properly - Alden/Max
 
 Optional!
 Ports
