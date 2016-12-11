@@ -115,6 +115,13 @@ $SQL = "Create Table DevStacks (
   Card int)";
   mysqli_query($mysqli, $SQL);
 
+for( $i = 1; $i <27 ; $i++){
+  $SQL= "Insert into DevStacks (DevID, Card)
+   Values ($i, 1)";
+  mysqli_query($mysqli, $SQL);
+}
+
+
 
 $SQL = "Create Table Turns (
   TurnID int primary key not null auto_increment)";

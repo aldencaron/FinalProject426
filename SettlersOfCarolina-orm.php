@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 //Classes: Player, Road, Tile, Card, College
@@ -33,6 +32,7 @@ class Card {
 
   private function update($PlayerID) {
     $mysqli= Card::connect();
+
 
     $SQL = "Update Cards set
     Ram = $this->Ram,
@@ -1004,7 +1004,7 @@ class Player {
    SoldiersCount = $this->SoldiersCount,
    Points = $this->Points,
    HexColor = $this->HexColor
-   WHERE PlayerID = $PlayerID";
+   WHERE PlayerID = '$PlayerID'";
   $result= mysqli_query($mysqli, $SQL);
 
 
