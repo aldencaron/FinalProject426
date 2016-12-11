@@ -550,7 +550,7 @@ var checkBuyUniversity = function() {
     }
   };
   var buyCard = function() {
-    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStack/26",
+    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStacks/26",
       type: "GET",
       dataType: "json",
       async: false,
@@ -566,7 +566,7 @@ var checkBuyUniversity = function() {
     var card = game.dev_cards[game.next_dev_card];
     game.next_dev_card++;
 
-    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStack/26",
+    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStacks/26",
       type: "POST",
       dataType: "json",
       async: false,
