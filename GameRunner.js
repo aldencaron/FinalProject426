@@ -880,7 +880,7 @@ var checkBuyUniversity = function() {
   };
 
 
-  var checkRoadsSpecial(){
+  var checkRoadsSpecial = function(){
     var max_roads = 2;
 
   }
