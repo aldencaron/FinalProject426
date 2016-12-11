@@ -736,7 +736,7 @@ class Tile {
     $mysqli= Tile::connect();
 
     $SQL = "Update Tiles set
-    Robber= $this->Robber,
+    Robber = $this->Robber,
     Placement = $this->Placement
     WHERE TileID = $TileID";
    $result= mysqli_query($mysqli, $SQL);
