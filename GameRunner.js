@@ -1420,7 +1420,7 @@ var checkBuyUniversity = function() {
   }
   // Initialize game
   // CAN DO WITH PARAMETERS AND HAVE EVERYONE START THE SAME GAME
-  var tiles_array = [4, 1, 2, 17, 0, 5, 11, 7, 12, 9, 10, 15, 12, 13, 14, 8, 16, 3, 18];
+  var tiles_array = [4, 1, 2, 17, 0, 5, 11, 7, 12, 9, 10, 15, 12, 13, 14, 18, 16, 3, 8];
   var dev_array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
   var game = new SettlersGame(tiles_array, dev_array);
   game.startGame();
