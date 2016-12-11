@@ -584,7 +584,7 @@ exit();
                       print("Robber is is not given.");
                       exit();
                   }
-                  if (isset($_REQUEST['TileID'] && isset($_REQUEST['Robber']) ) {
+                  if (isset($_REQUEST['TileID']) && isset($_REQUEST['Robber']) ) {
                       $Tile = Tile::create($new_TileID, $new_Robber);
                       if ($Tile == null) {
                           header("HTTP/1.0 500 Server Error");
