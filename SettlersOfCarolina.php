@@ -222,7 +222,7 @@ exit();
         else if($DBname=="Tiles"){
           postTile();
         }
-        else if($DBname=="DevCardStacks"){
+        else if($DBname=="DevStacks"){
           postDevCardStack();
         }
         else if($DBname=="Cards"){
