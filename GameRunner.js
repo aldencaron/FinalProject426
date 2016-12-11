@@ -386,6 +386,7 @@ var buyRoad = function(event) {
       }
     }
     drawBoard(false, false, false, false, false, 0);
+    console.log("roads_card: " + roads_card);
     if(roads_card){
       roads_card = false;
       var available = false;
@@ -396,6 +397,7 @@ var buyRoad = function(event) {
       }
       // Availability error
       if (!available) {
+        console.log("availability error for some reason");
         alert("No more roads available!");
       }
       else{
