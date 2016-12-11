@@ -603,7 +603,7 @@ exit();
           if (isset($_REQUEST["TileID"])) {
               $new_TileID = intval(trim($_REQUEST['TileID']));
           }
-          $new_Robber="false";
+          $new_Robber= false;
           if(isset($_REQUEST['Robber'])){
             $new_Robber= intval(trim($_REQUEST['Robber']));
           }
