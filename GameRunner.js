@@ -1187,7 +1187,11 @@ var checkBuyUniversity = function() {
   var turnChecks = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
-    if (game.turn_number == game.player.id) {
+    if(game.turn_number >= 10000){
+      alert("Game over!");
+      document.body.innerHTML="";
+    }
+    else if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
     }
     else if (game.turn_number == game.player.id + 4) {
@@ -1262,7 +1266,7 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
-              if(turn == 10000){
+              if(turn >= 10000){
                 //TODO more here
                 alert("Game over!");
                 document.body.innerHTML = "";
