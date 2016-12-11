@@ -19,7 +19,7 @@ mysqli_query($mysqli, $SQL);
 
 $SQL = "drop table if exists DiceRolls";
 mysqli_query($mysqli, $SQL);
-$SQL = "drop table if exists DevCardStack";
+$SQL = "drop table if exists DevCardStacks";
 mysqli_query($mysqli, $SQL);
 
 $SQL = "drop table if exists Turns";
@@ -114,6 +114,8 @@ $SQL = "Create Table DevCardStacks (
   DevID int primary key not null auto_increment,
   Order int)";
   mysqli_query($mysqli, $SQL);
+  print("DevCardStacks table success");
+
 
 $SQL = "Create Table Turns (
   TurnID int primary key not null auto_increment)";
