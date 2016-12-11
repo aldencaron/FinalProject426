@@ -980,6 +980,7 @@ class Player {
       $result = $mysqli->query("SELECT * FROM Players");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['PlayerID'] = $row['PlayerID'];
@@ -992,6 +993,7 @@ class Player {
       }
       return json_encode($json);
   }
+}
 
  private function update($PlayerID) {
    $mysqli= Player::connect();
@@ -1147,12 +1149,14 @@ class DiceRoll {
       $result = $mysqli->query("SELECT * FROM DiceRolls");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['DiceID'] = $row['DiceID'];
           $json_sub['RollResult'] = $row['RollResult'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 
