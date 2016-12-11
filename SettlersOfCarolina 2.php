@@ -92,6 +92,34 @@ global $path_components;
         exit();
     }
   }
+  else if($path_components[1]=="DevCardStacks"){
+    if($path_components[2]!="" &&
+  count($path_components) >= 3){
+    if($path_components[2]=='getAll'){
+      header("Content-type: application/json");
+      print(DevCardStack::getALLJSON());
+      exit();
+    }
+      $DevID= intval($path_components[2]);
+      $DevCardStack_Info = DevCardStack::findByID($DevID);
+      if ($DevCardStack_Info == null) {
+        // not found.
+        header("HTTP/1.0 404 Not Found");
+        print("Dev id: " . $DevCardStack_info . " not found.");
+        exit();
+      }
+      header("Content-type: application/json");
+      print($DevCardStack_Info->getJSON());
+      exit();
+    }
+    else{
+      // no ID, try returning all IDs.
+      //TODO implement .getAllIDs
+      header("Content-type: application/json");
+      print(json_encode(DevCardStack::getAllIDs()));
+      exit();
+    }
+  }
   else if($path_components[1]=="Tiles"){
     if($path_components[2]!="" &&
   count($path_components) >= 3){
@@ -117,35 +145,6 @@ global $path_components;
       //TODO implement .getAllIDs
       header("Content-type: application/json");
       print(json_encode(Tile::getAllIDs()));
-      exit();
-    }
-  }
-
-  else if($path_components[1]=="DevStacks"){
-    if($path_components[2]!="" &&
-  count($path_components) >= 3){
-    if($path_components[2]=='getAll'){
-      header("Content-type: application/json");
-      print(DevStack::getALLJSON());
-      exit();
-    }
-      $DevID= intval($path_components[2]);
-      $DevStack_Info = DevStack::findByID($DevID);
-      if ($DevStack_Info == null) {
-        // not found.
-        header("HTTP/1.0 404 Not Found");
-        print("Dev id: " . $DevStack_info . " not found.");
-        exit();
-      }
-      header("Content-type: application/json");
-      print($DevStack_Info->getJSON());
-      exit();
-    }
-    else{
-      // no ID, try returning all IDs.
-      //TODO implement .getAllIDs
-      header("Content-type: application/json");
-      print(json_encode(DevStack::getAllIDs()));
       exit();
     }
   }
@@ -622,70 +621,6 @@ exit();
       }
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
-}
-
-function postDevCardStack(){
-    global $path_components;
-    if ((count($path_components) >= 3) &&
-      ($path_components[2] != "")) {
-        $DevID= intval($path_components[2]);
-        $DevCardStack = DevCardStack::findByID($DevID);
-        if($DevCardStack==null){
-            function createDevCardStack() {
-
-                $new_DevID = false;
-                if (isset($_REQUEST['DevID'])) {
-                    $new_DevID = intval(trim($_REQUEST['DevID']));
-                } else {
-                    header("HTTP/1.0 400 Bad Request");
-                    print("DevID is is not given.");
-                    exit();
-                }
-                $new_Card = false;
-                if (isset($_REQUEST['Card'])) {
-                    $new_Card = intval(trim($_REQUEST['Card']));
-                } else {
-                    header("HTTP/1.0 400 Bad Request");
-                    print("Card is is not given.");
-                    exit();
-                }
-                if (isset($_REQUEST['DevID']) && isset($_REQUEST['Card']) ) {
-                    $DevCardStack= DevCardStack::create($new_DevID, $new_Card);
-                    if ($DevCardStack == null) {
-                        header("HTTP/1.0 500 Server Error");
-                        print("DevCardStacks was not inserted");
-                        exit();
-                    }
-                    header("Content-type: application/json");
-                    print($DevCardStack->getJSON());
-                    exit();
-                }
-            }
-            createDevCardStack();
-        }
-        //check which values to update
-        $new_DevID = false;
-        if (isset($_REQUEST["DevID"])) {
-            $new_DevID = intval(trim($_REQUEST['DevID']));
-        }
-        $new_Card= false;
-        if(isset($_REQUEST['Card'])){
-          $new_Card= intval(trim($_REQUEST['Card']));
-        }
-        //update via ORM
-        if ($new_DevID != false) {
-            $DevCardStack->setDevID($new_DevID);
-        }
-        if($new_Card != false){
-          $DevCardStack->setCard($new_Card);
-        }
-           //return json
-          header("Content-type: application/json");
-          print($DevCardStack->getJSON());
-          exit();
-    }
-  header("HTTP/1.0 400 Bad Request");
-  print("Did not understand URL");
 }
   function postCard(){
       global $path_components;

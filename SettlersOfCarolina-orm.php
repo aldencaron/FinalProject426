@@ -528,10 +528,9 @@ class Turn{
   return json_encode($json_obj);
   }
 }
-
-class DevCardStack {
+class DevStack {
   private $DevID;
-  private $Order;
+  private $Card;
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -540,10 +539,10 @@ class DevCardStack {
           "naeimzdb");
   }
 
-  public function create($DevID, $Order) {
-      $mysqli = DevCardStack::connect();
+  public function create($DevID, $Card) {
+      $mysqli = DevStack::connect();
       $res = $mysqli->query(
-          "INSERT INTO DevCardStacks VAlUES ('$DevID', '$Order')"
+          "INSERT INTO DevStacks VAlUES ('$DevID', '$Card')"
       );
 
       if ($res) {} else {
@@ -551,12 +550,12 @@ class DevCardStack {
           print($mysqli->error);
           exit();
       }
-      return new DevCardStack($DevID, $Order);
+      return new DevStack($DevID, $Card);
   }
 
   public static function findByID($DevID){
-    $mysqli= DevCardStack::connect();
-    $SQL= "Select * from DevCardStacks where DevID = $DevID ";
+    $mysqli= DevStack::connect();
+    $SQL= "Select * from DevStacks where DevID = $DevID ";
     $result= mysqli_query($mysqli, $SQL);
 
     if($result){
@@ -564,17 +563,17 @@ class DevCardStack {
         return null;
       }
       else{
-        $DevCardStack_info = $result->fetch_array();
-        return new DevCardStack($DevCardStack_info['DevID'],
-                           $DevCardStack_info['Order']);
+        $DevStack_info = $result->fetch_array();
+        return new DevStack($DevStack_info['DevID'],
+                           $DevStack_info['Card']);
       }
     }
   return null;
   }
 
   public static function getAllIDs() {
-    $mysqli = DevCardStack::connect();
-    $SQL = "Select DevID from Tiles where 1";
+    $mysqli = DevStack::connect();
+    $SQL = "Select DevID from DevStacks where 1";
     $result= mysqli_query($mysqli, $SQL);
     $id_array = array();
 
@@ -588,20 +587,20 @@ class DevCardStack {
 
   public function getJSON(){
   $json_obj = array('DevID' => $this->DevID,
-                     'Order' => $this->Order );
+                     'Card' => $this->Card );
   return json_encode($json_obj);
   }
 
   public static function getAllJSON() {
-      $mysqli = DevCardStack::connect();
-      $result = $mysqli->query("SELECT * FROM DevCardStacks");
+      $mysqli = DevStack::connect();
+      $result = $mysqli->query("SELECT * FROM DevStacks");
 
       $json = array();
       if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['DevID'] = $row['DevID'];
-          $json_sub['Order'] = $row['Order'];
+          $json_sub['Card'] = $row['Card'];
           $json[] = $json_sub;
       }
     }
@@ -609,10 +608,10 @@ class DevCardStack {
   }
 
   private function update($DevID) {
-    $mysqli= DevCardStack::connect();
+    $mysqli= DevStack::connect();
 
-    $SQL = "Update DevCardStacks set
-    Order= $this->Order
+    $SQL = "Update DevStacks set
+    Card= $this->Card
     WHERE DevID = $DevID";
    $result= mysqli_query($mysqli, $SQL);
 
@@ -626,25 +625,27 @@ class DevCardStack {
    return $result;
   }
 
- private function __construct($DevID, $Order){
+ private function __construct($DevID, $Card){
  $this->DevID= $DevID;
- $this->Robber = $Robber;
+ $this->Card = $Card;
  }
  public function getDevID() {
      return $this->DevID;
  }
- public function getOrder() {
-     return $this->Order;
+ public function getCard() {
+     return $this->Card;
   }
   public function setDevID($DevID){
     $this->DevID = $DevID;
     return $this->update($this->DevID);
   }
-  public function setOrder($Order){
-    $this->Order = $Order;
+  public function setCard($Card){
+    $this->Card = $Card;
     return $this->update($this->DevID);
   }
+
 }
+
 
 class Tile {
   private $TileID;
