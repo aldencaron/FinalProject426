@@ -1039,7 +1039,7 @@ var checkBuyUniversity = function() {
   }
   var updateTiles = function(tiles_array){
     for(var i = 0; i < tiles_array.length; i++){
-      if(tiles_array[i]["Robber"] == 2){
+      if(parseInt(tiles_array[i]["Robber"]) == 2){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
       }
       else{
