@@ -113,9 +113,9 @@ for($i = 0; $i <= 54; $i++){
 
 $SQL = "Create Table DevCardStacks (
   DevID int primary key not null auto_increment,
-  Order int)";
+  `Order` int)";
   mysqli_query($mysqli, $SQL);
-  print("DevCardStacks table success");
+
 
 
 $SQL = "Create Table Turns (
