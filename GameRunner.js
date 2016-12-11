@@ -578,7 +578,6 @@ var checkBuyUniversity = function() {
       dataType: "json",
       async: false,
       success: function(dev_stack_json, status, jqXHR) {
-        console.log("Got card.");
         game.next_dev_card = parseInt(dev_stack_json["Card"]) - 1;
       },
       error: function(jqXHR, status, error) {
@@ -595,7 +594,6 @@ var checkBuyUniversity = function() {
       async: false,
       data: "DevID=26&Card=" + (game.next_dev_card+1),
       success: function(College_json, status, jqXHR) {
-        console.log("Posted card.");
       },
       error: function(jqXHR, status, error) {
       alert(jqXHR.responseText);
@@ -648,7 +646,6 @@ var checkBuyUniversity = function() {
   var updateOtherPlayerInfo = function() {
     $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
-    console.log("Player something points: " + game.other_players[0].points);
     $('#player_two_points').text("Points: " + game.other_players[0].points);
     $('#player_three_username').text(game.other_players[1].username);
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
@@ -963,6 +960,7 @@ var checkBuyUniversity = function() {
     console.log("current max player at top:" + current_max_army_player);
     if(current_max_army_player == 0){
       console.log("player 0 has knights count: " + game.other_players[0].knight_count);
+      console.log("own player has knights: " + game.player.used_knights);
       if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.other_players[0].id;
@@ -979,23 +977,23 @@ var checkBuyUniversity = function() {
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
         game.player.point += 2;
-        $("player_one_special_knights").text("LARGEST ARMY");
+        $("#player_one_special_knights").text("LARGEST ARMY");
       }
       if(current_max_army_player == game.other_players[0]){
-        $("player_two_special_knights").text("LARGEST ARMY");
+        $("#player_two_special_knights").text("LARGEST ARMY");
       }
       if(current_max_army_player == game.other_players[1]){
-        $("player_three_special_knights").text("LARGEST ARMY");
+        $("#player_three_special_knights").text("LARGEST ARMY");
       }
       if(current_max_army_player == game.other_players[2]){
-        $("player_four_special_knights").text("LARGEST ARMY");
+        $("#player_four_special_knights").text("LARGEST ARMY");
       }
     }
     else{
-      $("player_one_special_knights").text("");
-      $("player_two_special_knights").text("");
-      $("player_three_special_knights").text("");
-      $("player_four_special_knights").text("");
+      $("#player_one_special_knights").text("");
+      $("#player_two_special_knights").text("");
+      $("#player_three_special_knights").text("");
+      $("#player_four_special_knights").text("");
 
       var old_max_army_player = current_max_army_player;
       if(game.other_players[0].knights_count > current_max_army){
@@ -1017,20 +1015,20 @@ var checkBuyUniversity = function() {
         current_max_army_player = game.player.id;
         if(old_max_army_player != game.player.id){
           game.player.points += 2;
-          $("player_one_special_knights").text("LARGEST ARMY");
+          $("#player_one_special_knights").text("LARGEST ARMY");
         }
       }
       if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
         game.player.points -= 2;
       }
       if(current_max_army_player == game.other_players[0].id){
-        $("player_two_special_knights").text("");
+        $("#player_two_special_knights").text("");
       }
       if(current_max_army_player == game.other_players[1].id){
-        $("player_three_special_knights").text("");
+        $("#player_three_special_knights").text("");
       }
       if(current_max_army_player == game.other_players[2].id){
-        $("player_four_special_knights").text("");
+        $("#player_four_special_knights").text("");
       }
     }
   }
@@ -1089,8 +1087,6 @@ var checkBuyUniversity = function() {
     if(current_max_roads > 3){
 
     }
-
-
   }
 
   var updateRoads = function(roads_array){
@@ -1165,7 +1161,7 @@ var checkBuyUniversity = function() {
       for(var j = 0; j < players_array.length; j++){
         if(game.other_players[i].id == players_array[j]["PlayerID"]){
           game.other_players[i].username = players_array[j]["Username"];
-          game.other_players[i].knights_count = players_array[j]["SolidersCount"];
+          game.other_players[i].knights_count = parseInt(players_array[j]["SolidersCount"]);
           game.other_players[i].points = players_array[j]["Points"];
           game.other_players[i].color = "#" + players_array[j]["HexColor"];
         }
@@ -1310,7 +1306,6 @@ var checkBuyUniversity = function() {
             async: false,
             success: function(tiles_array, status, jqXHR) {
               updateTiles(tiles_array);
-              console.log(tiles_array);
             },
             error: function(jqXHR, status, error) {
               console.log("Problem updating TILES");
@@ -1411,7 +1406,6 @@ var checkBuyUniversity = function() {
                 just_had_turn = false;
               }
               else if(turn > 8){
-                console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
               }
 
