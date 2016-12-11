@@ -1004,7 +1004,7 @@ class Player {
    SoldiersCount = $this->SoldiersCount,
    Points = $this->Points,
    HexColor = '$this->HexColor'
-   WHERE PlayerID = $PlayerID";
+   WHERE PlayerID = '$PlayerID'";
   $result= mysqli_query($mysqli, $SQL);
 
 
