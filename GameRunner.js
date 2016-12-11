@@ -1099,6 +1099,11 @@ var checkBuyUniversity = function() {
   // GAME RUNNING
   // =============================================================================
 
+  var gameOver = function(){
+    $('$startup').show();
+    $('#top_container').hide();
+  }
+
   var turnEnd = function(){
     updatePlayerInfo();
     alert("Turn over!");
@@ -1125,7 +1130,7 @@ var checkBuyUniversity = function() {
     var trading = document.getElementById("trade_button");
     trade_button.removeEventListener('click', tradeWithBank);
     var end_turn_button = document.getElementById("turn_over_button");
-    end_turn_button.addEventListener('click', turnEnd);
+    end_turn_button.removeEventListener('click', turnEnd);
 
     // Update player cards
     $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
@@ -1190,6 +1195,7 @@ var checkBuyUniversity = function() {
     if(game.turn_number >= 10000){
       alert("Game over!");
       document.body.innerHTML="";
+      gameOver();
     }
     else if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
@@ -1269,8 +1275,9 @@ var checkBuyUniversity = function() {
               if(turn >= 10000){
                 //TODO more here
                 alert("Game over!");
-                document.body.innerHTML = "";
-              }
+                clearInterval(c);
+                gameOver();
+                }
               else if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
