@@ -15,7 +15,7 @@ function RunGame() {
   var just_had_turn = false;
   var current_max_roads_player = 0;
   var current_max_army_player = 0;
-  var roads_cards = false;
+  var roads_card = false;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -1306,6 +1306,7 @@ var checkBuyUniversity = function() {
             async: false,
             success: function(tiles_array, status, jqXHR) {
               updateTiles(tiles_array);
+              console.log(tiles_array);
             },
             error: function(jqXHR, status, error) {
               console.log("Problem updating TILES");
