@@ -1175,6 +1175,7 @@ var checkBuyUniversity = function() {
     }
     else if (game.turn_number == game.player.id + 4) {
       game.fireEvent(new game.SetupTurnEvent());
+    }
     else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
