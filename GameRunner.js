@@ -927,15 +927,15 @@ var checkBuyUniversity = function() {
       $("player_four_special_knights").text("");
 
       var old_max_army_player = current_max_army_player;
-      if(game_other_players[0].knights_count > current_max_army){
+      if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.other_players[0].id;
       }
-      if(game_other_players[1].knights_count > current_max_army){
+      if(game.other_players[1].knights_count > current_max_army){
         current_max_army = game.other_players[1].knights_count;
         current_max_army_player = game.other_players[1].id;
       }
-      if(game_other_players[2].knights_count > current_max_army){
+      if(game.other_players[2].knights_count > current_max_army){
         current_max_army = game.other_players[2].knights_count;
         current_max_army_player = game.other_players[2].id;
       }
@@ -1045,7 +1045,7 @@ var checkBuyUniversity = function() {
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    //drawBoard(false, false, false, false, false, 0);
+    drawBoard(false, false, false, false, false, 0);
   }
 
   var updateOtherPlayers_Players = function(players_array){
@@ -1173,10 +1173,9 @@ var checkBuyUniversity = function() {
     if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
     }
-    //  else if (game.turn_number == game.player.id + 4) {
+    else if (game.turn_number == game.player.id + 4) {
     //   game.fireEvent(new game.SetupTurnEvent());
-    // } else
-     if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
+    else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
@@ -1292,9 +1291,6 @@ var checkBuyUniversity = function() {
               else if(turn > 8){
                 console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
-              }
-              else{
-                drawBoard(false, false, false, false, false, 0);
               }
 
               },
