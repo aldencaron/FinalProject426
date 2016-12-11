@@ -892,15 +892,15 @@ var checkBuyUniversity = function() {
   var checkKnightSpecial = function(){
     var current_max_army = 2;
     if(current_max_army_player == 0){
-      if(game_other.players[0].knights_count > current_max_army){
+      if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game_other_players[0].knights_count;
         current_max_army_player = game_other_players[0].id;
       }
-      if(game_other.players[1].knights_count > current_max_army){
+      if(game.other_players[1].knights_count > current_max_army){
         current_max_army = game_other_players[1].knights_count;
         current_max_army_player = game_other_players[1].id;
       }
-      if(game_other.players[2].knights_count > current_max_army){
+      if(game.other_players[2].knights_count > current_max_army){
         current_max_army = game_other_players[2].knights_count;
         current_max_army_player = game_other_players[2].id;
       }
@@ -1174,7 +1174,7 @@ var checkBuyUniversity = function() {
       game.fireEvent(new game.SetupTurnEvent());
     }
     else if (game.turn_number == game.player.id + 4) {
-    //   game.fireEvent(new game.SetupTurnEvent());
+      game.fireEvent(new game.SetupTurnEvent());
     else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
