@@ -295,10 +295,10 @@ var setupTurn = function() {
 
 var checkBuyRoad = function() {
   // Resource error
-if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
+/*if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
   alert("Insufficient amounts of resources!");
   return;
-}
+}*/
 var available = false;
 for (var i = 0; i < game.roads.length; i++) {
   if (game.roads[i].available) {
@@ -388,11 +388,11 @@ var buyRoad = function(event) {
 };
 var checkBuyCollege = function() {
   // Resource problem
-  if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
+  /*if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
   game.player.cards["ramen"] < 1 || game.player.cards["book"] < 1) {
     alert("Insufficient amounts of resources!");
     return;
-  }
+  }*/
   var available = false;
   for (var i = 0; i < game.colleges.length; i++) {
     if (game.colleges[i].available) {
@@ -598,9 +598,9 @@ var checkBuyUniversity = function() {
 
   };
   var updateOtherPlayerInfo = function() {
-    //TODO can do in order if I know their IDs but idk
     $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
+    console.log("Player something points: " + game.other_players[0].points);
     $('#player_two_points').text("Points: " + game.other_players[0].points);
     $('#player_three_username').text(game.other_players[1].username);
     $('#player_three_num_cards').text("Number of Cards: " + game.other_players[1].num_cards);
@@ -693,6 +693,7 @@ var checkBuyUniversity = function() {
       game.player.cards["knight"]--;
       game.player.used_knights++;
       updatePlayerInfo();
+      checkKnightSpecial();
       alert("Move the Blue Devil!");
       var board_canvas = document.getElementById("board_canvas");
       board_canvas.addEventListener('mousedown', moveRobber);
@@ -841,6 +842,8 @@ var checkBuyUniversity = function() {
     use_monopoly_card.addEventListener('click', useMonopolyCard);
     var trading = document.getElementById("trade_button");
     trade_button.addEventListener('click', tradeWithBank);
+    var end_turn_button = document.getElementById("turn_over_button");
+    end_turn_button.addEventListener('click', turnEnd);
   };
   // Query for dice roll from other players
   var rollOtherDice = function() {
@@ -855,7 +858,9 @@ var checkBuyUniversity = function() {
         console.log("Problem waiting for turn");
     }
     });
-    $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    if(game.turn_number > 8){
+      $("#current_dice_roll_text").text("Dice Roll: " + current_roll);
+    }
     if (current_roll == 7) {
       // Steal Cards
       if ((game.player.cards["ram"] + game.player.cards["ramen"] + game.player.cards["brick"] + game.player.cards["basketball"] + game.player.cards["book"]) > 7) {
@@ -868,10 +873,12 @@ var checkBuyUniversity = function() {
         updatePlayerInfo();
       }
     }
+
     // Is not a robber
     else {
-      // TODO this maybe does not work??
-      drawBoard(false, false, false, false, true, current_roll);
+      if(game.turn_number > 8){
+        drawBoard(false, false, false, false, true, current_roll);
+      }
       // Add cards
       for (var i = 0; i < game.player.colleges.length; i++) {
         for (var j = 0; j < game.player.colleges[i].tiles.length; j++) {
@@ -888,18 +895,18 @@ var checkBuyUniversity = function() {
   };
 
 
-  var checkKnightsSpecial = function(){
+  var checkKnightSpecial = function(){
     var current_max_army = 2;
     if(current_max_army_player == 0){
-      if(game_other_players[0].knights_count > current_max_army){
+      if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game_other_players[0].knights_count;
         current_max_army_player = game_other_players[0].id;
       }
-      if(game_other_players[1].knights_count > current_max_army){
+      if(game.other_players[1].knights_count > current_max_army){
         current_max_army = game_other_players[1].knights_count;
         current_max_army_player = game_other_players[1].id;
       }
-      if(game_other_players[2].knights_count > current_max_army){
+      if(game.other_players[2].knights_count > current_max_army){
         current_max_army = game_other_players[2].knights_count;
         current_max_army_player = game_other_players[2].id;
       }
@@ -907,13 +914,63 @@ var checkBuyUniversity = function() {
         current_max_army = game_other_players[0].knights_count;
         current_max_army_player = game.player.id;
         game.player.point += 2;
-        $("player_one_special").text("Special Points: LARGEST ARMY");
+        $("player_one_special_knights").text("LARGEST ARMY");
       }
       if(current_max_army_player == game.other_players[0]){
-        $("player_two_special").text("Special Points: ");
+        $("player_two_special_knights").text("LARGEST ARMY");
+      }
+      if(current_max_army_player == game.other_players[1]){
+        $("player_three_special_knights").text("LARGEST ARMY");
+      }
+      if(current_max_army_player == game.other_players[2]){
+        $("player_four_special_knights").text("LARGEST ARMY");
+      }
+    }
+    else{
+      $("player_one_special_knights").text("");
+      $("player_two_special_knights").text("");
+      $("player_three_special_knights").text("");
+      $("player_four_special_knights").text("");
+
+      var old_max_army_player = current_max_army_player;
+      if(game.other_players[0].knights_count > current_max_army){
+        current_max_army = game.other_players[0].knights_count;
+        current_max_army_player = game.other_players[0].id;
+      }
+      if(game.other_players[1].knights_count > current_max_army){
+        current_max_army = game.other_players[1].knights_count;
+        current_max_army_player = game.other_players[1].id;
+      }
+      if(game.other_players[2].knights_count > current_max_army){
+        current_max_army = game.other_players[2].knights_count;
+        current_max_army_player = game.other_players[2].id;
+      }
+      if(game.player.used_knights > current_max_army){
+        current_max_army = game.other_players[0].knights_count;
+        current_max_army_player = game.player.id;
+        if(old_max_army_player != game.player.id){
+          game.player.points += 2;
+          $("player_one_special_knights").text("LARGEST ARMY");
+        }
+      }
+      if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
+        game.player.points -= 2;
+      }
+      if(current_max_army_player == game.other_players[0].id){
+        $("player_two_special_knights").text("");
+      }
+      if(current_max_army_player == game.other_players[1].id){
+        $("player_three_special_knights").text("");
+      }
+      if(current_max_army_player == game.other_players[2].id){
+        $("player_four_special_knights").text("");
       }
     }
   }
+
+  var getLongestContinuousRoads = function(player){
+  }
+
   var checkRoadsSpecial = function(){
     var current_max_roads = 2;
 
@@ -957,7 +1014,12 @@ var checkBuyUniversity = function() {
         }
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }
   }
   // Also updates universities
   var updateColleges = function(colleges_array){
@@ -983,18 +1045,28 @@ var checkBuyUniversity = function() {
         }
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }
   }
   var updateTiles = function(tiles_array){
     for(var i = 0; i < tiles_array.length; i++){
-      if(tiles_array[i]["Robber"] == 0){
+      if(parseInt(tiles_array[i]["Robber"]) == 2){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
       }
       else{
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    //drawBoard(false, false, false, false, false, 0);
+    if(game.turn_number < 9){
+      drawBoard(false, false, false, false, false, 0);
+    }
+    else{
+      drawBoard(false, false, false, false, true, current_roll);
+    }
   }
 
   var updateOtherPlayers_Players = function(players_array){
@@ -1008,6 +1080,7 @@ var checkBuyUniversity = function() {
         }
       }
     }
+    checkKnightSpecial();
     updateOtherPlayerInfo();
   }
   var updateOtherPlayers_Cards = function(cards_array){
@@ -1022,19 +1095,18 @@ var checkBuyUniversity = function() {
     updateOtherPlayerInfo();
   }
 
-  //TODO you can change other people's turns
-  var end_turn_button = document.getElementById("turn_over_button");
-  end_turn_button.addEventListener('click', function() {
-    game.fireEvent(new game.TurnChangeEvent())
-  });
-
   // =============================================================================
   // GAME RUNNING
   // =============================================================================
 
+  var gameOver = function(){
+    $('$startup').show();
+    $('#top_container').hide();
+  }
+
   var turnEnd = function(){
     updatePlayerInfo();
-    alert("Turn end");
+    alert("Turn over!");
 
     // Remove all current board listeners
     var board_canvas = document.getElementById("board_canvas");
@@ -1057,6 +1129,8 @@ var checkBuyUniversity = function() {
     use_monopoly_card.removeEventListener('click', useMonopolyCard);
     var trading = document.getElementById("trade_button");
     trade_button.removeEventListener('click', tradeWithBank);
+    var end_turn_button = document.getElementById("turn_over_button");
+    end_turn_button.removeEventListener('click', turnEnd);
 
     // Update player cards
     $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
@@ -1118,12 +1192,18 @@ var checkBuyUniversity = function() {
   var turnChecks = function() {
     updatePlayerInfo();
     // Do appropriate things per turn number
-    // if (game.turn_number == game.player.id) {
-    //   game.fireEvent(new game.SetupTurnEvent());
-    // } else if (game.turn_number == game.player.id + 4) {
-    //   game.fireEvent(new game.SetupTurnEvent());
-    // } else
-     if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
+    if(game.turn_number >= 10000){
+      alert("Game over!");
+      document.body.innerHTML="";
+      gameOver();
+    }
+    else if (game.turn_number == game.player.id) {
+      game.fireEvent(new game.SetupTurnEvent());
+    }
+    else if (game.turn_number == game.player.id + 4) {
+      game.fireEvent(new game.SetupTurnEvent());
+    }
+    else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
       game.fireEvent(new game.DiceRollEvent());
     }
     else{
@@ -1192,25 +1272,31 @@ var checkBuyUniversity = function() {
             type:"GET",
             dataType: "json",
             success: function(turn, status, jqXHR) {
-              if(turn == 10000){
+              if(turn >= 10000){
                 //TODO more here
                 alert("Game over!");
-              }
+                clearInterval(c);
+                gameOver();
+                }
               else if(turn % 4 == game.player.id || ((turn % 4) + 4) == game.player.id){
                 game.turn_number = turn;
                 my_turn = true;
                 $("#current_turn").text("Currently your turn!");
+                $("#turn_info").css("background-color", game.player.color);
                 turnChecks();
               }
               else if(game.turn_number + 1 == turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();
@@ -1218,12 +1304,15 @@ var checkBuyUniversity = function() {
               else if(just_had_turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
+                  $("#turn_info").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();
@@ -1232,9 +1321,6 @@ var checkBuyUniversity = function() {
               else if(turn > 8){
                 console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
-              }
-              else{
-                drawBoard(false, false, false, false, false, 0);
               }
 
               },

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 //Classes: Player, Road, Tile, Card, College
