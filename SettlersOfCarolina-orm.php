@@ -644,7 +644,6 @@ class DevCardStack {
     $this->Order = $Order;
     return $this->update($this->DevID);
   }
-
 }
 
 class Tile {
