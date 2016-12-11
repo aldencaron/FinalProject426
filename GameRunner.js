@@ -1013,7 +1013,8 @@ var checkBuyUniversity = function() {
     }
     else{
       drawBoard(false, false, false, false, true, current_roll);
-    }  }
+    }
+  }
   // Also updates universities
   var updateColleges = function(colleges_array){
     for(var i = 0; i < colleges_array.length; i++){
