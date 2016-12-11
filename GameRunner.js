@@ -842,6 +842,8 @@ var checkBuyUniversity = function() {
     use_monopoly_card.addEventListener('click', useMonopolyCard);
     var trading = document.getElementById("trade_button");
     trade_button.addEventListener('click', tradeWithBank);
+    var end_turn_button = document.getElementById("turn_over_button");
+    end_turn_button.addEventListener('click', turnEnd);
   };
   // Query for dice roll from other players
   var rollOtherDice = function() {
@@ -1090,19 +1092,13 @@ var checkBuyUniversity = function() {
     updateOtherPlayerInfo();
   }
 
-  //TODO you can change other people's turns
-  var end_turn_button = document.getElementById("turn_over_button");
-  end_turn_button.addEventListener('click', function() {
-    game.fireEvent(new game.TurnChangeEvent())
-  });
-
   // =============================================================================
   // GAME RUNNING
   // =============================================================================
 
   var turnEnd = function(){
     updatePlayerInfo();
-    alert("Turn end");
+    alert("Turn over!");
 
     // Remove all current board listeners
     var board_canvas = document.getElementById("board_canvas");
@@ -1125,6 +1121,8 @@ var checkBuyUniversity = function() {
     use_monopoly_card.removeEventListener('click', useMonopolyCard);
     var trading = document.getElementById("trade_button");
     trade_button.removeEventListener('click', tradeWithBank);
+    var end_turn_button = document.getElementById("turn_over_button");
+    end_turn_button.addEventListener('click', turnEnd);
 
     // Update player cards
     $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,

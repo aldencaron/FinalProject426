@@ -2,27 +2,20 @@
 SHELLY & NAEIM
 ================================================================================
 
-Make it pretty!
-Load tile and dev card arrays in the setup PHP file
-Need a second column in DevCardStacks
-Need to be able to add large number to Turns database to signal over
+Load tile and development card arrays in the setup PHP file
+Need a second column in DevCardStacks and Tiles
 
 
 ================================================================================
 ALDEN & MAX
 ================================================================================
 
-Write event handler for end of game
-Special points/monopoly
-Trade is eh
-Interfacing could be better
-Username choosing CSS
-
+Aesthetics - general, trading, monopoly
 Robber disappears on first turn
-End turn button will end other people's turns
-Check game over functionality
+Setup tiles if we want random
 
-TO DO RIGHT NOW
-See when dice roll board is drawing
-Add in special points
-Dev cards 
+1. Test when game is over
+2. End turn button will end other people's turns
+3. Development cards
+4. Add in special points - longest road/largest army
+5. Run setup non manually - think on
