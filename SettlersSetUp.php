@@ -127,9 +127,16 @@ $SQL = "Create Table DevStacks (
   Card int)";
   mysqli_query($mysqli, $SQL);
 
+  $array = range(1,25);
+  shuffle($array);
+
 for( $i = 1; $i <27 ; $i++){
+  if($i==26){
+    $SQL= "Insert into DevStacks (DevID, Card)
+     Values ($i, 1)";
+  }
   $SQL= "Insert into DevStacks (DevID, Card)
-   Values ($i, 1)";
+   Values ($i," . $array[$i] . ")";
   mysqli_query($mysqli, $SQL);
 }
 
