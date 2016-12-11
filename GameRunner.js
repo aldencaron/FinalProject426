@@ -550,13 +550,34 @@ var checkBuyUniversity = function() {
     }
   };
   var buyCard = function() {
-    //GET CURRENT INDEX
+    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStack/26",
+      type: "GET",
+      dataType: "json",
+      async: false,
+      success: function(dev_stack_json, status, jqXHR) {
+        console.log("Got card.");
+        game.next_dev_card = parseInt(dev_stack_json["Card"]) - 1;
+      },
+      error: function(jqXHR, status, error) {
+        alert(jqXHR.responseText);
+      }
+      });
 
     var card = game.dev_cards[game.next_dev_card];
     game.next_dev_card++;
 
-    // POST CURRENT INDEX 
-
+    $.ajax({url:url_base + "SettlersOfCarolina.php/DevStack/26",
+      type: "POST",
+      dataType: "json",
+      async: false,
+      data: "DevID=26&Card=" + (game.next_dev_card+1),
+      success: function(College_json, status, jqXHR) {
+        console.log("Posted card.");
+      },
+      error: function(jqXHR, status, error) {
+      alert(jqXHR.responseText);
+      }
+      });
     if(card.type == "oldwell" || card.type == "sitterson" || card.type == "pit" || card.type == "bell" || card.type == "davis"){
       alert("You got a victory point card!")
       game.player.cards["victory_points"][card.type]++;
