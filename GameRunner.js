@@ -905,7 +905,12 @@ var checkBuyUniversity = function() {
       }
       if(game.player.used_knights > current_max_army){
         current_max_army = game_other_players[0].knights_count;
-        current_max_army_player = game_other_players[0].id;
+        current_max_army_player = game.player.id;
+        game.player.point += 2;
+        $("player_one_special").text("Special Points: LARGEST ARMY");
+      }
+      if(current_max_army_player == game.other_players[0]){
+        $("player_two_special").text("Special Points: ");
       }
     }
   }
