@@ -693,6 +693,7 @@ var checkBuyUniversity = function() {
       game.player.cards["knight"]--;
       game.player.used_knights++;
       updatePlayerInfo();
+      checkKnightSpecial();
       alert("Move the Blue Devil!");
       var board_canvas = document.getElementById("board_canvas");
       board_canvas.addEventListener('mousedown', moveRobber);
@@ -888,7 +889,7 @@ var checkBuyUniversity = function() {
   };
 
 
-  var checkKnightsSpecial = function(){
+  var checkKnightSpecial = function(){
     var current_max_army = 2;
     if(current_max_army_player == 0){
       if(game_other_players[0].knights_count > current_max_army){
@@ -907,13 +908,64 @@ var checkBuyUniversity = function() {
         current_max_army = game_other_players[0].knights_count;
         current_max_army_player = game.player.id;
         game.player.point += 2;
-        $("player_one_special").text("Special Points: LARGEST ARMY");
+        $("player_one_special_knights").text("LARGEST ARMY");
       }
       if(current_max_army_player == game.other_players[0]){
-        $("player_two_special").text("Special Points: ");
+        $("player_two_special_knights").text("LARGEST ARMY");
+      }
+      if(current_max_army_player == game.other_players[1]){
+        $("player_three_special_knights").text("LARGEST ARMY");
+      }
+      if(current_max_army_player == game.other_players[2]){
+        $("player_four_special_knights").text("LARGEST ARMY");
+      }
+    }
+    else{
+      $("player_one_special_knights").text("");
+      $("player_two_special_knights").text("");
+      $("player_three_special_knights").text("");
+      $("player_four_special_knights").text("");
+
+      var old_max_army_player = current_max_army_player;
+      if(game_other_players[0].knights_count > current_max_army){
+        current_max_army = game.other_players[0].knights_count;
+        current_max_army_player = game.other_players[0].id;
+      }
+      if(game_other_players[1].knights_count > current_max_army){
+        current_max_army = game.other_players[1].knights_count;
+        current_max_army_player = game.other_players[1].id;
+      }
+      if(game_other_players[2].knights_count > current_max_army){
+        current_max_army = game.other_players[2].knights_count;
+        current_max_army_player = game.other_players[2].id;
+      }
+      if(game.player.used_knights > current_max_army){
+        current_max_army = game.other_players[0].knights_count;
+        current_max_army_player = game.player.id;
+        if(old_max_army_player != game.player.id){
+          game.player.points += 2;
+          $("player_one_special_knights").text("LARGEST ARMY");
+        }
+      }
+      if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
+        game.player.points -= 2;
+      }
+      if(current_max_army_player == game.other_players[0].id){
+        $("player_two_special_knights").text("");
+      }
+      if(current_max_army_player == game.other_players[1].id){
+        $("player_three_special_knights").text("");
+      }
+      if(current_max_army_player == game.other_players[2].id){
+        $("player_four_special_knights").text("");
       }
     }
   }
+
+  var getLongestContinuousRoads = function(player){
+    for()
+  }
+
   var checkRoadsSpecial = function(){
     var current_max_roads = 2;
 
@@ -987,7 +1039,7 @@ var checkBuyUniversity = function() {
   }
   var updateTiles = function(tiles_array){
     for(var i = 0; i < tiles_array.length; i++){
-      if(tiles_array[i]["Robber"] == 0){
+      if(tiles_array[i]["Robber"] == 2){
         game.tiles[tiles_array[i]["TileID"] - 1].robber = false;
       }
       else{
@@ -1008,6 +1060,7 @@ var checkBuyUniversity = function() {
         }
       }
     }
+    checkKnightSpecial();
     updateOtherPlayerInfo();
   }
   var updateOtherPlayers_Cards = function(cards_array){
@@ -1200,17 +1253,21 @@ var checkBuyUniversity = function() {
                 game.turn_number = turn;
                 my_turn = true;
                 $("#current_turn").text("Currently your turn!");
+                $("#turn_panel").css("background-color", game.player.color);
                 turnChecks();
               }
               else if(game.turn_number + 1 == turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();
@@ -1218,12 +1275,15 @@ var checkBuyUniversity = function() {
               else if(just_had_turn){
                 if(turn % 4 == game.other_players[0].id || ((turn % 4) + 4) ==  game.other_players[0].id){
                   $("#current_turn").text("Currently " + game.other_players[0].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[0].color);
                 }
                 if(turn % 4 == game.other_players[1].id || ((turn % 4) + 4) ==  game.other_players[1].id){
                   $("#current_turn").text("Currently " + game.other_players[1].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[1].color);
                 }
                 if(turn % 4 == game.other_players[2].id || ((turn % 4) + 4) ==  game.other_players[2].id){
                   $("#current_turn").text("Currently " + game.other_players[2].username + "'s turn!");
+                  $("#turn_panel").css("background-color", game.other_players[2].color);
                 }
                 game.turn_number = turn;
                 rollOtherDice();

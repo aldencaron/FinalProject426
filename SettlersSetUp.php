@@ -60,7 +60,7 @@ mysqli_query($mysqli, $SQL);
 //19 Tiles
 for($i = 0; $i <= 19; $i++){
   $SQL = "Insert into Tiles (TileID, Robber)
-  Values ($i, 0)";
+  Values ($i, 2)"; //TODO 
     mysqli_query($mysqli, $SQL);
 }
 

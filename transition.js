@@ -14,7 +14,7 @@ var tileGame_tileAJAX = function(game_tile){
     robber_bool = 1;
   }
   else{
-    robber_bool = 0;
+    robber_bool = 2;
   }
   console.log("TileID=" + game_tile.id + "&Robber=" + robber_bool);
   return("TileID=" + game_tile.id + "&Robber=" + robber_bool);
