@@ -15,7 +15,6 @@ var tileGame_tileAJAX = function(game_tile){
   else{
     robber_bool = 0;
   }
-  console.log("Robber bool: " + robber_bool);
   console.log("TileID=" + game_tile.id + "&Robber=" + robber_bool);
   return("TileID=" + game_tile.id + "&Robber=" + robber_bool);
 }
@@ -33,7 +32,6 @@ var collegeGame_collegeAJAX = function(game_college){
      university_bool = 0;
    }
    available_bool = 0;
-   console.log("University bool:" + university_bool);
    console.log("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id +
    "&Available=" + available_bool + "&University=" + university_bool);
    return ("CollegeID=" + game_college.id + "&PlayerID=" + game_college.player.id +

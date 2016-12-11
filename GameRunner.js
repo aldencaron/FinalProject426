@@ -13,8 +13,8 @@ function RunGame() {
   var partial_turn_over = false;
   var current_roll = 0;
   var just_had_turn = false;
-  var current_max_roads = 0;
-  var current_max_army = 0;
+  var current_max_roads_player = 1;
+  var current_max_army_player = 1;
   // =============================================================================
   // BOARD DRAWING
   // =============================================================================
@@ -265,12 +265,16 @@ var addRoadStart = function(event) {
       for (var k = 0; k < game.player.roads.length; k++) {
         for (var l = 0; l < game.player.roads[k].connections[0].roads.length; l++) {
           if (!game.player.roads[k].connections[0].roads[l].used) {
-            game.player.roads[k].connections[0].roads[l].available = true;
+            if(!game.player.roads[k].connections[0].used || (game.player.roads[k].connections[0].player.id == game.player.id)){
+              game.player.roads[k].connections[0].roads[l].available = true;
+            }
           }
         }
         for (var l = 0; l < game.player.roads[k].connections[1].roads.length; l++) {
           if (!game.player.roads[k].connections[1].roads[l].used) {
-            game.player.roads[k].connections[1].roads[l].available = true;
+            if(!game.player.roads[k].connections[1].used || (game.player.roads[k].connections[1].player.id == game.player.id)){
+              game.player.roads[k].connections[1].roads[l].available = true;
+            }
           }
         }
       }
@@ -366,12 +370,16 @@ var buyRoad = function(event) {
     for (var k = 0; k < game.player.roads.length; k++) {
       for (var l = 0; l < game.player.roads[k].connections[0].roads.length; l++) {
         if (!game.player.roads[k].connections[0].roads[l].used) {
-          game.player.roads[k].connections[0].roads[l].available = true;
+          if(!game.player.roads[k].connections[0].used || (game.player.roads[k].connections[0].player.id == game.player.id)){
+            game.player.roads[k].connections[0].roads[l].available = true;
+          }
         }
       }
       for (var l = 0; l < game.player.roads[k].connections[1].roads.length; l++) {
         if (!game.player.roads[k].connections[1].roads[l].used) {
-          game.player.roads[k].connections[1].roads[l].available = true;
+          if(!game.player.roads[k].connections[1].used || (game.player.roads[k].connections[1].player.id == game.player.id)){
+            game.player.roads[k].connections[1].roads[l].available = true;
+          }
         }
       }
     }
@@ -881,7 +889,34 @@ var checkBuyUniversity = function() {
 
 
   var checkRoadsSpecial = function(){
-    var max_roads = 2;
+    var current_max_roads = 2;
+
+    // Figure out which player
+    if(current_max_roads_player == game.player.id){
+      current_max_roads = game.player.roads.length;
+    }
+    else{
+      for(var i = 0; i < game.other_players.length; i++){
+        if(current_max_roads_player == game.other_players[i].id){
+          curent_max_roads = game.other_players[i].roads.length;
+        }
+      }
+    }
+    // Figure out new current roads
+    for(var i = 0; i < game.other_players.length; i++){
+      if(game.other_players[i].roadss.length > current_max_roads){
+        current_max_roads_player = game.other_players[i].id;
+        current_max_roads = game.other_players[i].roads.length;
+      }
+    }
+    if(game.player.roads.length > current_max_roads){
+      current_max_roads_player = game.player.id;
+      current_max_roads = game.player.roads.length;
+    }
+    if(current_max_roads > 3){
+
+    }
+
 
   }
 
@@ -933,7 +968,7 @@ var checkBuyUniversity = function() {
         game.tiles[tiles_array[i]["TileID"] - 1].robber = true;
       }
     }
-    drawBoard(false, false, false, false, false, 0);
+    //drawBoard(false, false, false, false, false, 0);
   }
 
   var updateOtherPlayers_Players = function(players_array){
@@ -1169,6 +1204,9 @@ var checkBuyUniversity = function() {
               else if(turn > 8){
                 console.log("In last turn thing with current roll: " + current_roll);
                 drawBoard(false, false, false, false, true, current_roll);
+              }
+              else{
+                drawBoard(false, false, false, false, false, 0);
               }
 
               },
