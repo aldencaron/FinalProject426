@@ -651,7 +651,7 @@ class DevStack {
 class Tile {
   private $TileID;
   private $Robber;
-  private $Order;
+  private $Placement;
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
@@ -660,10 +660,10 @@ class Tile {
           "naeimzdb");
   }
 
-  public function create($TileID, $Robber, $Order) {
+  public function create($TileID, $Robber, $Placement) {
       $mysqli = Tile::connect();
       $res = $mysqli->query(
-          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber', '$Order')"
+          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber', '$Placement')"
       );
 
       if ($res) {} else {
@@ -671,7 +671,7 @@ class Tile {
           print($mysqli->error);
           exit();
       }
-      return new Tile($TileID, $Robber, $Order);
+      return new Tile($TileID, $Robber, $Placement);
   }
 
   public static function findByID($TileID){
@@ -687,7 +687,7 @@ class Tile {
         $Tile_info = $result->fetch_array();
         return new Tile($Tile_info['TileID'],
                            $Tile_info['Robber'],
-                            $Tile_info['Order']);
+                            $Tile_info['Placement']);
       }
     }
   return null;
@@ -710,7 +710,7 @@ class Tile {
   public function getJSON(){
   $json_obj = array('TileID' => $this->TileID,
                      'Robber' => $this->Robber,
-                      'Order' => $this ->Order);
+                      'Placement' => $this ->Placement);
 
   return json_encode($json_obj);
   }
@@ -725,7 +725,7 @@ class Tile {
           $json_sub = array();
           $json_sub['TileID'] = $row['TileID'];
           $json_sub['Robber'] = $row['Robber'];
-          $json_sub['Order'] = $row['Order'];
+          $json_sub['Placement'] = $row['Placement'];
           $json[] = $json_sub;
       }
     }
@@ -737,7 +737,7 @@ class Tile {
 
     $SQL = "Update Tiles set
     Robber= $this->Robber,
-    Order = $this->Order
+    Placement = $this->Placement
     WHERE TileID = $TileID";
    $result= mysqli_query($mysqli, $SQL);
 
@@ -754,13 +754,13 @@ class Tile {
  private function __construct($TileID, $Robber){
  $this->TileID= $TileID;
  $this->Robber = $Robber;
- $this->Order = $Order;
+ $this->Placement = $Placement;
  }
  public function getTileID() {
      return $this->TileID;
  }
- public function getOrder(){
-      return $this->Order;
+ public function getPlacement(){
+      return $this->Placement;
  }
  public function getRobber() {
      return $this->Robber;
@@ -769,9 +769,9 @@ class Tile {
     $this->TileID = $TileID;
     return $this->update($this->TileID);
   }
-  public function setOrder($TileID){
-    $this->Order = $Order;
-    return $this->update($this->Order);
+  public function setPlacement($TileID){
+    $this->Placement = $Placement;
+    return $this->update($this->Placement);
   }
   public function setRobber($Robber){
     $this->Robber = $Robber;

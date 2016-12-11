@@ -56,13 +56,25 @@ for($i = 0; $i <= 73; $i++){
 $SQL = "Create Table Tiles (
   TileID int primary key not null auto_increment,
   Robber int,
-  Order int)";
+  Placement int )";
+
 mysqli_query($mysqli, $SQL);
 //19 Tiles
+
+$array = range(0,19);
+shuffle($array);
 for($i = 0; $i <= 19; $i++){
-  $SQL = "Insert into Tiles (TileID, Robber, Order)
-  Values ($i, 2, $i)";
+    if($i != 19){
+  $SQL = "Insert into Tiles (TileID, Robber, Placement)
+  Values ($i, 2, " . $array[$i] . ")";
     mysqli_query($mysqli, $SQL);
+  }
+  else{
+    $SQL = "Insert into Tiles (TileID, Robber, Placement)
+      Values ($i, 1, $i)";
+        mysqli_query($mysqli, $SQL);
+      }
+  }
 }
 
 $SQL = "Create Table Colleges (
@@ -130,6 +142,14 @@ mysqli_query($mysqli, $SQL);
 
 $SQL = "Insert into Turns (TurnID) Values(1)";
 mysqli_query($mysqli, $SQL);
+
+// function generate_array($lower, $upper){
+//   $array = array();
+//   while(!$done){
+//     $array = range($lower, $upper);
+//     shuffle($array);
+//   }
+// }
 
 
  ?>
