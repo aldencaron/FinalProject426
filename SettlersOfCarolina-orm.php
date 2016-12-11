@@ -1003,7 +1003,7 @@ class Player {
    RoadsCount = $this->RoadsCount,
    SoldiersCount = $this->SoldiersCount,
    Points = $this->Points,
-   HexColor = $this->HexColor
+   HexColor = '$this->HexColor'
    WHERE PlayerID = '$PlayerID'";
   $result= mysqli_query($mysqli, $SQL);
 
