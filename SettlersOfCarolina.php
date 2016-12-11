@@ -592,6 +592,69 @@ exit();
     header("HTTP/1.0 400 Bad Request");
     print("Did not understand URL");
 }
+function postDevCardStack(){
+    global $path_components;
+  if ((count($path_components) >= 3) &&
+      ($path_components[2] != "")) {
+        $DevID= intval($path_components[2]);
+        $DevCardStack = DevCardStack::findByID($DevID);
+        if($DevCardStack==null){
+            function createDevCardStack() {
+                // Create new DevCardStack
+                $new_DevID = false;
+                if (isset($_REQUEST['DevID'])) {
+                    $new_DevID = intval(trim($_REQUEST['DevID']));
+                } else {
+                    header("HTTP/1.0 400 Bad Request");
+                    print("DevID is is not given.");
+                    exit();
+                }
+                $new_Order = false;
+                if (isset($_REQUEST['Order'])) {
+                    $new_Order = intval(trim($_REQUEST['Order']));
+                } else {
+                    header("HTTP/1.0 400 Bad Request");
+                    print("Order is is not given.");
+                    exit();
+                }
+                if ($new_DevID && $new_Order) {
+                    $DevCardStack = DevCardStack::create($new_DevID, $new_Order);
+                    if ($DevCardStack == null) {
+                        header("HTTP/1.0 500 Server Error");
+                        print("DevCardStack was not inserted");
+                        exit();
+                    }
+                    header("Content-type: application/json");
+                    print($DevCardStack->getJSON());
+                    exit();
+                }
+            }
+            createDevCardStack();
+        }
+        //check which values to update
+        $new_DevID = false;
+        if (isset($_REQUEST["DevID"])) {
+            $new_DevID = intval(trim($_REQUEST['DevID']));
+        }
+        $new_Order=false;
+        if(isset($_REQUEST["Order"])){
+          $new_Order= intval(trim($_REQUEST['Order']));
+        }
+        //update via ORM
+        if ($new_DevID != false) {
+            $DevCardStack->setDevID($new_DevID);
+        }
+        if($new_Order != false){
+          $DevCardStack->setOrder($new_Order);
+        }
+           //return json
+          header("Content-type: application/json");
+          print($DevCardStack->getJSON());
+          exit();
+    }
+  header("HTTP/1.0 400 Bad Request");
+  print("Did not understand URL");
+}
   function postCard(){
       global $path_components;
     if ((count($path_components) >= 3) &&
