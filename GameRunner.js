@@ -1303,6 +1303,7 @@ var checkBuyUniversity = function() {
     }
   });
   //game.player.color = colors[game.player.id % 4];
+  console.log("Color inside gamerunner:" + color);
   game.player.color = "#" + color;
 
   $("#player_one").css("background-color", game.player.color);
