@@ -867,13 +867,14 @@ var checkBuyUniversity = function() {
     console.log(monopoly_resource);
     console.log(monopoly_resource.capitalizeFirstLetter());
       var total=0;
+      var temp_array = [];
       $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/getAll",
-       type: "Get",
+       type: "GET",
        dataType: "json",
        async: false,
        success: function(card_array, status, jqXHR) {
-         for( var i=1;i<card_array.length+1;i++){
-           if(i!=game.player.id){
+         for( var i = 1; i < card_array.length + 1; i++){
+           if(i != game.player.id){
            total += parseInt(card_array[i-1][monopoly_resource.capitalizeFirstLetter()]);
            console.log(total);
          }
@@ -897,14 +898,17 @@ var checkBuyUniversity = function() {
        }
       });
 
-      for(var i=1; i<5; i++){
-        if(i!=game.player.id){
+      var temp = monopoly_resource.capitalizeFirstLetter()+"=0";
+      console.log(temp);
+      for(var i = 1; i < 5; i++){
+        if(i != (game.player.id)){
           $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + i,
            type: "POST",
            dataType: "json",
-           data: (monopoly_resource.capitalizeFirstLetter() + "=0"),
+           data: temp,
            async: false,
            success: function(card_array, status, jqXHR) {
+             console.log(i);
            },
            error: function(jqXHR, status, error) {
             console.log(jqXHR.responseText);
@@ -912,7 +916,20 @@ var checkBuyUniversity = function() {
           });
         }
       }
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/getAll",
+       type: "GET",
+       dataType: "json",
+       async: false,
+       success: function(card_array, status, jqXHR) {
+         updatePlayerCards(card_array);
+         updateOtherPlayers_Cards(card_array);
+       },
+       error: function(jqXHR, status, error) {
+        console.log(jqXHR.responseText);
+       }
+      });
       updatePlayerInfo();
+      updateOtherPlayerInfo();
     }
   }
 
@@ -1433,13 +1450,24 @@ var checkBuyUniversity = function() {
   var updateOtherPlayers_Cards = function(cards_array){
     for(var i = 0; i < game.other_players.length; i++){
       for(var j = 0; j < cards_array.length; j++){
-        if(game.other_players.length == cards_array[j]["PlayerID"]){
+        if(game.other_players[i].id == cards_array[j]["PlayerID"]){
           game.other_players[i].num_cards = parseInt(cards_array[j]["Ram"]) + parseInt(cards_array[j]["Ramen"])
            + parseInt(cards_array[j]["Brick"]) + parseInt(cards_array[j]["Book"]) + parseInt(cards_array[j]["Basketball"]);
         }
       }
     }
     updateOtherPlayerInfo();
+  }
+  var updatePlayerCards = function(cards_array){
+    for(var i = 0; i < cards_array.length; i++){
+      if(game.player.id = cards_array[i]["PlayerID"]){
+        game.player.cards["ram"] = cards_array[i]["Ram"];
+        game.player.cards["ramen"] = cards_array[i]["Ramen"];
+        game.player.cards["brick"] = cards_array[i]["Brick"];
+        game.player.cards["book"] = cards_array[i]["Book"];
+        game.player.cards["basketball"] = cards_array[i]["Basketball"];
+      }
+    }
   }
 
   // =============================================================================
@@ -1625,6 +1653,7 @@ var checkBuyUniversity = function() {
             async: false,
             success: function(cards_array, status, jqXHR) {
               updateOtherPlayers_Cards(cards_array);
+              updatePlayerCards(cards_array);
             },
             error: function(jqXHR, status, error) {
               console.log("Problem updating PLAYERS");
