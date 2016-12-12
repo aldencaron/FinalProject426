@@ -10,9 +10,9 @@
 class Card {
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
   private $PlayerID;
   private $Ram;
@@ -325,9 +325,9 @@ class College {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function create($CollegeID, $PlayerID, $Available, $University) {
@@ -475,9 +475,9 @@ class Turn{
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function GetHighestID(){
@@ -535,9 +535,9 @@ class DevStack {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function create($DevID, $Card) {
@@ -655,9 +655,9 @@ class Tile {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function create($TileID, $Robber, $Placement) {
@@ -798,9 +798,9 @@ class Road{
 
     public static function connect() {
       return new mysqli("classroom.cs.unc.edu",
-            "shellyg",
+            "aldenc",
             "comp426",
-            "shellygdb");
+            "aldencdb");
     }
 
   public static function findByID($RoadID){
@@ -923,9 +923,9 @@ class Player {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function create($PlayerID, $Username, $RoadsCount,
@@ -1103,9 +1103,9 @@ class DiceRoll {
 
   public static function connect() {
     return new mysqli("classroom.cs.unc.edu",
-          "shellyg",
+          "aldenc",
           "comp426",
-          "shellygdb");
+          "aldencdb");
   }
 
   public function create($DiceID, $RollResult) {
