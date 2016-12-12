@@ -663,7 +663,7 @@ class Tile {
   public function create($TileID, $Robber, $Placement) {
       $mysqli = Tile::connect();
       $res = $mysqli->query(
-          "INSERT INTO Tiles VAlUES ('$TileID', '$Robber', '$Placement')"
+          "INSERT INTO Tiles VALUES ('$TileID', '$Robber', '$Placement')"
       );
 
       if ($res) {} else {
@@ -710,7 +710,7 @@ class Tile {
   public function getJSON(){
   $json_obj = array('TileID' => $this->TileID,
                      'Robber' => $this->Robber,
-                      'Placement' => $this ->Placement);
+                      'Placement' => $this->Placement);
 
   return json_encode($json_obj);
   }
@@ -771,7 +771,7 @@ class Tile {
   }
   public function setPlacement($Placement){
     $this->Placement = $Placement;
-    return $this->update($this->Placement);
+    return $this->update($this->TileID);
   }
   public function setRobber($Robber){
     $this->Robber = $Robber;
