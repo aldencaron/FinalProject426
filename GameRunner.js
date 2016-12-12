@@ -1029,7 +1029,7 @@ var checkBuyUniversity = function() {
         current_max_army_player = game.other_players[2].id;
       }
       if(game.player.used_knights > current_max_army){
-        current_max_army = game.other_players[0].knights_count;
+        current_max_army = game.player.used_knights;
         current_max_army_player = game.player.id;
         if(old_max_army_player != game.player.id){
           game.player.points += 2;
@@ -1039,6 +1039,17 @@ var checkBuyUniversity = function() {
       if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
         game.player.points -= 2;
       }
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
+          type: "POST",
+          dataType: "json",
+          data: playerGame_playerAJAX(game.player),
+          async: false,
+          success: function(Player_json, status, jqXHR) {
+          },
+          error: function(jqXHR, status, error) {
+           console.log(jqXHR.responseText);
+          }
+      });
       if(current_max_army_player == game.other_players[0].id){
         $("#player_two_special_knights").text("Largest Army: " + current_max_army);
       }
