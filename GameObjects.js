@@ -140,6 +140,7 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.cards["roads"] = 0;
     this.colleges = []; // owned colleges
     this.roads = []; // owned roads
+    this.tarheel_road = false;
   }
 
   // Other players
@@ -151,6 +152,7 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.color = color;
     this.knights_count = 0; // for largest army purposes
     this.points;
+    this.tarheel_road = false;
   }
 
   var devCard = function(type, id){
