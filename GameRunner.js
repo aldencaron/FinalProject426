@@ -665,9 +665,6 @@ var checkBuyUniversity = function() {
     var rect = board_canvas.getBoundingClientRect();
     var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
     var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
-    for(var i = 0; i < game.num_tiles; i++){
-      console.log("First Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
-    }
     for (var i = 0; i < game.num_tiles; i++) {
       if(game.tiles[i].robber){
         game.tiles[i].robber = false;
@@ -687,9 +684,6 @@ var checkBuyUniversity = function() {
           }
         });
       }
-    }
-    for(var i = 0; i < game.num_tiles; i++){
-      console.log("Second Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
     }
     // Check hexagons
     for (var i = 0; i < game.num_tiles; i++) {
@@ -715,9 +709,6 @@ var checkBuyUniversity = function() {
           }
         });
       }
-    }
-    for(var i = 0; i < game.num_tiles; i++){
-      console.log("Third Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
     }
     if (partial_turn_over) {
       board_canvas.removeEventListener('mousedown', moveRobber);
@@ -1445,9 +1436,36 @@ var checkBuyUniversity = function() {
   }
   // Initialize game
   // CAN DO WITH PARAMETERS AND HAVE EVERYONE START THE SAME GAME
-  var tiles_array = [4, 1, 2, 17, 0, 5, 11, 7, 12, 9, 10, 15, 12, 13, 14, 18, 16, 3, 8];
-  var dev_array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
-  var game = new SettlersGame(tiles_array, dev_array);
+  var tiles_placement_array = [];
+  var dev_placement_array = [];
+  $.ajax({url: url_base + "SettlersOfCarolina.php/Tiles/getAll",
+    type:"GET",
+    dataType: "json",
+    async: false,
+    success: function(tiles_array, status, jqXHR) {
+      for(var i = 0; i < tiles_array.length; i++){
+        tiles_placement_array[i] = tiles_array[i]["Placement"];
+      }
+    },
+    error: function(jqXHR, status, error) {
+      console.log("Problem updating TILES");
+    }
+  });
+  $.ajax({url: url_base + "SettlersOfCarolina.php/DevStacks/getAll",
+    type:"GET",
+    dataType: "json",
+    async: false,
+    success: function(dev_array, status, jqXHR) {
+      for(var i = 0; i < dev_array.length-1; i++){
+        dev_placement_array[i] = dev_array[i]["Card"];
+      }
+    },
+    error: function(jqXHR, status, error) {
+      console.log("Problem updating TILES");
+    }
+  });
+
+  var game = new SettlersGame(tiles_placement_array, dev_placement_array);
   game.startGame();
   // Add roads to colleges
   for (var k = 0; k < game.num_colleges; k++) {
@@ -1460,33 +1478,13 @@ var checkBuyUniversity = function() {
   game.player.username = username;
   game.player.id = id;
 
-  // Post beginning robber position
-  /*for(var i = 0; i < game.tiles[i].length; i++){
-    if(game.tiles[i].type == "DESERT"){game.tiles[i].robber = true;}
-    if(game.tiles[i].robber){
-      $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
-        type: "POST",
-        dataType: "json",
-        async: false,
-        data: tileGame_tileAJAX(game.tiles[i]),
-        success: function(tile_json, status, jqXHR) {
-      },
-      error: function(jqXHR, status, error) {
-      console.log(jqXHR.responseText);
-      }
-      });
-    }
-  }*/
-
   // Set up colors
-  //var colors = ["palegreen", "palegoldenrod", "tomato", "mediumturquoise"];
   // Assign other players ids based on own id
   for(var i = 0; i < game.other_players.length; i++){
     game.other_players[i].id = game.player.id + i + 1;
     if(game.other_players[i].id > 4){
       game.other_players[i].id -= 4;
     }
-    //game.other_players[i].color = colors[game.other_players[i].id % 4]
   }
   $.ajax({url: url_base + "SettlersOfCarolina.php/Players/getAll",
     type:"GET",
@@ -1499,7 +1497,6 @@ var checkBuyUniversity = function() {
       console.log("Problem updating PLAYERS");
     }
   });
-  //game.player.color = colors[game.player.id % 4];
   console.log("Color inside gamerunner:" + color);
   game.player.color = "#" + color;
 
