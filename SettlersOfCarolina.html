@@ -99,17 +99,6 @@
 		</div>
 		<div id="col_two">
 			<div id="board">
-                <div id = "trade_interface" style = "width: 603px; height: 552px;">
-                    <p>You can trade with the bank at a 3:1 ratio. Pick the card you want to trade.</p>
-
-                    <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
-                    <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
-                    <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
-                    <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
-                    <div class="cards books"> <img src="images/book.gif" /> </div>
-
-                    <h1 id = "trade_message"></h1>
-                </div>
                 <canvas id="board_canvas">
 			</div>
 			<div id="turn_info">
@@ -144,14 +133,24 @@
         <div id="player_four_special_roads"></div>
         <div id="player_four_special_knights"></div>
       </div>
-      <!-- <div id="chat-box">
-        <ul id="messages"> </ul>
-        <form id ="chat-form" action="">
-          <input id = "m" autocomplete="off">
-          <button>Send</button>
-        </form>
+      <div id = "trade_interface">
+          <div id = "part1">
+              <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
+              <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
+              <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
+              <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
+              <div class="cards books"> <img src="images/book.gif" /> </div>
+          </div>
 
-      </div> -->
+          <div id = "part2">
+              <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
+              <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
+              <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
+              <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
+              <div class="cards books"> <img src="images/book.gif" /> </div>
+          </div>
+          <p id = "trade_message">You can trade with the bank at a 3:1 ratio. Pick the card you want to trade.</p>
+      </div>
     </div>
 	</div>
 

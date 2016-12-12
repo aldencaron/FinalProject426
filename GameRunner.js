@@ -890,30 +890,115 @@ var checkBuyUniversity = function() {
   }
 
   var tradeWithBank = function(){
-    resource_to_trade = prompt("You can trade with the bank at a 3:1 ratio. Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK to give to the bank.").toLowerCase();
+      var bool = false;
+
+      if (game.player.cards["ram"] < 3) {
+          console.log("Ram: " + game.player.cards['ram']);
+      } else {
+          bool = true;
+      }
+      if (game.player.cards["brick"] < 3) {
+          console.log("Brick: " + game.player.cards['brick']);
+      } else {
+          bool = true;
+      }
+      if (game.player.cards["basketball"] < 3) {
+          console.log("Basketball: " + game.player.cards['basketball']);
+      } else {
+          bool = true;
+      }
+      if (game.player.cards['ramen'] < 3) {
+          console.log("Ramen: " + game.player.cards['ramen']);
+      } else {
+          bool = true;
+      }
+      if (game.player.cards['book'] < 3) {
+          console.log("Book: " + game.player.cards['book']);
+      } else {
+          bool = true;
+      }
+
+      if (bool == false) {
+          console.log("Not enough cards");
+          return;
+      } else {
+          $("#trade_interface").show();
+          $("#part2").hide();
+          console.log("You have enough cards");
+      }
+  }
+
+  // TODO
+  var tradeProcessor = function(e) {
+      if ($(e.target).is("img")) {
+          var parent = $(e.target).parent();
+          if (parent.hasClass("rameses")) {
+              resource_to_trade = "RAM";
+          } else if (parent.hasClass("basketballs")) {
+              resource_to_trade = "BASKETBALL";
+          } else if (parent.hasClass("ramen")) {
+              resource_to_trade = "RAMEN";
+          } else if (parent.hasClass("books")) {
+              resource_to_trade = "BOOK";
+          } else if (parent.hasClass("bricks")) {
+              resource_to_trade = "BRICK";
+          }
+      }
+
+    resource_to_trade = resource_to_trade.toLowerCase();
     if(!(resource_to_trade in game.player.cards)){
-      alert("Bad input. Try again.");
+      $("#trade_message").html("Bad input. Try again");
     }
     else{
       if(game.player.cards[resource_to_trade] < 3){
-        alert("Not enough " + resource_to_trade + " cards.");
+        $("#trade_message").html("Not enough " + resource_to_trade + " cards.");
       }
       else{
+          $("#trade_message").html("Which resource would you like in return?");
+          $("#part1").hide();
+          $("#part2").show();
         game.player.cards[resource_to_trade] -= 3;
         updatePlayerInfo();
-        resource_to_get = prompt("Which resource would you like in return: RAM, BRICK, BASKETBALL, RAMEN, BOOK?").toLowerCase();
-        if(!(resource_to_get in game.player.cards)){
-          alert("Bad input. Try again.");
-          game.player.cards[resource_to_trade] += 3;
-          updatePlayerInfo();
-        }
-        else{
-          game.player.cards[resource_to_get]++;
-          updatePlayerInfo();
-        }
+        return;
       }
     }
   }
+
+  var tradeProcessor2 = function(e) {
+      if ($(e.target).is("img")) {
+          var parent = $(e.target).parent();
+          if (parent.hasClass("rameses")) {
+              resource_to_get = "RAM";
+          } else if (parent.hasClass("basketballs")) {
+              resource_to_get = "BASKETBALL";
+          } else if (parent.hasClass("ramen")) {
+              resource_to_get = "RAMEN";
+          } else if (parent.hasClass("books")) {
+              resource_to_get = "BOOK";
+          } else if (parent.hasClass("bricks")) {
+              resource_to_get = "BRICK";
+          }
+      }
+
+      resource_to_get = resource_to_get.toLowerCase();
+      if(!(resource_to_get in game.player.cards)){
+        alert("Bad input. Try again.");
+        $("#trade_message").html("Bad input. Try again");
+        game.player.cards[resource_to_trade] += 3;
+        updatePlayerInfo();
+      }
+      else{
+        game.player.cards[resource_to_get]++;
+        updatePlayerInfo();
+      }
+      $("#trade_message").html("Trade successful!");
+      setTimeout(function() {
+          $("#part2").hide();
+          $("#trade_interface").hide();
+          $("#trade_message").html("");
+      }, 2000);
+  }
+
 
   var diceRoll = function() {
     alert("Your turn! Buy/trade!");
@@ -985,6 +1070,10 @@ var checkBuyUniversity = function() {
     trade_button.addEventListener('click', tradeWithBank);
     var end_turn_button = document.getElementById("turn_over_button");
     end_turn_button.addEventListener('click', turnEnd);
+    var part1 = document.getElementById("part1");
+    part1.addEventListener('click', tradeProcessor);
+    var part2 = document.getElementById("part2");
+    part2.addEventListener('click', tradeProcessor2);
   };
   // Query for dice roll from other players
   var rollOtherDice = function() {
@@ -1313,6 +1402,10 @@ var checkBuyUniversity = function() {
     trade_button.removeEventListener('click', tradeWithBank);
     var end_turn_button = document.getElementById("turn_over_button");
     end_turn_button.removeEventListener('click', turnEnd);
+    var part1 = document.getElementById('part1');
+    part1.removeEventListener('click', tradeProcessor);
+    var part2 = document.getElementById('part2');
+    part2.removeEventListener('click', tradeProcessor2);
 
     // Update player cards
     $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
