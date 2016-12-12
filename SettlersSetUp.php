@@ -67,7 +67,6 @@ for($i = 0; $i < 19; $i++){
     $SQL = "Insert into Tiles (TileID, Robber, Placement)
       Values (" . ($i+1) . ", 1, " . $array[$i] . ")";
         mysqli_query($mysqli, $SQL);
-      }
   }
 
 $SQL = "Create Table Colleges (
