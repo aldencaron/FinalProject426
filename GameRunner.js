@@ -1,5 +1,5 @@
 function RunGame() {
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
 
@@ -1072,8 +1072,8 @@ var checkBuyUniversity = function() {
             roads_together[0].push(current_to_check.connections[1].roads[i]);
           }
         }
-
     }
+
 
   var checkRoadsSpecial = function(){
     var current_max_roads = 2;
@@ -1103,6 +1103,7 @@ var checkBuyUniversity = function() {
     if(current_max_roads > 3){
 
     }
+
   }
 
   var updateRoads = function(roads_array){
@@ -1183,6 +1184,7 @@ var checkBuyUniversity = function() {
         }
       }
     }
+
     checkKnightSpecial();
     updateOtherPlayerInfo();
   }

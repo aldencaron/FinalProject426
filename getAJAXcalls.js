@@ -49,7 +49,7 @@ $(document).ready(function() {
 var ret;
 //console.log("here");
 function getRoad(ID){
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
       $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + ID,
         type: "GET",
          dataType: "json",
@@ -65,7 +65,7 @@ function getRoad(ID){
     return ret;
   }
   function updateRoad(Road){
-      var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+      var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
         $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + Road.RoadID,
           type: "POST",
            dataType: "json",
@@ -103,7 +103,7 @@ function getRoad(ID){
 
     var ret;
   function getRoadAJAX(ID){
-    var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+    var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
         $.ajax({url:"/SettlersOfCarolina.php/Roads/"+ ID,
           type: "GET",
            dataType: "json",
@@ -120,7 +120,7 @@ function getRoad(ID){
     }
 
     function getPlayer(ID){
-      var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+      var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
           $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/"+ ID,
             type: "GET",
              dataType: "json",
@@ -133,7 +133,7 @@ function getRoad(ID){
        });
       }
       function getCard(ID){
-        var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+        var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
             $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/"+ ID,
               type: "GET",
                dataType: "json",
@@ -146,7 +146,7 @@ function getRoad(ID){
          });
         }
         function getTile(ID){
-          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+          var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
               $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles/"+ ID,
                 type: "GET",
                  dataType: "json",
@@ -159,7 +159,7 @@ function getRoad(ID){
            });
           }
           function getCollege(ID){
-            var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+            var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges/"+ ID,
                   type: "GET",
                    dataType: "json",
@@ -173,7 +173,7 @@ function getRoad(ID){
             }
 
           function getAllIDs(DBname){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/" + DBname,
                   type: "GET",
                    dataType: "json",
@@ -187,7 +187,7 @@ function getRoad(ID){
 
 
             function updateRoad(Road){
-                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads/" + Road.RoadID,
                     type: "PSOT",
                      dataType: "json",
@@ -201,7 +201,7 @@ function getRoad(ID){
                });
              }
             function createRoad(Road){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Roads",
                   type: "GET",
                    dataType: "json",
@@ -215,7 +215,7 @@ function getRoad(ID){
              });
             }
             function updateCard(Card){
-                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards/" + Card.CardID,
                     type: "GET",
                      dataType: "json",
@@ -229,7 +229,7 @@ function getRoad(ID){
                });
               }
             function createCard(Card){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Cards",
                   type: "GET",
                    dataType: "json",
@@ -243,7 +243,7 @@ function getRoad(ID){
              });
             }
             function updatePlayer(Player){
-                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Players/" + Player.PlayerID,
                     type: "GET",
                      dataType: "json",
@@ -257,7 +257,7 @@ function getRoad(ID){
                });
               }
             function createPlayer(Player){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Players",
                   type: "GET",
                    dataType: "json",
@@ -271,7 +271,7 @@ function getRoad(ID){
              });
             }
             function updateCollege(College){
-                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges/" + College.CollegeID,
                     type: "GET",
                      dataType: "json",
@@ -285,7 +285,7 @@ function getRoad(ID){
                });
               }
             function createCollege(College){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Colleges",
                   type: "GET",
                    dataType: "json",
@@ -299,7 +299,7 @@ function getRoad(ID){
              });
             }
             function updateTile(Tile){
-                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+                var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                   $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles/" + Tile.TileID,
                     type: "GET",
                      dataType: "json",
@@ -313,7 +313,7 @@ function getRoad(ID){
                });
               }
             function createTile(Tile){
-              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final";
+              var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final";
                 $.ajax({url: url_base + "/SettlersOfCarolina.php/Tiles",
                   type: "GET",
                    dataType: "json",

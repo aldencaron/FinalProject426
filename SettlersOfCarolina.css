@@ -54,41 +54,22 @@ body {
     border: 1pt solid black;
     background-color: white;
 }
+.button{
+  display: inline-block;
+  background-color: #699DB6;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  padding: 1px 3px;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-bottom-width: 3px;
 
-#chat-box {
-  height: 40%;
-  border: 1pt solid black;
-  background-color: #FFAABB;
-  overflow: scroll;
 }
-
-#chat-form{
-    position: fixed;
-    bottom: 10px;
-    width: 50%; }
-form input {
-    padding: 10px;
-    width: 35%;
-    margin-right: .5%; }
-form button {
-    width: 8%;
-    background:
-    rgb(130, 224, 255);
-    border: none;
-    padding: 10px;
+.button:hover {
+  background-color: #e3e3e3;
+  border-color: rgba(0,0,0,0.5);
 }
-#messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-#messages li {
-    padding: 5px 10px;
-}
-#messages li:nth-child(odd) {
-    background: #eee;
-}
-
 #buying_info{
   height: 25%;
   border: 1pt solid black;
@@ -110,6 +91,7 @@ form button {
     border: 1pt solid black;
     overflow: auto;
     text-align: center;
+    background-image: url(images/ocean.jpg);
 }
 
 #turn_info {
@@ -138,6 +120,10 @@ form button {
     border-radius: 10px;
     display: inline-block;
     background-color: white;
+
+}
+.cards:hover{
+  zoom:150%;
 }
 
 /* Specifies the image dimensions inside
