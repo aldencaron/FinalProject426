@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html><head>    <title>Settlers of Carolina</title>    <!--JQuery -->    <script src="http://www.cs.unc.edu/Courses/comp426-f16/jquery-3.1.0.js"></script>    <!--Preloading images-->    <link rel="preload" as="image" href="images/desert.jpg">    <link rel="preload" as="image" href="images/paper.jpg">    <link rel="preload" as="image" href="images/pasta.jpg">    <link rel="preload" as="image" href="images/balltexture.jpg">    <link rel="preload" as="image" href="images/brickwall.jpg">    <link rel="preload" as="image" href="images/field.jpg">    <!-- External CSS -->    <link rel="stylesheet" type="text/css" href="SettlersOfCarolina.css">    <!-- Board drawing -->
+    <script src="getAJAXcalls.js"></script>
+    <script src="transition.js"></script>
+	  <script src="GameObjects.js"></script>
+	  <script src="GameRunnerGodMode.js"></script>
+    <script src="WaitingRoom.js"></script>
+    <script src="jscolor.js"></script>
+</head>
+
+<body style="margins: 0px 0px 0px 0px !important;background-color:#99cccc;">    <!-- Obtain username, make player query in database -->    <div id = "startup" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">      <span style="vertical-align:middle;">        <h1> GAME SETTINGS</h1>        <div>You will need four people to play! Go ahead and register with a username to get started with a game!</div>        <br><br>        <form id = "settings">          <strong>  Username: </strong> <input id="username" style="border-radius:50px;" type = "text" name = "username"/>        </form>        <form id = "settings2" style = "position: relative; right: 17px;">            <strong> Color: </strong> <input id="color-picker" class="jscolor" value="364AB2" style = "position: relative; border-radius: 50px; left: 35px;"/>        </form>        <div style = "text-align: left;"> <h2>Instructions</h2>            <ol>              <li>The object of Settlers of Carolina is to be the first person to gain 10 victory points.                Points are earned by building structures, buying cards, and earning accomplishment cards such as “Tarheel Junction” and “Largest Army."                Each College is worth one victory point and each University is worth two victory points.                Each "Victory Point" card is worth one victory point.                The "Largest Army" card is worth two points while the "Tarheel Junction" card is worth one point.                The "Tarheel Junction" card will be awarded              to anyone who builds a "T" once.              The "Largest Army" card will be awarded to the first person to play three "Knight" cards.              The card will switch hands whenever a player plays more "Knight" cards than the "Largest Army" cardholder.</li>              <li>Place your Colleges and roads by clicking on the board to complete                the game setup.</li>              <li> After all players have placed both of their Colleges and roads, you all get some resource cards to start.                Take one resource card for each hex tile that your second College is attached to.</li>                <li> Each player's College will be touching up to three terrain hexes with three numbers.                  If the number that is rolled corresponds to the number that a player's College is on,                  then that player gets a resource card of that terrain hex.                  The same is true for a player with a University(instead of a College),                  except that they would get to pick up two resource cards.</li>                <li>If a player rolls a seven, then each player must make sure that they do                  not have more than seven cards in their hand. If a player does have more                  than seven cards, half will be stolen by the robber.                  The person that rolled the seven then gets to put the robber on whatever hex they desire.                Keep in mind that the robber blocks players from getting a resource from a hex.</li>                <li>The player can trade for resources with the bank in a 3:1 ratio.</li>                <li> Click yes to indicate when you are done with your turn.</li>            </ol>        </div>      </span>    </div>    <script>      $(document).ready(function() {                    $("#waitingRoom").hide();                    $('#color-picker').val(Math.floor(Math.random()*(256*256*256/4)+3*(256*256*256/4)).toString(16));                    var click = jQuery.Event( "submit" );                    $('#color-picker').trigger("focus");                    $('#username').trigger("focus");                    console.log($("#color-picker"));                  //  Math.floor(Math.random()*(256*256*256)).toString(16);                    //364ab2                    //value="364AB2      });            username = "";            color = "";            var id=0;            $("#settings").on("submit", function(e) {                e.preventDefault();                username = $("#settings input").val();                function getData() {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/",                        type: "GET",                        dataType: "JSON",                        success: function(response) {                            if (response == false) {                                id = 1;                            } else {                                id = response.length+1;                            }                            var roads_count = 0;                            var soldiers_count = 0;                            var points = 0;                            color = $("#settings2 input").val();                            console.log("in script html: " + color);                            var form_data = "Username=" + username +                            "&RoadsCount=" + roads_count + "&SoldiersCount=" +                            soldiers_count + "&Points=" + points + "&PlayerID="                            + id + "&HexColor=" + color;                            postPlayer(id, form_data);                        },                        error: function(response) {                            console.log(response);                        }                    });                }                getData();                function postPlayer(id, form_data) {                    $.ajax({                        url: "SettlersOfCarolina.php/Players/" + id,                        type: "POST",                        data: form_data,                        async: false,                        success: function(response) {                            console.log(response);                            // document.body.style.backgroundColor = "white";                            $("#waitingRoom").show();                            $("#startup").hide();                            WaitingRoom();                        },                        error: function(response) {                            console.log(response);                        }                    });                }            });            $("#settings2").on("submit", function(e) {                e.preventDefault();            });        </script>  <div id="waitingRoom" style="width:100%;height:100vh;display:inline-blocks;text-align:center;margins:0 auto;">    <h1> Waiting Room </h1>    Players in room: <div id="playercount">      stuff is here    </div>    <div id="playerinfo_waiting">    </div>  </div>	<div id="top_container">
+		<div id="col_one">
+			<div id="player_one" class="players">
+        <table id="player_one_cards">
+          <th colspan=5> Resource Cards </th>
+          <tr align="center"> <td width=65> <div class="cards rameses"> <img src = "images/rameses.gif" /> </div> </td>
+               <td width=65> <div class="cards bricks"> <img src ="images/bricks.gif" /> </div> </td>
+               <td width=65> <div class="cards basketballs"> <img src="images/basketball.gif" /> </div> </td>
+               <td width=65> <div class="cards ramen"> <img src="images/ramen.gif" /> </div> </td>
+               <td width=65> <div class="cards books"> <img src="images/book.gif" /> </div> </td>
+          </tr>
+          <tr align="center">
+             <td> Rams </td>
+             <td> Bricks </td>
+             <td> Basketballs </td>
+             <td> Ramen </td>
+             <td> Books </td>
+          </tr>
+          <tr align="center" fontsize="10">
+             <td id="player_one_ram_cards"> 0 </td>
+             <td id="player_one_brick_cards"> 0 </td>
+             <td id="player_one_basketball_cards"> 0 </td>
+             <td id="player_one_ramen_cards"> 0 </td>
+             <td id="player_one_book_cards"> 0 </td> </tr>
+          <th colspan=5> Development Cards </th>
+          <tr align="center">
+            <td> <div class ="cards folt"> <img src="images/folt.gif" /> </div> </td>
+            <td> <div class="cards roadBuilding"> <img src="images/roadBuilding.gif" /> </div> </td>
+            <td> <div class="cards volunteer"> <img src="images/volunteer.gif" /> </div> </td>
+            <td> <div class="cards monopoly"> <img src="images/monopoly.gif" /> </div> </td>
+            <td></td>
+          </tr>
+          <tr align="center">
+             <td> Knight </td>
+             <td> Roads </td>
+             <td> Volunteering </td>
+             <td> Monopoly </td>
+             <td>  </td>
+          </tr>
+          <tr align="center">
+             <td> <button class = "button" id="use_knight" type="button">Use</button></td>
+             <td> <button class = "button" id="use_roads" type="button">Use</button> </td>
+             <td> <button class = "button" id="use_volunteer" type="button">Use</button> </td>
+             <td> <button class = "button" id="use_monopoly" type="button">Use</button> </td>
+             <td>  </td>
+          </tr>
+          <tr align="center">
+             <td id="player_one_knight_cards"> 0 </td>
+             <td id="player_one_road_cards"> 0 </td>
+             <td id="player_one_volunteer_cards"> 0 </td>
+             <td id="player_one_monopoly_cards"> 0 </td>
+             <td> </td>
+          </tr>
+          <th colspan=5> Victory Point Cards </th>
+          <tr align="center">
+            <td> <div class="cards well"> <img src="images/well.gif" /> </div> </td>
+            <td> <div class="cards pit"> <img src="images/pit.gif" /> </div> </td>
+            <td> <div class="cards davis"> <img src="images/davis.gif" /> </div> </td>
+            <td> <div class="cards sitterson"> <img src="images/sitterson.gif" /> </div> </td>
+            <td> <div class="cards bell"> <img src="images/bell.gif" /> </div> </td>
+          </tr>
+          <tr align="center">
+             <td> Old Well </td>
+             <td> The Pit </td>
+             <td> Davis </td>
+             <td> Sitterson </td>
+             <td> Bell Tower </td>
+          </tr>
+          <tr align="center">
+             <td id="player_one_well_cards"> 0 </td>
+             <td id="player_one_pit_cards"> 0 </td>
+             <td id="player_one_davis_cards"> 0 </td>
+             <td id="player_one_sitterson_cards"> 0 </td>
+             <td id="player_one_bell_cards"> 0 </td>
+          </tr>
+        </table>
+        <div id="player_one_points"> Points: 0 </div><br>
+        <div id="player_one_special_roads"></div>
+        <div id="player_one_special_knights"></div>
+			</div>
+      <div id="buying_info">
+        <table id="buying_table">
+            <tr><th>Building</th><th>Ram</th><th>Brick</th><th>Ball</th><th>Ramen</th><th>Book</th><th></th></tr>
+            <tr align = "center"><td>Road</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td><button class = "button" id="buy_road">Buy</button></td></tr>
+            <tr align = "center"><td>College</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td><button class = "button" id="buy_college">Buy</button></td></tr>
+            <tr align = "center"><td>University</td><td>0</td><td>0</td><td>3</td><td>2</td><td>0</td><td><button class = "button" id="buy_university">Buy</button></td></tr>
+            <tr align = "center"><td>Dev Card</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td><button class = "button" id="buy_card">Buy</button></td></tr></table>
+      </div>
+		</div>
+		<div id="col_two">
+			<div id="board">
+                <canvas id="board_canvas">
+			</div>
+			<div id="turn_info">
+        <div id="current_turn"></div>
+        <div id="current_dice_roll_text">Dice Roll: </div>
+      </div>
+      <div id="turn_panel">
+        Turn Panel<br>
+        Do you want to trade? <button class = "button" id="trade_button" type="button">Trade</button><br>
+        Turn over? <button class = "button" id="turn_over_button" type="button">Yes</button><br>
+      </div>
+		</div>
+	<div id="col_three">
+			<div id="player_two" class="players">
+				<b><div id="player_two_username">Player Two</div></b>
+        <div id="player_two_num_cards">Cards: 0 </div>
+        <div id="player_two_points">Known Points: 0 </div>
+        <div id="player_two_special_roads"></div>
+        <div id="player_two_special_knights"></div>
+			</div>
+      <div id="player_three" class="players">
+        <b><div id="player_three_username">Player Three</div></b>
+        <div id="player_three_num_cards">Cards: 0 </div>
+        <div id="player_three_points">Known Points: 0 </div>
+        <div id="player_three_special_roads"></div>
+        <div id="player_three_special_knights"></div>
+			</div>
+			<div id="player_four" class="players">
+        <b><div id="player_four_username">Player Four</div></b>
+        <div id="player_four_num_cards">Cards: 0 </div>
+        <div id="player_four_points">Known Points: 0 </div>
+        <div id="player_four_special_roads"></div>
+        <div id="player_four_special_knights"></div>
+      </div>
+      <div id = "trade_interface">
+          <div id = "part1">
+              <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
+              <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
+              <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
+              <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
+              <div class="cards books"> <img src="images/book.gif" /> </div>
+          </div>
+
+          <div id = "part2">
+              <div class="cards rameses"> <img src = "images/rameses.gif" /> </div>
+              <div class="cards bricks"> <img src ="images/bricks.gif" /> </div>
+              <div class="cards basketballs"> <img src="images/basketball.gif" /> </div>
+              <div class="cards ramen"> <img src="images/ramen.gif" /> </div>
+              <div class="cards books"> <img src="images/book.gif" /> </div>
+          </div>
+          <p id = "trade_message">You can trade with the bank at a 3:1 ratio. Pick the card you want to trade.</p>
+      </div>
+    </div>
+	</div>
+
+    <!-- Hide container during game startup -->
+    <script>
+        $("#top_container").hide();
+        $("#trade_interface").hide();
+
+        // $("#trade_button").click(function(e) {
+        //     //tradeWithBank();
+        //     if ($("#trade_interface").is(":visible")) {
+        //         $("#trade_interface").hide();
+        //     } else {
+        //         $("#trade_interface").show();
+        //     }
+        // });
+
+        $("#trade_form").on("submit", function(e) {
+            e.preventDefault();
+        });
+    </script>
+
+    <!-- <script>
+        username = "";
+        $("#settings").on("submit", function(e) {
+            e.preventDefault();
+            username = $("#settings input").val();
+
+            var id = 0;
+            function getData() {
+                $.ajax({
+                    url: "SettlersOfCarolina.php/Players/",
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function(response) {
+                        if (response == false) {
+                            id = 1;
+                        } else {
+                            id = response.length + 1;
+                        }
+
+                        var roads_count = 0;
+                        var soldiers_count = 0;
+                        var points = 0;
+
+                        var form_data = "Username=" + username +
+                        "&RoadsCount=" + roads_count + "&SoldiersCount=" +
+                        soldiers_count + "&Points=" + points + "&PlayerID=" + id;
+
+                        postPlayer(id, form_data);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            }
+            getData();
+
+            function postPlayer(id, form_data) {
+                $.ajax({
+                    url: "SettlersOfCarolina.php/Players/" + id,
+                    type: "POST",
+                    data: form_data,
+                    success: function(response) {
+                        console.log(response);
+                        $("#top_container").show();
+                        $("#startup").hide();
+                        RunGame();
+                    }
+                });
+            }
+        });
+    </script> -->
+</body>
+</html>
