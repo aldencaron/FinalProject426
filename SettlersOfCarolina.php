@@ -567,6 +567,7 @@ exit();
           $TileID= intval($path_components[2]);
           $Tile = Tile::findByID($TileID);
           if($Tile==null){
+            error_log("created Tile for some reason", 3,  "debug.txt");
               function createTile() {
                   // Create new Tile
                   $new_TileID = false;
@@ -631,6 +632,9 @@ exit();
           if($new_Placement != false){
             $Tile->setPlacement($new_Placement);
           }
+          error_log( print_r($new_Robber, true), 3,  "debug.txt");
+          error_log(print_r($new_TileID, true), 3,  "debug.txt");
+          error_log(print_r($new_Placement, true), 3,  "debug.txt");
              //return json
             header("Content-type: application/json");
             print($Tile->getJSON());

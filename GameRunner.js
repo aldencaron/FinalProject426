@@ -665,8 +665,9 @@ var checkBuyUniversity = function() {
     var rect = board_canvas.getBoundingClientRect();
     var x = (((event.clientX - rect.left) / (rect.right - rect.left) * board_canvas.width));
     var y = (((event.clientY - rect.top) / (rect.bottom - rect.top) * board_canvas.height));
-
-    // Check hexagons
+    for(var i = 0; i < game.num_tiles; i++){
+      console.log("First Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
+    }
     for (var i = 0; i < game.num_tiles; i++) {
       if(game.tiles[i].robber){
         game.tiles[i].robber = false;
@@ -677,14 +678,21 @@ var checkBuyUniversity = function() {
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
             console.log("Success in getting rid of robber");
-            console.log(tile_json["TileID"]);
-            console.log(tile_json["Robber"]);
+            console.log("ID to get rid of: " + tile_json["TileID"]);
+            console.log("Robber to get rid of: " + tile_json["Robber"]);
+            console.log("Placement to get rid of: " + tile_json["Robber"]);
           },
           error: function(jqXHR, status, error) {
             console.log(jqXHR.responseText);
           }
         });
       }
+    }
+    for(var i = 0; i < game.num_tiles; i++){
+      console.log("Second Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
+    }
+    // Check hexagons
+    for (var i = 0; i < game.num_tiles; i++) {
       if (game.checkLeft(game.tiles[i].x_coords[4], x) &&
       game.checkRight(game.tiles[i].x_coords[1], x) &&
       game.checkTopLeft(game.tiles[i].x_coords[5], game.tiles[i].y_coords[5], game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], x, y) &&
@@ -707,6 +715,9 @@ var checkBuyUniversity = function() {
           }
         });
       }
+    }
+    for(var i = 0; i < game.num_tiles; i++){
+      console.log("Third Loop - ID: " + game.tiles[i].id + ", Robber: " + game.tiles[i].robber + ", Placement: " + game.tiles[i].placement);
     }
     if (partial_turn_over) {
       board_canvas.removeEventListener('mousedown', moveRobber);
@@ -975,10 +986,8 @@ var checkBuyUniversity = function() {
 
   var checkKnightSpecial = function(){
     //var current_max_army = 2;
-    console.log("current max player at top:" + current_max_army_player);
+    //console.log("current max player at top:" + current_max_army_player);
     if(current_max_army_player == 0){
-      console.log("player 0 has knights count: " + game.other_players[0].knights_count);
-      console.log("own player has knights: " + game.player.used_knights);
       if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.other_players[0].id;
@@ -1026,8 +1035,6 @@ var checkBuyUniversity = function() {
         current_max_army = game.other_players[2].knights_count;
         current_max_army_player = game.other_players[2].id;
       }
-      console.log(game.player.used_knights);
-      console.log(current_max_army);
       if(game.player.used_knights > current_max_army){
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
