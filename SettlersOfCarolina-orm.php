@@ -996,6 +996,7 @@ class Player {
       $result = $mysqli->query("SELECT * FROM Players");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['PlayerID'] = $row['PlayerID'];
@@ -1006,6 +1007,7 @@ class Player {
           $json_sub['HexColor'] = $row['HexColor'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 
@@ -1163,12 +1165,14 @@ class DiceRoll {
       $result = $mysqli->query("SELECT * FROM DiceRolls");
 
       $json = array();
+      if($result){
       while ($row = $result->fetch_array()) {
           $json_sub = array();
           $json_sub['DiceID'] = $row['DiceID'];
           $json_sub['RollResult'] = $row['RollResult'];
           $json[] = $json_sub;
       }
+    }
       return json_encode($json);
   }
 

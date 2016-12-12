@@ -15,6 +15,7 @@ function RunGame() {
   var just_had_turn = false;
   var current_max_roads_player = 0;
   var current_max_army_player = 0;
+  var current_max_army = 2;
   var roads_card = false;
   // =============================================================================
   // BOARD DRAWING
@@ -675,7 +676,9 @@ var checkBuyUniversity = function() {
           async: false,
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
-            console.log("Success in getting rid of robber.");
+            console.log("Success in getting rid of robber");
+            console.log(tile_json["TileID"]);
+            console.log(tile_json["Robber"]);
           },
           error: function(jqXHR, status, error) {
             console.log(jqXHR.responseText);
@@ -688,6 +691,7 @@ var checkBuyUniversity = function() {
       game.checkTopRight(game.tiles[i].x_coords[0], game.tiles[i].y_coords[0], game.tiles[i].x_coords[1], game.tiles[i].y_coords[1], x, y) &&
       game.checkBottomLeft(game.tiles[i].x_coords[2], game.tiles[i].y_coords[2], game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], x, y) &&
       game.checkBottomRight(game.tiles[i].x_coords[3], game.tiles[i].y_coords[3], game.tiles[i].x_coords[4], game.tiles[i].y_coords[4], x, y)) {
+        console.log("INSIDE IF STATEMENT TWICE");
         partial_turn_over = true;
         game.tiles[i].robber = true;
         $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
@@ -741,15 +745,15 @@ var checkBuyUniversity = function() {
       game.player.cards["knight"]--;
       game.player.used_knights++;
       $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
-          type: "POST",
-          dataType: "json",
-          data: playerGame_playerAJAX(game.player),
-          async: false,
-          success: function(Card_json, status, jqXHR) {
-          },
-          error: function(jqXHR, status, error) {
-           console.log(jqXHR.responseText);
-          }
+       type: "POST",
+       dataType: "json",
+       data: playerGame_playerAJAX(game.player),
+       async: false,
+       success: function(Card_json, status, jqXHR) {
+       },
+       error: function(jqXHR, status, error) {
+        console.log(jqXHR.responseText);
+       }
       });
       updatePlayerInfo();
       checkKnightSpecial();
@@ -913,7 +917,7 @@ var checkBuyUniversity = function() {
     use_volunteer_card.addEventListener('click', useVolunteerCard);
     var use_monopoly_card = document.getElementById("use_monopoly");
     use_monopoly_card.addEventListener('click', useMonopolyCard);
-    var trading = document.getElementById("trade_button");
+    var trade_button = document.getElementById("trade_button");
     trade_button.addEventListener('click', tradeWithBank);
     var end_turn_button = document.getElementById("turn_over_button");
     end_turn_button.addEventListener('click', turnEnd);
@@ -970,7 +974,7 @@ var checkBuyUniversity = function() {
 
 
   var checkKnightSpecial = function(){
-    var current_max_army = 2;
+    //var current_max_army = 2;
     console.log("current max player at top:" + current_max_army_player);
     if(current_max_army_player == 0){
       console.log("player 0 has knights count: " + game.other_players[0].knights_count);
