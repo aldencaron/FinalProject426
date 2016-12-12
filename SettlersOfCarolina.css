@@ -4,8 +4,10 @@ body {
 
 #top_container {
     display: flex;
+    height: 800px;
     flex-direction: row;
     justify-content: space-around;
+
 }
 
 #col_one {
@@ -23,6 +25,7 @@ body {
 #col_three {
     display: flex;
     width: 25%;
+    border: 1pt solid black;
     flex-direction: column;
 }
 
@@ -37,21 +40,24 @@ body {
 #player_two {
     float: right;
     height: 20%;
-    border: 1pt solid black;
+    border-top: 1pt solid black;
+    border-bottom: : 1pt solid black;
     background-color: white;
 }
 
 #player_three {
     float: left;
     height: 20%;
-    border: 1pt solid black;
+    border-top: 1pt solid black;
+    border-bottom: : 1pt solid black;
     background-color: white;
 }
 
 #player_four {
     float: right;
     height: 20%;
-    border: 1pt solid black;
+    border-top: 1pt solid black;
+    border-bottom: : 1pt solid black;
     background-color: white;
 }
 .button{
@@ -111,6 +117,11 @@ body {
 
 #player_one_cards td {
     font-size: 12px;
+}
+
+#trade_interface{
+  border: 1pt solid black;
+  background-color: black;
 }
 
 /* General card dimensions */

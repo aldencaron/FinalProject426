@@ -3,9 +3,9 @@
 date_default_timezone_set('America/New_York');
 
 $mysqli = new mysqli("classroom.cs.unc.edu",
-                   "aldenc",
+                   "shellyg",
                    "comp426",
-		               "aldencdb");
+		               "shellygdb");
 $SQL = "drop table if exists Players";
 mysqli_query($mysqli, $SQL);
 $SQL = "drop table if exists Roads";
