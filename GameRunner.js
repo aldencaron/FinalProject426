@@ -1,5 +1,5 @@
 function RunGame() {
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final/";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
 
@@ -387,7 +387,7 @@ var buyRoad = function(event) {
       }
     }
     drawBoard(false, false, false, false, false, 0);
-    console.log("roads_card: " + roads_card);
+    checkTarheelRoad();
     if(roads_card){
       roads_card = false;
       var available = false;
@@ -495,6 +495,7 @@ var buyCollege = function() {
   if (partial_turn_over) {
     board_canvas.removeEventListener('mousedown', buyCollege);
     drawBoard(false, false, false, false, false, 0);
+    checkTarheelRoad();
     partial_turn_over = false;
   }
 };
@@ -630,6 +631,7 @@ var checkBuyUniversity = function() {
   // Update html for player
   var updatePlayerInfo = function() {
     //Update card counts
+    checkTarheelRoad();
     $("#player_one_ram_cards").text(game.player.cards["ram"]);
     $("#player_one_brick_cards").text(game.player.cards["brick"]);
     $("#player_one_basketball_cards").text(game.player.cards["basketball"]);
@@ -648,6 +650,8 @@ var checkBuyUniversity = function() {
 
   };
   var updateOtherPlayerInfo = function() {
+    checkTarheelRoad();
+    checkKnightSpecial();
     $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
     $('#player_two_points').text("Points: " + game.other_players[0].points);
@@ -879,9 +883,6 @@ var checkBuyUniversity = function() {
           });
         }
       }
-
-
-
       updatePlayerInfo();
     }
   }
@@ -1223,7 +1224,7 @@ var checkBuyUniversity = function() {
             }
           }
           if(num_colleges_used == 3){
-            $("#player_three_special_roads").text("Tarheel Junction Present");
+            $("#player_four_special_roads").text("Tarheel Junction Present");
             game.other_players[2].points += 2;
             game.other_players[2].tarheel_road = true;
           }
@@ -1317,63 +1318,6 @@ var checkBuyUniversity = function() {
     updateOtherPlayerInfo();
   }
 
-  var getLongestContinuousRoads = function(player){
-    //http://stackoverflow.com/questions/3191460/finding-the-longest-road-in-a-settlers-of-catan-game-algorithmically
-    var roads_not_checked = [];
-    var roads_together = [];
-    var roads_checked = [];
-    for(var i = 0; i < player.roads.length; i++){
-      roads_not_checked[i] = player.roads[i];
-    }
-    var current_to_check = roads_not_checked[roads_not_checked.length - 1];
-    roads_together[0].push(current_to_check);
-    roads_not_checked.pop();
-    for(var i = 0; i < current_to_check.connections[0].roads.length; i++){
-      if(current_to_check.connections[0].roads[i].id != current_to_check.id
-        && current_to_check.connections[0].roads[i].player.id == player.id){
-          roads_together[0].push(current_to_check.connections[0].roads[i]);
-        }
-      }
-      for(var i = 0; i < current_to_check.connections[1].roads.length; i++){
-        if(current_to_check.connections[1].roads[i].id != current_to_check.id
-          && current_to_check.connections[1].roads[i].player.id == player.id){
-            roads_together[0].push(current_to_check.connections[1].roads[i]);
-          }
-        }
-    }
-
-
-  var checkRoadsSpecial = function(){
-    var current_max_roads = 2;
-
-    // Figure out which player
-    if(current_max_roads_player == game.player.id){
-      current_max_roads = game.player.roads.length;
-    }
-    else{
-      for(var i = 0; i < game.other_players.length; i++){
-        if(current_max_roads_player == game.other_players[i].id){
-          curent_max_roads = game.other_players[i].roads.length;
-        }
-      }
-    }
-    // Figure out new current roads
-    for(var i = 0; i < game.other_players.length; i++){
-      if(game.other_players[i].roadss.length > current_max_roads){
-        current_max_roads_player = game.other_players[i].id;
-        current_max_roads = game.other_players[i].roads.length;
-      }
-    }
-    if(game.player.roads.length > current_max_roads){
-      current_max_roads_player = game.player.id;
-      current_max_roads = game.player.roads.length;
-    }
-    if(current_max_roads > 3){
-
-    }
-
-  }
-
   var updateRoads = function(roads_array){
     for(var i = 0; i < roads_array.length; i++){
       for(var j = 0; j < game.other_players.length; j++){
@@ -1452,7 +1396,7 @@ var checkBuyUniversity = function() {
         }
       }
     }
-
+    checkTarheelRoad();
     checkKnightSpecial();
     updateOtherPlayerInfo();
   }
