@@ -842,7 +842,7 @@ var checkBuyUniversity = function() {
          for( var i=0;i<card_array.length;i++){
            total += card_array[i][monopoly_resource.toLowerCase()];
          }
-         game.player.cards[monopoly_resource.toLowerCase()]= total;
+         game.player.cards[monopoly_resource.toLowerCase()]+= total;
        },
        error: function(jqXHR, status, error) {
         console.log(jqXHR.responseText);
@@ -855,9 +855,6 @@ var checkBuyUniversity = function() {
        data: playerGame_cardsAJAX(game.player),
        async: false,
        success: function(card_array, status, jqXHR) {
-         for( var i=0;i<card_array.length;i++){
-           total += card_array[i][monopoly_resource];
-         }
        },
        error: function(jqXHR, status, error) {
         console.log(jqXHR.responseText);
