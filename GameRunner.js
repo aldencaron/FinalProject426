@@ -1,5 +1,5 @@
 function RunGame() {
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/shellyg/final/";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
 
