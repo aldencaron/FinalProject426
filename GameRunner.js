@@ -1,4 +1,33 @@
+window.onbeforeunload = function () {
+    $.ajax({
+        url: "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/SettlersSetUp.php",
+        type: "GET",
+        success: function() {
+            alert("Success!");
+        },
+        error: function(response) {
+            console.log(response);
+        }
+    });
+    $('#startup').show();
+    $('#top_container').hide();
+};
+
 function RunGame() {
+    var intervalID = setInterval(function() {
+        $.ajax({
+            url: "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/SettlersOfCarolina.php/Players/getAll",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.length == 0) {
+                    alert("Game over! Someone left the game.");
+                    clearInterval(intervalID);
+                    location.reload();
+                }
+            }
+        });
+    }, 5000);
   var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
