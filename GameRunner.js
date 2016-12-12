@@ -1124,24 +1124,29 @@ var checkBuyUniversity = function() {
   };
 
   var checkTarheelRoad = function(){
+    console.log("In check road");
     if(!game.player.tarheel_road){
-      for(var i = 0; i < game.player.colleges.length; i++){
+      console.log("Own player does not have tarheel road.");
+      for(var i = 0; i < game.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.player.colleges[i].roads.length; j++){
-          if(game.player.colleges[i].roads[j].player.id == game.player.id){
+        for(var j = 0; j < game.colleges[i].roads.length; j++){
+          if(game.colleges[i].roads[j].player.id == game.player.id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.player.colleges[i].roads.length; j++){
-            if(game.player.colleges[i].roads[j].connections[0].player.id == game.player.id && game.player.colleges[i].roads[j].connections[1].player.id == game.player.id){
+          console.log("Three roads are used.");
+          for(var j = 0; j < game.colleges[i].roads.length; j++){
+            if(game.colleges[i].roads[j].connections[0].player.id == game.player.id
+              || game.colleges[i].roads[j].connections[1].player.id == game.player.id){
               num_colleges_used++;
             }
           }
           if(num_colleges_used == 3){
+            console.log("Three colleges are used.");
             $("#player_one_special_roads").text("Tarheel Junction Present");
-            game.player.points += 2;
+            game.player.points++;
             game.player.tarheel_road = true;
             updatePlayerInfo();
             $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
@@ -1160,72 +1165,72 @@ var checkBuyUniversity = function() {
       }
     }
     if(!game.other_players[0].tarheel_road){
-      for(var i = 0; i < game.other_players[0].colleges.length; i++){
+      for(var i = 0; i < game.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[0].colleges[i].roads.length; j++){
-          if(game.other_players[0].colleges[i].roads[j].player.id == game.other_players[0].id){
+        for(var j = 0; j < game.colleges[i].roads.length; j++){
+          if(game.colleges[i].roads[j].player.id == game.other_players[0].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[0].colleges[i].roads.length; j++){
-            if(game.other_players[0].colleges[i].roads[j].connections[0].player.id == game.other_players[0].id
-              && game.other_players[0].colleges[i].roads[j].connections[1].player.id == game.other_players[0].id){
+          for(var j = 0; j < game.colleges[i].roads.length; j++){
+            if(game.colleges[i].roads[j].connections[0].player.id == game.other_players[0].id
+              || game.colleges[i].roads[j].connections[1].player.id == game.other_players[0].id){
               num_colleges_used++;
             }
           }
           if(num_colleges_used == 3){
             $("#player_two_special_roads").text("Tarheel Junction Present");
-            game.other_players[0].points += 2;
+            game.other_players[0].points++;
             game.other_players[0].tarheel_road = true;
           }
         }
       }
     }
     if(!game.other_players[1].tarheel_road){
-      for(var i = 0; i < game.other_players[1].colleges.length; i++){
+      for(var i = 0; i < game.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[1].colleges[i].roads.length; j++){
-          if(game.other_players[1].colleges[i].roads[j].player.id == game.other_players[1].id){
+        for(var j = 0; j < game.colleges[i].roads.length; j++){
+          if(game.colleges[i].roads[j].player.id == game.other_players[1].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[1].colleges[i].roads.length; j++){
-            if(game.other_players[1].colleges[i].roads[j].connections[0].player.id == game.other_players[1].id
-              && game.other_players[1].colleges[i].roads[j].connections[1].player.id == game.other_players[1].id){
+          for(var j = 0; j < game.colleges[i].roads.length; j++){
+            if(game.colleges[i].roads[j].connections[0].player.id == game.other_players[1].id
+              || game.colleges[i].roads[j].connections[1].player.id == game.other_players[1].id){
               num_colleges_used++;
             }
           }
           if(num_colleges_used == 3){
             $("#player_three_special_roads").text("Tarheel Junction Present");
-            game.other_players[1].points += 2;
+            game.other_players[1].points++;
             game.other_players[1].tarheel_road = true;
           }
         }
       }
     }
     if(!game.other_players[2].tarheel_road){
-      for(var i = 0; i < game.other_players[2].colleges.length; i++){
+      for(var i = 0; i < game.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[2].colleges[i].roads.length; j++){
-          if(game.other_players[2].colleges[i].roads[j].player.id == game.other_players[2].id){
+        for(var j = 0; j < game.colleges[i].roads.length; j++){
+          if(game.colleges[i].roads[j].player.id == game.other_players[2].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[2].colleges[i].roads.length; j++){
-            if(game.other_players[2].colleges[i].roads[j].connections[0].player.id == game.other_players[2].id
-              && game.other_players[2].colleges[i].roads[j].connections[1].player.id == game.other_players[2].id){
+          for(var j = 0; j < game.colleges[i].roads.length; j++){
+            if(game.colleges[i].roads[j].connections[0].player.id == game.other_players[2].id
+              || game.colleges[i].roads[j].connections[1].player.id == game.other_players[2].id){
               num_colleges_used++;
             }
           }
           if(num_colleges_used == 3){
             $("#player_four_special_roads").text("Tarheel Junction Present");
-            game.other_players[2].points += 2;
+            game.other_players[2].points++;
             game.other_players[2].tarheel_road = true;
           }
         }

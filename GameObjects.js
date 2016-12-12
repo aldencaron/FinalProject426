@@ -80,7 +80,7 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.too_close = false; // for the one away restriction
     this.university = false; // if upgraded to university
     this.radius = 8; // for drawing purposes
-    this.player = null; // which player owns
+    this.player = 0; // which player owns
     this.roads = []; // list of connecting roads
   }
 
@@ -97,7 +97,7 @@ var SettlersGame = function(tiles_array, dev_array) {
     this.available = false; // whether or not player can buy
     this.used = false; // if owned by player
     this.radius = 10; // for drawing purposes
-    this.player = null; // which player owns
+    this.player = 0; // which player owns
   }
 
   // Tile objects
