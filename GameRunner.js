@@ -631,7 +631,6 @@ var checkBuyUniversity = function() {
   // Update html for player
   var updatePlayerInfo = function() {
     //Update card counts
-    checkTarheelRoad();
     $("#player_one_ram_cards").text(game.player.cards["ram"]);
     $("#player_one_brick_cards").text(game.player.cards["brick"]);
     $("#player_one_basketball_cards").text(game.player.cards["basketball"]);
@@ -650,8 +649,6 @@ var checkBuyUniversity = function() {
 
   };
   var updateOtherPlayerInfo = function() {
-    checkTarheelRoad();
-    checkKnightSpecial();
     $('#player_two_username').text(game.other_players[0].username);
     $('#player_two_num_cards').text("Number of Cards: " + game.other_players[0].num_cards);
     $('#player_two_points').text("Points: " + game.other_players[0].points);
