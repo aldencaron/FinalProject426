@@ -1,5 +1,5 @@
 function RunGame() {
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
 
@@ -820,28 +820,34 @@ var checkBuyUniversity = function() {
       game.player.cards["monopoly"]--;
       alert("You declared a monopoly!");
       var done=0;
+      var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
       while(!done){
-        var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
-        if(monopoly_resource!= "RAM" || monopoly_resource!= "BRICK"
-         || monopoly_resource!="BASKETBALL" || monopoly_resource!="RAMEN" || monopoly_resource!="BOOK"){
-          alert("please type a correct option");
+        if(monopoly_resource!= "RAM" && monopoly_resource!= "BRICK"
+         && monopoly_resource!="BASKETBALL" && monopoly_resource!="RAMEN" && monopoly_resource!="BOOK"){
+          alert("Please type a correct option.");
+          monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
         }
         else{
           done=1;
         }
     }
-    String.prototype.capitalizeFirstLetter = function() {
+    String.prototype.capitalizeFirstLetter = function capitalizeFirstLetter() {
         return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
     }
+    console.log(monopoly_resource);
+    console.log(monopoly_resource.capitalizeFirstLetter());
       var total=0;
       $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/getAll",
        type: "Get",
        dataType: "json",
        async: false,
        success: function(card_array, status, jqXHR) {
-         for( var i=0;i<card_array.length;i++){
-           total += card_array[i][monopoly_resource.toLowerCase()];
+         for( var i=1;i<card_array.length+1;i++){
+           if(i!=game.player.id){
+           total += parseInt(card_array[i-1][monopoly_resource.capitalizeFirstLetter()]);
+           console.log(total);
          }
+       }
          game.player.cards[monopoly_resource.toLowerCase()]+= total;
        },
        error: function(jqXHR, status, error) {
@@ -866,12 +872,9 @@ var checkBuyUniversity = function() {
           $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + i,
            type: "POST",
            dataType: "json",
-           data: (monopoly_resource.capitalizeFirstLetter + "= " + 0),
+           data: (monopoly_resource.capitalizeFirstLetter() + "=0"),
            async: false,
            success: function(card_array, status, jqXHR) {
-             for( var i=0;i<card_array.length;i++){
-               total += card_array[i][monopoly_resource];
-             }
            },
            error: function(jqXHR, status, error) {
             console.log(jqXHR.responseText);
