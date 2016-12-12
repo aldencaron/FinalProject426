@@ -1,5 +1,5 @@
 function RunGame() {
-  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/mhb/final/";
+  var url_base= "http://wwwp.cs.unc.edu/Courses/comp426-f16/users/aldenc/final/";
 
   alert("Welcome " + username + "! You are player " + id + "!");
 
@@ -1124,9 +1124,7 @@ var checkBuyUniversity = function() {
   };
 
   var checkTarheelRoad = function(){
-    console.log("In check road");
     if(!game.player.tarheel_road){
-      console.log("Own player does not have tarheel road.");
       for(var i = 0; i < game.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
@@ -1136,7 +1134,6 @@ var checkBuyUniversity = function() {
           }
         }
         if(num_roads_used == 3){
-          console.log("Three roads are used.");
           for(var j = 0; j < game.colleges[i].roads.length; j++){
             if(game.colleges[i].roads[j].connections[0].player.id == game.player.id
               || game.colleges[i].roads[j].connections[1].player.id == game.player.id){
@@ -1144,7 +1141,6 @@ var checkBuyUniversity = function() {
             }
           }
           if(num_colleges_used == 3){
-            console.log("Three colleges are used.");
             $("#player_one_special_roads").text("Tarheel Junction Present");
             game.player.points++;
             game.player.tarheel_road = true;
@@ -1508,7 +1504,6 @@ var checkBuyUniversity = function() {
         error: function(jqXHR, status, error) {
          console.log(jqXHR.responseText);
         }
-
       });
     }
     turnChecks();
@@ -1526,7 +1521,7 @@ var checkBuyUniversity = function() {
     else if (game.turn_number == game.player.id) {
       game.fireEvent(new game.SetupTurnEvent());
     }
-    else if (game.turn_number == game.player.id + 4) {
+    else if (game.turn_number == game.player.id + 4){
       game.fireEvent(new game.SetupTurnEvent());
     }
     else if (game.turn_number % 4 == game.player.id || ((game.turn_number % 4) + 4) == game.player.id) {
