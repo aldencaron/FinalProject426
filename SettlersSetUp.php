@@ -64,9 +64,14 @@ mysqli_query($mysqli, $SQL);
 $array = range(1,19);
 shuffle($array);
 for($i = 0; $i < 19; $i++){
+//   i  $SQL = "Insert into Tiles (TileID, Robber, Placement)
+//     Values (" . ($i+1) . ", 1, " . $array[$i] . ")";
+//       mysqli_query($mysqli, $SQL);
+// }else{
     $SQL = "Insert into Tiles (TileID, Robber, Placement)
-      Values (" . ($i+1) . ", 1, " . $array[$i] . ")";
+      Values (" . ($i+1) . ", 2, " . $array[$i] . ")";
         mysqli_query($mysqli, $SQL);
+      // }
   }
 
 $SQL = "Create Table Colleges (
