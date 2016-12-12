@@ -897,21 +897,23 @@ var checkBuyUniversity = function() {
        }
       });
 
-      for(var i=1; i<5; i++){
-        if(i!=game.player.id){
-          $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + i,
-           type: "POST",
-           dataType: "json",
-           data: (monopoly_resource.capitalizeFirstLetter() + "=0"),
-           async: false,
-           success: function(card_array, status, jqXHR) {
-           },
-           error: function(jqXHR, status, error) {
-            console.log(jqXHR.responseText);
-           }
-          });
-        }
-      }
+//zero part
+
+      // for(var i=1; i<5; i++){
+      //   if(i!=game.player.id){
+      //     $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + i,
+      //      type: "POST",
+      //      dataType: "json",
+      //      data: (monopoly_resource.capitalizeFirstLetter() + "=0"),
+      //      async: false,
+      //      success: function(card_array, status, jqXHR) {
+      //      },
+      //      error: function(jqXHR, status, error) {
+      //       console.log(jqXHR.responseText);
+      //      }
+      //     });
+      //   }
+      // }
       updatePlayerInfo();
     }
   }
