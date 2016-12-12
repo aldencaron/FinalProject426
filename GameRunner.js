@@ -1128,13 +1128,13 @@ var checkBuyUniversity = function() {
       for(var i = 0; i < game.player.colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.player.colleges[i].roads; j++){
+        for(var j = 0; j < game.player.colleges[i].roads.length; j++){
           if(game.player.colleges[i].roads[j].player.id == game.player.id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.player.colleges[i].roads; j++){
+          for(var j = 0; j < game.player.colleges[i].roads.length; j++){
             if(game.player.colleges[i].roads[j].connections[0].player.id == game.player.id && game.player.colleges[i].roads[j].connections[1].player.id == game.player.id){
               num_colleges_used++;
             }
@@ -1163,13 +1163,13 @@ var checkBuyUniversity = function() {
       for(var i = 0; i < game.other_players[0].colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[0].colleges[i].roads; j++){
+        for(var j = 0; j < game.other_players[0].colleges[i].roads.length; j++){
           if(game.other_players[0].colleges[i].roads[j].player.id == game.other_players[0].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[0].colleges[i].roads; j++){
+          for(var j = 0; j < game.other_players[0].colleges[i].roads.length; j++){
             if(game.other_players[0].colleges[i].roads[j].connections[0].player.id == game.other_players[0].id
               && game.other_players[0].colleges[i].roads[j].connections[1].player.id == game.other_players[0].id){
               num_colleges_used++;
@@ -1187,13 +1187,13 @@ var checkBuyUniversity = function() {
       for(var i = 0; i < game.other_players[1].colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[1].colleges[i].roads; j++){
+        for(var j = 0; j < game.other_players[1].colleges[i].roads.length; j++){
           if(game.other_players[1].colleges[i].roads[j].player.id == game.other_players[1].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[1].colleges[i].roads; j++){
+          for(var j = 0; j < game.other_players[1].colleges[i].roads.length; j++){
             if(game.other_players[1].colleges[i].roads[j].connections[0].player.id == game.other_players[1].id
               && game.other_players[1].colleges[i].roads[j].connections[1].player.id == game.other_players[1].id){
               num_colleges_used++;
@@ -1211,13 +1211,13 @@ var checkBuyUniversity = function() {
       for(var i = 0; i < game.other_players[2].colleges.length; i++){
         var num_roads_used = 0;
         var num_colleges_used = 0;
-        for(var j = 0; j < game.other_players[2].colleges[i].roads; j++){
+        for(var j = 0; j < game.other_players[2].colleges[i].roads.length; j++){
           if(game.other_players[2].colleges[i].roads[j].player.id == game.other_players[2].id){
             num_roads_used++;
           }
         }
         if(num_roads_used == 3){
-          for(var j = 0; j < game.other_players[2].colleges[i].roads; j++){
+          for(var j = 0; j < game.other_players[2].colleges[i].roads.length; j++){
             if(game.other_players[2].colleges[i].roads[j].connections[0].player.id == game.other_players[2].id
               && game.other_players[2].colleges[i].roads[j].connections[1].player.id == game.other_players[2].id){
               num_colleges_used++;
