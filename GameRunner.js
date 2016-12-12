@@ -976,8 +976,8 @@ var checkBuyUniversity = function() {
 
 
   var checkKnightSpecial = function(){
-    //var current_max_army = 2;
-    //console.log("current max player at top:" + current_max_army_player);
+    console.log("current max player at top: " + current_max_army_player);
+    console.log("current max army at top:" + current_max_army);
     if(current_max_army_player == 0){
       if(game.other_players[0].knights_count > current_max_army){
         current_max_army = game.other_players[0].knights_count;
@@ -995,17 +995,19 @@ var checkBuyUniversity = function() {
         current_max_army = game.other_players[0].knights_count;
         current_max_army_player = game.player.id;
         game.player.points += 2;
-        $("#player_one_special_knights").text("LARGEST ARMY");
+        $("#player_one_special_knights").text("Largest Army: " + current_max_army);
       }
       if(current_max_army_player == game.other_players[0].id){
-        $("#player_two_special_knights").text("LARGEST ARMY");
+        $("#player_two_special_knights").text("Largest Army: " + current_max_army);
       }
       if(current_max_army_player == game.other_players[1].id){
-        $("#player_three_special_knights").text("LARGEST ARMY");
+        $("#player_three_special_knights").text("Largest Army: " + current_max_army);
       }
       if(current_max_army_player == game.other_players[2].id){
-        $("#player_four_special_knights").text("LARGEST ARMY");
+        $("#player_four_special_knights").text("Largest Army: " + current_max_army);
       }
+      console.log("current max player at end of if loop: " + current_max_army_player);
+      console.log("current max army at end of if loop:" + current_max_army);
     }
     else{
       $("#player_one_special_knights").text("");
@@ -1031,20 +1033,20 @@ var checkBuyUniversity = function() {
         current_max_army_player = game.player.id;
         if(old_max_army_player != game.player.id){
           game.player.points += 2;
-          $("#player_one_special_knights").text("LARGEST ARMY");
         }
+        $("#player_one_special_knights").text("Largest Army: " + current_max_army);
       }
       if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
         game.player.points -= 2;
       }
       if(current_max_army_player == game.other_players[0].id){
-        $("#player_two_special_knights").text("");
+        $("#player_two_special_knights").text("Largest Army: " + current_max_army);
       }
       if(current_max_army_player == game.other_players[1].id){
-        $("#player_three_special_knights").text("");
+        $("#player_three_special_knights").text("Largest Army: " + current_max_army);
       }
       if(current_max_army_player == game.other_players[2].id){
-        $("#player_four_special_knights").text("");
+        $("#player_four_special_knights").text("Largest Army: " + current_max_army);
       }
     }
   }
