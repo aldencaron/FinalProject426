@@ -818,11 +818,73 @@ var checkBuyUniversity = function() {
     }
     else{
       game.player.cards["monopoly"]--;
-      alert("You declared a monopoly!")
-      var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.")
-      while(!giveResourceCard(monopoly_resource)){
-        monopoly_resource = prompt("Bad input. Please try: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+      alert("You declared a monopoly!");
+      var done=0;
+      while(!done){
+        var monopoly_resource = prompt("Pick which card of: RAM, BRICK, BASKETBALL, RAMEN, BOOK.");
+        if(monopoly_resource!= "RAM" || monopoly_resource!= "BRICK"
+         || monopoly_resource!="BASKETBALL" || monopoly_resource!="RAMEN" || monopoly_resource!="BOOK"){
+          alert("please type a correct option");
+        }
+        else{
+          done=1;
+        }
+    }
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+    }
+      var total=0;
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/getAll",
+       type: "Get",
+       dataType: "json",
+       async: false,
+       success: function(card_array, status, jqXHR) {
+         for( var i=0;i<card_array.length;i++){
+           total += card_array[i][monopoly_resource.toLowerCase()];
+         }
+         game.player.cards[monopoly_resource.toLowerCase()]= total;
+       },
+       error: function(jqXHR, status, error) {
+        console.log(jqXHR.responseText);
+       }
+      });
+
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
+       type: "POST",
+       dataType: "json",
+       data: playerGame_cardsAJAX(game.player),
+       async: false,
+       success: function(card_array, status, jqXHR) {
+         for( var i=0;i<card_array.length;i++){
+           total += card_array[i][monopoly_resource];
+         }
+       },
+       error: function(jqXHR, status, error) {
+        console.log(jqXHR.responseText);
+       }
+      });
+
+      for(var i=1; i<5; i++){
+        if(i!=game.player.id){
+          $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + i,
+           type: "POST",
+           dataType: "json",
+           data: (monopoly_resource.capitalizeFirstLetter + "= " + 0),
+           async: false,
+           success: function(card_array, status, jqXHR) {
+             for( var i=0;i<card_array.length;i++){
+               total += card_array[i][monopoly_resource];
+             }
+           },
+           error: function(jqXHR, status, error) {
+            console.log(jqXHR.responseText);
+           }
+          });
+        }
       }
+
+
+
       updatePlayerInfo();
     }
   }
