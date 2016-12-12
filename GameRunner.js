@@ -326,10 +326,10 @@ var setupTurn = function() {
 
 var checkBuyRoad = function() {
   // Resource error
-/*if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
+if (game.player.cards["brick"] < 1 || game.player.cards["book"] < 1) {
   alert("Insufficient amounts of resources!");
   return;
-}*/
+}
 var available = false;
 for (var i = 0; i < game.roads.length; i++) {
   if (game.roads[i].available) {
@@ -441,11 +441,11 @@ var buyRoad = function(event) {
 };
 var checkBuyCollege = function() {
   // Resource problem
-  /*if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
+  if (game.player.cards["ram"] < 1 || game.player.cards["brick"] < 1 ||
   game.player.cards["ramen"] < 1 || game.player.cards["book"] < 1) {
     alert("Insufficient amounts of resources!");
     return;
-  }*/
+  }
   var available = false;
   for (var i = 0; i < game.colleges.length; i++) {
     if (game.colleges[i].available) {
@@ -530,10 +530,10 @@ var buyCollege = function() {
 };
 var checkBuyUniversity = function() {
   // Resource problem
-  // if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
-  //   alert("Insufficient amounts of resources!");
-  //   return;
-  // }
+  if (game.player.cards["basketball"] < 3 || game.player.cards["ramen"] < 2) {
+     alert("Insufficient amounts of resources!");
+     return;
+  }
   var available = false;
   for (var i = 0; i < game.player.colleges.length; i++) {
     if (!game.colleges[i].university) {
@@ -592,16 +592,16 @@ var checkBuyUniversity = function() {
     }
   };
   var checkBuyCard = function() {
-    /*if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
+    if (game.player.cards["ram"] < 1 || game.player.cards["ramen"] < 1 ||
     game.player.cards["basketball"] < 1) {
       alert("Insufficient amounts of resources!");
     }
     else if(game.next_dev_card > 25){
       alert("No more development cards");
     }
-    else{*/
+    else{
       buyCard();
-    //}
+    }
   };
   var buyCard = function() {
     game.player.cards["ram"]--;
@@ -1150,6 +1150,17 @@ var checkBuyUniversity = function() {
         }
       }
       updatePlayerInfo();
+      $.ajax({url: url_base + "SettlersOfCarolina.php/Cards/" + game.player.id,
+          type: "POST",
+          dataType: "json",
+          data: playerGame_cardsAJAX(game.player),
+          async: false,
+          success: function(Card_json, status, jqXHR) {
+          },
+          error: function(jqXHR, status, error) {
+           console.log(jqXHR.responseText);
+          }
+      });
     }
     }
   };
@@ -1435,7 +1446,7 @@ var checkBuyUniversity = function() {
   var updateOtherPlayers_Cards = function(cards_array){
     for(var i = 0; i < game.other_players.length; i++){
       for(var j = 0; j < cards_array.length; j++){
-        if(game.other_players.id == cards_array[j]["PlayerID"]){
+        if(game.other_players[i].id == cards_array[j]["PlayerID"]){
           game.other_players[i].num_cards = parseInt(cards_array[j]["Ram"]) + parseInt(cards_array[j]["Ramen"])
            + parseInt(cards_array[j]["Brick"]) + parseInt(cards_array[j]["Book"]) + parseInt(cards_array[j]["Basketball"]);
         }
@@ -1449,14 +1460,13 @@ var checkBuyUniversity = function() {
   // =============================================================================
 
   var gameOver = function(){
-    alert("The game is over.");
     if(game.player.points == 10){
       alert("You win!");
     }
     else{
       for(var i = 0; i < game.other_players.length; i++){
-        if(game.other_players.points == 10){
-          alert(game.other_players.username + " won! Good game!");
+        if(game.other_players[i].points == 10){
+          alert(game.other_players[i].username + " won! Good game!");
         }
       }
     }
