@@ -206,7 +206,7 @@ function RunGame() {
           $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
           type: "POST",
           dataType: "json",
-          async: false,
+          //async: false,
           data: collegeGame_collegeAJAX(game.colleges[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
           },
@@ -273,7 +273,7 @@ var addRoadStart = function(event) {
         $.ajax({url:url_base + "SettlersOfCarolina.php/Roads/" + game.roads[i].id,
           type: "POST",
           dataType: "json",
-          async: false,
+          //async: false,
           data: roadGame_roadAJAX(game.roads[i]),
           success: function(College_json, status, jqXHR) {
           },
@@ -371,7 +371,7 @@ var buyRoad = function(event) {
         $.ajax({url:url_base + "SettlersOfCarolina.php/Roads/" + game.roads[i].id,
           type: "POST",
           dataType: "json",
-          async: false,
+          //async: false,
           data: roadGame_roadAJAX(game.roads[i]), //$(new collegeGame_collegeAJAX(game.colleges[i])).serialize(),
           success: function(College_json, status, jqXHR) {
           },
@@ -491,7 +491,7 @@ var buyCollege = function() {
           $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
             type: "POST",
             dataType: "json",
-            async: false,
+            //async: false,
             data: collegeGame_collegeAJAX(game.colleges[i]),
             success: function(College_json, status, jqXHR) {
             },
@@ -572,7 +572,7 @@ var checkBuyUniversity = function() {
           $.ajax({url:url_base + "SettlersOfCarolina.php/Colleges/" + game.colleges[i].id,
             type: "POST",
             dataType: "json",
-            async: false,
+            //async: false,
             data: collegeGame_collegeAJAX(game.colleges[i]),
             success: function(College_json, status, jqXHR) {
               console.log("Posted university");
@@ -596,8 +596,7 @@ var checkBuyUniversity = function() {
     game.player.cards["basketball"] < 1) {
       alert("Insufficient amounts of resources!");
     }
-    else*/
-     if(game.next_dev_card > 25){
+    else*/ if(game.next_dev_card > 25){
       alert("No more development cards");
     }
     else{
@@ -626,7 +625,7 @@ var checkBuyUniversity = function() {
     $.ajax({url:url_base + "SettlersOfCarolina.php/DevStacks/26",
       type: "POST",
       dataType: "json",
-      async: false,
+      //async: false,
       data: "DevID=26&Card=" + (game.next_dev_card+1),
       success: function(College_json, status, jqXHR) {
       },
@@ -702,7 +701,7 @@ var checkBuyUniversity = function() {
         $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
           type: "POST",
           dataType: "json",
-          async: false,
+          //async: false,
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
             console.log("Success in getting rid of robber");
@@ -730,7 +729,7 @@ var checkBuyUniversity = function() {
         $.ajax({url:url_base + "SettlersOfCarolina.php/Tiles/" + game.tiles[i].id,
           type: "POST",
           dataType: "json",
-          async: false,
+          //async: false,
           data: tileGame_tileAJAX(game.tiles[i]),
           success: function(tile_json, status, jqXHR) {
             console.log("Success in posting robber.");
@@ -781,7 +780,7 @@ var checkBuyUniversity = function() {
        type: "POST",
        dataType: "json",
        data: playerGame_playerAJAX(game.player),
-       async: false,
+       //async: false,
        success: function(Card_json, status, jqXHR) {
        },
        error: function(jqXHR, status, error) {
@@ -890,7 +889,7 @@ var checkBuyUniversity = function() {
        type: "POST",
        dataType: "json",
        data: playerGame_cardsAJAX(game.player),
-       async: false,
+       //async: false,
        success: function(card_array, status, jqXHR) {
        },
        error: function(jqXHR, status, error) {
@@ -906,7 +905,7 @@ var checkBuyUniversity = function() {
       //      type: "POST",
       //      dataType: "json",
       //      data: (monopoly_resource.capitalizeFirstLetter() + "=0"),
-      //      async: false,
+      //      //async: false,
       //      success: function(card_array, status, jqXHR) {
       //      },
       //      error: function(jqXHR, status, error) {
@@ -1155,7 +1154,7 @@ var checkBuyUniversity = function() {
           type: "POST",
           dataType: "json",
           data: playerGame_cardsAJAX(game.player),
-          async: false,
+          ////async: false,
           success: function(Card_json, status, jqXHR) {
           },
           error: function(jqXHR, status, error) {
@@ -1192,7 +1191,7 @@ var checkBuyUniversity = function() {
                 type: "POST",
                 dataType: "json",
                 data: playerGame_playerAJAX(game.player),
-                async: false,
+                ////async: false,
                 success: function(Player_json, status, jqXHR) {
                 },
                 error: function(jqXHR, status, error) {
@@ -1342,7 +1341,7 @@ var checkBuyUniversity = function() {
           type: "POST",
           dataType: "json",
           data: playerGame_playerAJAX(game.player),
-          async: false,
+          //async: false,
           success: function(Player_json, status, jqXHR) {
           },
           error: function(jqXHR, status, error) {
@@ -1513,7 +1512,7 @@ var checkBuyUniversity = function() {
         type: "POST",
         dataType: "json",
         data: playerGame_cardsAJAX(game.player),
-        async: false,
+        //async: false,
         success: function(Card_json, status, jqXHR) {
         },
         error: function(jqXHR, status, error) {
@@ -1525,7 +1524,7 @@ var checkBuyUniversity = function() {
         type: "POST",
         dataType: "json",
         data: playerGame_playerAJAX(game.player),
-        async: false,
+        //async: false,
         success: function(Player_json, status, jqXHR) {
         },
         error: function(jqXHR, status, error) {
@@ -1538,7 +1537,7 @@ var checkBuyUniversity = function() {
     $.ajax({url: url_base + "SettlersOfCarolina.php/Turns",
       type: "POST",
       dataType: "json",
-      async: false,
+      //async: false,
       success: function(turn, status, jqXHR) {
         console.log("success on posting");
       },
@@ -1551,7 +1550,7 @@ var checkBuyUniversity = function() {
       $.ajax({url: url_base + "SettlersOfCarolina.php/Turns/gameover",
         type: "POST",
         dataType: "json",
-        async: false,
+        //async: false,
         success: function(turn, status, jqXHR) {
           console.log("success on posting game over");
         },
