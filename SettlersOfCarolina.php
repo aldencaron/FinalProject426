@@ -862,23 +862,23 @@ function postDevStack(){
           if (isset($_REQUEST['PlayerID'])) {
               $new_PlayerID = intval(trim($_REQUEST['PlayerID']));
           }
-          $new_Ram="NOINPUT";
+          $new_Ram=false;
           if(isset($_REQUEST['Ram'])){
             $new_Ram= intval(trim($_REQUEST['Ram']));
           }
-          $new_Ramen="NOINPUT";
+          $new_Ramen=false;
           if(isset($_REQUEST['Ramen'])){
             $new_Ramen= intval(trim($_REQUEST['Ramen']));
           }
-          $new_Brick="NOINPUT";
+          $new_Brick=false;
           if(isset($_REQUEST['Brick'])){
             $new_Brick= intval(trim($_REQUEST['Brick']));
           }
-          $new_Basketball="NOINPUT";
+          $new_Basketball=false;
           if(isset($_REQUEST['Basketball'])){
             $new_Basketball= intval(trim($_REQUEST['Basketball']));
           }
-          $new_Book="NOINPUT";
+          $new_Book=false;
           if(isset($_REQUEST['Book'])){
             $new_Book= intval(trim($_REQUEST['Book']));
           }
@@ -922,19 +922,19 @@ function postDevStack(){
           if ($new_PlayerID != false) {
               $Card->setPlayerID($new_PlayerID);
           }
-          if($new_Ram != "NOINPUT"){
+          if($new_Ram != false){
             $Card->setRam($new_Ram);
           }
-          if($new_Ramen != "NOINPUT"){
+          if($new_Ramen != false){
             $Card->setRamen($new_Ramen);
           }
-          if($new_Brick != "NOINPUT"){
+          if($new_Brick != false){
             $Card->setBrick($new_Brick);
           }
-          if($new_Basketball != "NOINPUT"){
+          if($new_Basketball != false){
             $Card->setBasketball($new_Basketball);
           }
-          if($new_Book != "NOINPUT"){
+          if($new_Book != false){
             $Card->setBook($new_Book);
           }
           if($new_Knight != false){
