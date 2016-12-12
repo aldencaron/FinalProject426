@@ -1101,6 +1101,7 @@ var checkBuyUniversity = function() {
       if(old_max_army_player == game.player.id && current_max_army_player != game.player.id){
         game.player.points -= 2;
       }
+      updatePlayerInfo();
       $.ajax({url: url_base + "SettlersOfCarolina.php/Players/" + game.player.id,
           type: "POST",
           dataType: "json",
@@ -1122,6 +1123,7 @@ var checkBuyUniversity = function() {
         $("#player_four_special_knights").text("Largest Army: " + current_max_army);
       }
     }
+    updateOtherPlayerInfo();
   }
 
   var getLongestContinuousRoads = function(player){
