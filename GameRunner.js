@@ -1444,7 +1444,7 @@ var checkBuyUniversity = function() {
     async: false,
     success: function(tiles_array, status, jqXHR) {
       for(var i = 0; i < tiles_array.length; i++){
-        tiles_placement_array[i] = tiles_array[i]["Placement"];
+        tiles_placement_array[i] = tiles_array[i]["Placement"] - 1;
       }
     },
     error: function(jqXHR, status, error) {
@@ -1457,7 +1457,7 @@ var checkBuyUniversity = function() {
     async: false,
     success: function(dev_array, status, jqXHR) {
       for(var i = 0; i < dev_array.length-1; i++){
-        dev_placement_array[i] = dev_array[i]["Card"];
+        dev_placement_array[i] = dev_array[i]["Card"] - 1;
       }
     },
     error: function(jqXHR, status, error) {
