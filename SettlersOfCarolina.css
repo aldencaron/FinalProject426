@@ -87,7 +87,7 @@ body {
 
 }
 #board {
-    height: 552px;
+    height: 75%;
     border: 1pt solid black;
     overflow: auto;
     text-align: center;
@@ -96,14 +96,14 @@ body {
 
 #turn_info {
     border: 1pt solid black;
-    height: 51px;
+    height: 10%;
     text-align: center;
     background-color: #E37222;
 }
 
 #turn_panel {
     border: 1pt solid black;
-    height: 125px;
+    height: 15%;
     text-align: center;
     background-color: #F1F1EF;
 
@@ -122,9 +122,9 @@ body {
     background-color: white;
 
 }
-.cards:hover{
+/*.cards:hover{
   zoom:150%;
-}
+}*/
 
 /* Specifies the image dimensions inside
 the cards */
