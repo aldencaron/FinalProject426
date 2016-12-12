@@ -1447,6 +1447,18 @@ var checkBuyUniversity = function() {
   // =============================================================================
 
   var gameOver = function(){
+    alert("The game is over.");
+    if(game.player.points == 10){
+      alert("You win!");
+    }
+    else{
+      for(var i = 0; i < game.other_players.length; i++){
+        if(game.other_players.points == 10){
+          alert(game.other_players.username + " won! Good game!");
+        }
+      }
+    }
+
     $('#startup').show();
     $('#top_container').hide();
   }
